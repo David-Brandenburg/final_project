@@ -1,0 +1,17 @@
+$navbarHeight: 50px;
+
+$accentColorBlue: #01204e;
+$accentColorLightBlue: #028391;
+$accentColorCreme: #f6dcac;
+$accentColorOrange: #faa968;
+$accentColorDarkOrange: #f85525;
+
+$fontColorTransp: #ffffffb0;
+$fontColorFull: #fff;
+$backgroundColor: #d9d9d9;
+$navbarGradient: linear-gradient(180deg, #121212e6, #232323e6);
+$footerGradient: linear-gradient(180deg, #121212 50%, #232323);
+
+$defaultFont: "Play", sans-serif;
+$defaultGradient: linear-gradient(35deg, $accentColorBlue, $accentColorLightBlue, $accentColorCreme, $accentColorOrange, $accentColorDarkOrange);
+$defaultGradientReverse: linear-gradient(35deg, $accentColorDarkOrange, $accentColorOrange, $accentColorCreme, $accentColorLightBlue, $accentColorBlue);

@@ -1,0 +1,34 @@
+@import '../../styles/variables.scss';
+
+footer{
+	height: 250px;
+
+	&::after{
+		content: '';
+		position: absolute;
+		z-index: 9998;
+		background: $defaultGradient;
+		bottom: -4px;
+		width: 100%;
+		height: 4px;
+	}
+
+	.footer-wrapper{
+		background: $footerGradient;
+		box-shadow: inset 1px 1px 10px rgba(0,0,0,1);
+		height: 250px;
+		display: flex;
+		flex-direction: column;
+		.footer-top-row{
+			height: 50px;
+			background: green;
+		}
+		.footer-mid-row{
+			height: 150px;
+		}
+		.footer-bot-row{
+			height: 50px;
+			background: limegreen;
+		}
+	}
+}
