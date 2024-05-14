@@ -1,0 +1,140 @@
+nav {
+  height: 50px;
+  position: fixed;
+  top: 4px;
+  right: 0;
+  left: 0;
+  z-index: 9998;
+  box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+nav::before {
+  content: "";
+  position: absolute;
+  z-index: 9998;
+  background: linear-gradient(35deg, #01204e, #028391, #f6dcac, #faa968, #f85525);
+  top: -4px;
+  width: 100%;
+  height: 4px;
+}
+nav .nav-wrapper {
+  height: 100%;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.9019607843), rgba(35, 35, 35, 0.9019607843));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(50px, 8vw, 200px);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+nav .nav-wrapper .nav-link {
+  text-transform: uppercase;
+  padding: 8px 28px 8px 16px;
+  color: #fff;
+  font-family: "Play", sans-serif;
+  position: relative;
+  font-size: 14px;
+}
+nav .nav-wrapper .nav-link:visited {
+  color: #fff;
+}
+nav .nav-wrapper .nav-link::after {
+  content: "\f22c";
+  font-size: 12px;
+  font-family: "Bootstrap-Icons";
+  position: absolute;
+  top: 11px;
+  right: 14px;
+}
+nav .nav-wrapper .nav-link:last-child {
+  color: #028391;
+  cursor: pointer;
+}
+nav .nav-wrapper .nav-link:last-child:hover {
+  color: #faa968;
+}
+nav .nav-wrapper .nav-link:hover {
+  color: color-mix(in lab, #028391 65%, #fff);
+}
+nav .nav-wrapper .nav-left {
+  display: flex;
+  gap: 10px;
+}
+nav .nav-wrapper .nav-left .logo-wrapper {
+  display: inline-flex;
+}
+nav .nav-wrapper .nav-left .logo-wrapper img {
+  width: 70px;
+  filter: invert(1);
+}
+nav .nav-wrapper .nav-left .item-wrapper {
+  display: flex;
+}
+nav .nav-wrapper .nav-mid {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+nav .nav-wrapper .nav-mid .nav-search {
+  color: #fff;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2509803922);
+  width: 50%;
+  padding: 6px;
+  font-family: "Play", sans-serif;
+}
+nav .nav-wrapper .nav-mid .nav-search:focus-visible, nav .nav-wrapper .nav-mid .nav-search:focus, nav .nav-wrapper .nav-mid .nav-search:hover {
+  border-bottom: 1px solid #fff;
+}
+nav .nav-wrapper .nav-right {
+  color: rgba(255, 255, 255, 0.6901960784);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+nav .nav-wrapper .nav-right .search-wrapper {
+  cursor: pointer;
+}
+nav .nav-wrapper .nav-right .search-wrapper:hover {
+  color: #fff;
+}
+nav .nav-wrapper .nav-right .cart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+}
+nav .nav-wrapper .nav-right .cart-wrapper:hover {
+  color: #fff;
+}
+nav .nav-wrapper .nav-right .cart-wrapper .cart-count {
+  padding: 0 3px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+nav .nav-wrapper .nav-right .cart-wrapper .cart-modal {
+  position: absolute;
+  width: 500px;
+  height: 400px;
+  color: var(--mainColor);
+  background: var(--background);
+  border-radius: 5px;
+  border: 1px solid var(--mainBorder);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  top: 36px;
+  right: 200px;
+  transform: translate(250px);
+  cursor: default;
+}
+nav .nav-wrapper .nav-right .screenmode-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+nav .nav-wrapper .nav-right .screenmode-wrapper:hover {
+  color: #fff;
+}/*# sourceMappingURL=navbar.css.map */
