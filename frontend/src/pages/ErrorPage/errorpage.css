@@ -1,0 +1,17 @@
+.error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error-wrapper h2 {
+  color: var(--mainColor);
+  font-size: clamp(200px, 8vw, 400px);
+}
+.error-wrapper p {
+  color: var(--mainColor);
+  font-size: clamp(25px, 8vw, 50px);
+  margin-bottom: 20px;
+}
+.error-wrapper a {
+  font-size: clamp(12px, 8vw, 25px);
+}/*# sourceMappingURL=errorpage.css.map */
