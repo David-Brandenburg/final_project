@@ -3,7 +3,7 @@
 .login-modal {
   position: absolute;
   width: 500px;
-  height: 400px;
+  height: 600px;
   color: var(--mainColor);
   background: var(--background);
   border-radius: 5px;
@@ -30,6 +30,18 @@
       &:focus {
         outline: none;
         border: 1px solid var(--mainColor);
+      }
+    }
+    .invalid-email {
+      &:focus {
+        border: 1px solid red;
+        color: red;
+      }
+    }
+    .valid-email {
+      &:focus {
+        border: 1px solid green;
+        color: green;
       }
     }
     .login-btn-wrapper {
@@ -67,6 +79,25 @@
         background: var(--mainHover);
         color: var(--mainColor);
       }
+    }
+  }
+  .sign-up-text {
+    margin-top: 30px;
+    margin-left: 107px;
+  }
+  .sign-up-btn {
+    width: 80%;
+    margin-left: 47px;
+    padding: 5px;
+    border: 1px solid var(--mainBorder);
+    border-radius: 5px;
+    background: var(--mainColor);
+    color: var(--background);
+    font-size: 1.2rem;
+    cursor: pointer;
+    &:hover {
+      background: var(--mainHover);
+      color: var(--mainColor);
     }
   }
 }
