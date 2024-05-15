@@ -7,7 +7,7 @@ import './navbar.scss';
 
 const Navbar = () => {
 
-	const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal,setOpenLoginModal } = useContext(ModalContext);
+	const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal } = useContext(ModalContext);
 	const { screenMode, setScreenMode } = useContext(ScreenModeContext);
 
 	const cartItems = ["Assassins Creed", "Cyberpunk"];

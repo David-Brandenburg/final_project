@@ -1,7 +1,6 @@
 @import '../../styles/variables.scss';
 
 footer{
-	height: 250px;
 
 	&::after{
 		content: '';
@@ -15,20 +14,21 @@ footer{
 
 	.footer-wrapper{
 		background: $footerGradient;
-		box-shadow: inset 1px 1px 10px rgba(0,0,0,1);
-		height: 250px;
 		display: flex;
+		box-shadow: inset 0px 3px 5px rgba(0,0,0,0.5);
 		flex-direction: column;
+		padding: 0 clamp(50px, 8vw, 200px);
 		.footer-top-row{
 			height: 50px;
-			background: green;
 		}
 		.footer-mid-row{
-			height: 150px;
+			height: 200px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 		.footer-bot-row{
 			height: 50px;
-			background: limegreen;
 		}
 	}
 }
