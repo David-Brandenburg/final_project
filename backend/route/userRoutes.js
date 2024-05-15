@@ -1,5 +1,6 @@
 import express from "express";
 import { createUser, loginUser } from "../controller/userController.js";
+import checkToken from "./../middleware/checkToken.js";
 
 const router = express.Router();
 
@@ -8,5 +9,8 @@ router.post("/create", createUser);
 
 // Route to log In
 router.post("/login", loginUser);
+
+// Route to check token
+router.post("/checktoken", checkToken);
 
 export default router;

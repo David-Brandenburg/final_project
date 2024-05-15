@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import userRoutes from "./route/userRoutes.js";
+import requestLogger from "./middleware/requestlogger.js";
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -13,10 +14,12 @@ const MONGO_HOST = process.env.MONGO_HOST;
 const MONGO_DATABASE = process.env.MONGO_DATABASE;
 
 const app = express();
+
 app.use(cors());
-app.use(express.json());
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(requestLogger);
 
 mongoose
   .connect(
