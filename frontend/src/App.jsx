@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";

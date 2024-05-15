@@ -5,7 +5,6 @@ import { ModalContext } from "../../contexts/ModalContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
 import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
-import { set } from "date-fns";
 
 const Navbar = () => {
   const {
@@ -100,8 +99,8 @@ const Navbar = () => {
               </NavLink>
               <p className="nav-link" onClick={handleOpenLogin}>
                 Einloggen
-                {openLoginModal && <Login />}
               </p>
+              {openLoginModal && <Login />}
             </div>
           )}
         </div>
