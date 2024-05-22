@@ -10,7 +10,7 @@
   border: 1px solid var(--mainBorder);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
   padding: 10px;
-  top: calc($navbarHeight - 6px);
+  top: calc($navbarHeight - -2px);
   cursor: default;
   .login-form {
     display: flex;

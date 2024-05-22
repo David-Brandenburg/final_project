@@ -1,9 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "../../styles/modals.scss";
 
 const Login = () => {
-  const [formData, setFormData] = useState(new FormData());
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [showLogin, setShowLogin] = useState(true);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const checkToken = async () => {
+  //     try {
+  //       if (token) {
+  //         const response = await fetch(
+  //           `http://localhost:3001/accounts/checktoken`,
+  //           {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //               Authorization: `Bearer ${token}`, // Including the token in the request header
+  //             },
+  //           }
+  //         );
+  //         const data = await response.json();
+  //         console.log(data);
+  //         switch (data.message) {
+  //           case "Token not found":
+  //           case "Token Invalid!":
+  //           case "User not found":
+  //             toast.error(data.message);
+
+  //             break;
+  //           case "Successfully Authorized!":
+  //             toast.success(data.message);
+
+  //             break;
+  //         }
+  //       } else {
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   };
+
+  //   checkToken();
+  // }, []);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -16,35 +60,45 @@ const Login = () => {
     return re.test(password);
   };
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    const newFormData = new FormData(formData); // Copy existing FormData
-    newFormData.append(name, files ? files[0] : value);
-    setFormData(newFormData);
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    if (!validateEmail(newEmail)) {
+      setEmailError("Invalid email format!");
+    } else {
+      setEmailError("");
+    }
   };
 
-  const appendData = async (e) => {
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    if (!validatePassword(newPassword)) {
+      setPasswordError(
+        "Password must be at least 8 characters long and contain at least one number, one lowercase letter, one uppercase letter, and one special character (!@#$%^&*()_-=[]{};':\"|,.<>/?)."
+      );
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (emailError || passwordError) {
+      toast.warn("Please fix the errors in the form.");
+      return;
+    }
+
     try {
-      const formData = new FormData(e.target);
-
-      // Validiere die E-Mail-Adresse
-      if (!validateEmail(formData.get("email"))) {
-        toast("Invalid email format!");
-        return;
-      }
-
-      // Validiere das Password
-      if (!validatePassword(formData.get("password"))) {
-        toast(
-          "Password must be at least 8 characters long and contain at least one number, one lowercase letter, one uppercase letter, and one special character (!@#$%^&*()_-=[]{};':\"|,.<>/?)."
-        );
-        return;
-      }
+      const formData = { benutzername: username, email, password };
 
       const resp = await fetch("http://localhost:3001/accounts/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
       if (!resp.ok) {
@@ -55,85 +109,186 @@ const Login = () => {
         console.log(data);
         toast(data.message);
       }
-
-      // e.target.reset();
     } catch (error) {
       console.error("Error appending data to server", error);
     }
   };
 
+  const handleSubmitLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+
+      const resp = await fetch("http://localhost:3001/accounts/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await resp.json();
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("email", e.target.email.value);
+        localStorage.setItem("UserID", data.user._id);
+      } else {
+        console.log("Token not found!");
+      }
+
+      if (!resp.ok) {
+        toast.error(data.message);
+      } else {
+        toast.success(data.message);
+      }
+
+      e.target.reset();
+    } catch (error) {
+      console.error("Error appending data to server!", error);
+    }
+  };
+
   return (
     <div className="login-modal" onClick={(e) => e.stopPropagation()}>
-      <form
-        className="login-form"
-        action=""
-        method="post"
-        encType="multipart/form-data" // Hier enctype hinzufügen
-        onSubmit={appendData}>
-        <h1 className=" ">Sign Up</h1>
-        <div className="">
-          <svg
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            height="16"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-            className="self-center text-white">
-            <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
-          </svg>
-          <input
-            type="text"
-            name="benutzername"
-            className="login-input"
-            placeholder="Username"
-            autoComplete="off"
-          />
-        </div>
-        <div className="">
-          <svg
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            height="16"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-            className=" ">
-            <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
-          </svg>
-          <input
-            type="text"
-            name="email"
-            className="login-input"
-            placeholder="@ zeichen & .de, .com, etc."
-            autoComplete="off"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="">
-          <svg
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            height="16"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-            className=" self-center">
-            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
-          </svg>
-          <input
-            type="password"
-            name="password"
-            className="login-input"
-            placeholder="min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
-            onChange={handleChange}
-          />
-        </div>
+      {!showLogin && (
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h1 className=" ">Sign Up</h1>
+          <div className="">
+            <svg
+              viewBox="0 0 16 16"
+              fill="transparent"
+              height="16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              className="self-center text-white">
+              <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
+            </svg>
+            <input
+              type="text"
+              name="benutzername"
+              value={username}
+              className="login-input"
+              placeholder="Username"
+              autoComplete="off"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="">
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              height="16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              className=" ">
+              <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
+            </svg>
+            <input
+              type="text"
+              name="email"
+              value={email}
+              className={
+                "login-input" + (emailError ? " invalid-email" : " valid-email")
+              }
+              placeholder="@ zeichen & .de, .com, etc."
+              autoComplete="off"
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="">
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              height="16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              className=" self-center">
+              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+            </svg>
+            <input
+              type="text"
+              name="password"
+              value={password}
+              className={
+                "login-input" +
+                (passwordError ? " invalid-email" : " valid-email")
+              }
+              placeholder="min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              autoComplete="off"
+              onChange={handlePasswordChange}
+            />
+          </div>
 
-        <div className="login-btn-wrapper">
-          <button className="login-button" type="submit">
-            Sign Up!
-          </button>
-          <button className="login-button">Log In!</button>
-        </div>
-      </form>
+          <div className="login-btn-wrapper">
+            <button className="login-button" type="submit">
+              Sign Up!
+            </button>
+            <button className="login-button" onClick={() => setShowLogin(true)}>
+              Log In!
+            </button>
+          </div>
+        </form>
+      )}
+      {showLogin && (
+        <form className="login-form" onSubmit={handleSubmitLogin}>
+          <h1 className=" ">Login</h1>
+          <div className="">
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              height="16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              className=" ">
+              <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
+            </svg>
+            <input
+              type="text"
+              name="email"
+              value={email}
+              className="login-input"
+              placeholder="@ zeichen & .de, .com, etc."
+              autoComplete="off"
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="">
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              height="16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              className=" self-center">
+              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+            </svg>
+            <input
+              type="text"
+              name="password"
+              value={password}
+              className="login-input"
+              placeholder="min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              autoComplete="off"
+              onChange={handlePasswordChange}
+            />
+          </div>
+
+          <div className="login-btn-wrapper">
+            <button
+              className="login-button"
+              onClick={() => setShowLogin(false)}>
+              Sign Up!
+            </button>
+            <button className="login-button" type="submit">
+              Log In!
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
