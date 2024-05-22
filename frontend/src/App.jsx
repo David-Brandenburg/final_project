@@ -1,14 +1,15 @@
 import { useEffect, useContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ScreenModeContext } from "./contexts/ScreenModeContext.js";
+import { ModalContext } from "./contexts/ModalContext.js";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
-import "./styles/App.scss";
-import { ModalContext } from "./contexts/ModalContext.js";
 import GamesPage from "./pages/GamesPage/GamesPage.jsx";
+import "react-toastify/dist/ReactToastify.css";
+import "./styles/App.scss";
 
 function App() {
   const {
@@ -20,7 +21,11 @@ function App() {
     setOpenCart,
     openLoginModal,
     setOpenLoginModal,
+		openGameModal,
+		setOpenGameModal,
   } = useContext(ModalContext);
+
+	const { screenMode } = useContext(ScreenModeContext);
 
   const handleModalClose = (e) => {
     e.preventDefault();
@@ -36,13 +41,16 @@ function App() {
     if (openLoginModal) {
       setOpenLoginModal(false);
     }
+		if (openGameModal) {
+			setOpenGameModal(false);
+		}
   };
   return (
     <>
       <Navbar />
       <ToastContainer
         autoClose={3000}
-        theme="dark"
+        theme={screenMode}
         pauseOnHover={false}
         pauseOnFocusLoss={false}
         newestOnTop
@@ -56,7 +64,7 @@ function App() {
       </main>
       <Footer />
       {openModalBlocker && (
-        <div className="modal-blocker" onClick={handleModalClose}></div>
+        <div className="modal-blocker" onClick={handleModalClose} />
       )}
     </>
   );

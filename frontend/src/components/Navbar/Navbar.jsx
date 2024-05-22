@@ -1,22 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
 import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
+import GameModal from "./GameModal.jsx";
 
 const Navbar = () => {
-  const {
-    openModalBlocker,
-    setOpenModalBlocker,
-    openSearch,
-    setOpenSearch,
-    openCart,
-    setOpenCart,
-    openLoginModal,
-    setOpenLoginModal,
-  } = useContext(ModalContext);
+  const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
 
   const cartItems = ["Assassins Creed", "Cyberpunk"];
@@ -25,8 +17,9 @@ const Navbar = () => {
   const handleOpenSearch = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (openCart && openModalBlocker) {
+    if ((openCart || openLoginModal) && openModalBlocker) {
       setOpenCart(false);
+      setOpenLoginModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }
@@ -40,13 +33,16 @@ const Navbar = () => {
     setOpenSearch(false);
     setOpenCart(false);
     setOpenLoginModal(false);
+		setOpenGameModal(false);
   };
 
   const handleOpenCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (openSearch && openModalBlocker) {
+    if ((openSearch || openLoginModal || openGameModal) && openModalBlocker) {
       setOpenSearch(false);
+      setOpenLoginModal(false);
+			setOpenGameModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }
@@ -56,9 +52,10 @@ const Navbar = () => {
   const handleOpenLogin = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if ((openSearch || openCart) && openModalBlocker) {
+    if ((openSearch || openCart || openGameModal) && openModalBlocker) {
       setOpenSearch(false);
       setOpenCart(false);
+			setOpenGameModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }
@@ -76,6 +73,28 @@ const Navbar = () => {
     }
   };
 
+	useEffect(() => {
+		const gamesLink = document.getElementById('gamesLink');
+		gamesLink.addEventListener("mouseover", (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+			setOpenGameModal(true)
+			setOpenModalBlocker(true)
+			setOpenSearch(false);
+			setOpenCart(false);
+			setOpenLoginModal(false);
+		})
+
+		return () => {
+			gamesLink.addEventListener("mouseout", (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				setOpenGameModal(false)
+				setOpenModalBlocker(false)
+			})
+		}
+	}, [])
+
   return (
     <nav>
       <div className="nav-wrapper" onClick={handleCloseAll}>
@@ -85,22 +104,19 @@ const Navbar = () => {
           </NavLink>
           {!openSearch && (
             <div className="item-wrapper">
-              <NavLink to="/games" className="nav-link" title="navlink">
-                Spiele
-              </NavLink>
-              <NavLink to="/infos" className="nav-link" title="navlink">
-                Infos
-              </NavLink>
-              <NavLink to="/forum" className="nav-link" title="navlink">
-                Forum
-              </NavLink>
-              <NavLink to="/help" className="nav-link" title="navlink">
-                Hilfe
-              </NavLink>
-              <p className="nav-link" onClick={handleOpenLogin}>
-                Einloggen
-              </p>
-              {openLoginModal && <Login />}
+              <div className="dropdown-wrapper" id="gamesLink" onClick={((e) => {setOpenGameModal(false); e.stopPropagation();})}>
+								<NavLink to="/games" className="nav-link" title="navlink">
+									Spiele
+								</NavLink>
+								{openGameModal && <GameModal />}
+              </div>
+              <NavLink to="/infos" className="nav-link" title="navlink">Infos</NavLink>
+              <NavLink to="/forum" className="nav-link" title="navlink">Forum</NavLink>
+              <NavLink to="/help" className="nav-link" title="navlink">Hilfe</NavLink>
+              <div className="dropdown-wrapper">
+								<p className="nav-link" onClick={handleOpenLogin}>Einloggen</p>
+								{openLoginModal && <Login />}
+              </div>
             </div>
           )}
         </div>
@@ -132,7 +148,7 @@ const Navbar = () => {
                 background: cIL > 0 ? "#f85525" : "unset",
               }}>
               {cIL}
-            </small>{" "}
+            </small>
             {/* Cart Count */}
             {openCart && (
               <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
