@@ -7,9 +7,10 @@ export const ModalContextProvider = ({children}) => {
 	const [openSearch, setOpenSearch] = useState(false);
 	const [openCart, setOpenCart] = useState(false);
 	const [openLoginModal, setOpenLoginModal] = useState(false);
+	const [openGameModal, setOpenGameModal] = useState(false)
 
 	return (
-		<ModalContext.Provider value={{ openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal }}>
+		<ModalContext.Provider value={{ openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal }}>
 			{children}
 		</ModalContext.Provider>
 	)
