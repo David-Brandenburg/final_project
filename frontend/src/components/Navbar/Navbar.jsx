@@ -98,10 +98,12 @@ const Navbar = () => {
               <NavLink to="/help" className="nav-link" title="navlink">
                 Hilfe
               </NavLink>
-              <p className="nav-link" onClick={handleOpenLogin}>
-                Einloggen
-              </p>
-              {openLoginModal && <Login />}
+              <div>
+                <p className="nav-link" onClick={handleOpenLogin}>
+                  Einloggen
+                </p>
+                {openLoginModal && <Login />}
+              </div>
             </div>
           )}
         </div>
