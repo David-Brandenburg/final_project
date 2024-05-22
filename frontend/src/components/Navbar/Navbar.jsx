@@ -45,8 +45,9 @@ const Navbar = () => {
   const handleOpenCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (openSearch && openModalBlocker) {
+    if ((openSearch || openLoginModal) && openModalBlocker) {
       setOpenSearch(false);
+      setOpenLoginModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }

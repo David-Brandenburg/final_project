@@ -8,11 +8,11 @@ const saltRounds = 5;
 async function createUser(req, res) {
   try {
     const { benutzername, email, password, vorname, nachname } = req.body;
-
+    console.log(req.body.password);
     // hashen des Passwords
     const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    console.log(req.body);
+    const hash = await bcrypt.hash(password, salt);
+
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
       return res
