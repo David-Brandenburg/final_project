@@ -105,8 +105,8 @@
 .games-modal{
 	position: absolute;
 	top: calc(100% + 10px);
-	width: 600px;
 	height: 400px;
+	width: fit-content;
 	padding: 10px;
 	background: var(--background);
 	border: 1px solid var(--mainBorder);
@@ -114,63 +114,144 @@
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
 	color: var(--mainColor);
 	display: flex;
+	// gap: 10px;
 
 	.games-genre-list{
 		display: flex;
 		flex-direction: column;
-		gap: 3px;
-		width: 200px;
+		width: 150px;
+		height: fit-content;
+
+		hr{
+			margin: 10px 0;
+		}
 
 		.games-modal-link{
-			padding: 3px;
-			&:hover{
+			padding: 6px 6px;
+			&:hover, &.active{
 				background: color-mix(in lab, var(--background) 95%, var(--mainColor));
 				letter-spacing: 1px;
 				transition: letter-spacing 300ms ease-in-out;
 				cursor: pointer;
+				color: $accentColorLightBlue;
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				&::after{
+					content: "\F234";
+					position: absolute;
+					font-family: "Bootstrap-Icons";
+					right: 0;
+					letter-spacing: 0px;
+				}
 			}
 		}
 	}
 
-	.games-card-container{
-		background: color-mix(in lab, var(--background) 95%, var(--mainColor));
-		width: 100%;
-		padding: 3px;
-		.game-card{
-			background: #e1e1e1;
-			width: fit-content;
-			.game-card-thumbnail-wrapper{
-				img{
-					display: flex;
-				}
-			}
-			.game-card-info-wrapper{
+	.games-content{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 15px;
+		justify-content: space-between;
+		height: fit-content;
+		width: fit-content;
+		.games-card-container{
+			background: color-mix(in lab, var(--background) 95%, var(--mainColor));
+			width: max-content;
+			max-width: calc(196px * 3 + 50px);
+			padding: 10px;
+			display: inline-flex;
+			align-content: flex-start;
+			gap: 15px;
+			flex-wrap: wrap;
+	
+			.games-card-error-wrapper{
+				width: calc(196px * 3 + 50px);
+				height: 320px;
 				display: flex;
-				height: fit-content;
+				flex-direction: column;
 				align-items: center;
-				padding: 5px;
-				justify-content: space-between;
-				.bi{
-					color: #a6a6a6;
+				justify-content: center;
+			}
+			.game-card{
+				// background: #e1e1e1;
+				background: color-mix(in lab, var(--background) , #000 20%);
+				width: 196px;
+				height: max-content;
+				.game-card-thumbnail-wrapper{
+					width: max-content;
+					img{
+						width: 100%;
+						display: flex;
+					}
 				}
-				.game-card-price-tag{
-					color: #686868;
-					font-size: 14px;
-					border: 1px solid #a6a6a6;
-					padding: 3px 6px;
-					border-radius: 3px;
+				.game-card-info-wrapper{
+					display: flex;
+					height: fit-content;
+					align-items: center;
+					padding: 5px;
+					justify-content: space-between;
+					.bi{
+						// color: #a6a6a6;
+						color: color-mix(in lab, var(--mainColor) , var(--background));
+					}
+					.price-tags-wrapper{
+						display: flex;
+						align-items: flex-start;
+						gap: 5px;
+						.game-card-price-tag, .game-card-price-tag-discount{
+							color: #686868;
+							font-size: 14px;
+							border: 1px solid color-mix(in lab, var(--mainColor) , var(--background));
+							padding: 3px 6px;
+							margin: 3px 0;
+							border-radius: 3px;
+						}
+						.game-card-price-tag-discount{
+							text-decoration: line-through;
+						}
+						.game-discount-wrapper{
+							font-size: 12px;
+							display: flex;
+							flex-direction: column;
+							align-items: flex-end;
+							.discount-tag{
+								background: $accentColorDarkOrange;
+								padding: 2px 4px;
+								border-radius: 2px;
+							}
+						}
+					}
+				}
+				&:hover{
+					// background: #ebebeb;
+					background: color-mix(in lab, var(--background) , #000 10%);
+					.game-card-price-tag, .game-card-price-tag-discount{
+						background: linear-gradient(-180deg, #9fbf00, #80ab00 91%);
+						border: 1px solid #96bd27!important;
+						border-bottom-color: #69941b!important;
+						border-left-color: #7fa721!important;
+						border-right-color: #7fa721!important;
+						color: #fff!important;
+					}
 				}
 			}
+		}
+		.genre-link{
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			background: $accentColorLightBlue;
+			border: 1px solid color-mix(in lab, $accentColorLightBlue, #fff 30%);
+			padding: 6px 100px;
+			font-size: 18px;
+			border-radius: 3px;
+			cursor: pointer;
+			color: #fff;
 			&:hover{
-				background: #ebebeb;
-				.game-card-info-wrapper > .game-card-price-tag{
-					background: linear-gradient(-180deg, #9fbf00, #80ab00 91%);
-					border: 1px solid #96bd27;
-					border-bottom-color: #69941b;
-					border-left-color: #7fa721;
-					border-right-color: #7fa721;
-					color: #fff;
-				}
+				background: $accentColorBlue;
+				border-color: color-mix(in lab, $accentColorBlue, #fff 30%);
+				transition: background 200ms ease, border-color 200ms ease;
 			}
 		}
 	}

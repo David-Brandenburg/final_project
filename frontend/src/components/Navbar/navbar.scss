@@ -76,6 +76,14 @@ nav {
 				align-items: center;
 				.dropdown-wrapper{
 					position: relative;
+
+					&:last-child > .nav-link {
+						color: $accentColorLightBlue;
+						cursor: pointer;
+						&:hover {
+							color: $accentColorOrange;
+						}
+					}
 					.nav-link {
 						text-transform: uppercase;
 						padding: 17px 28px 17px 16px;

@@ -1,55 +1,62 @@
-import { useContext, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../../styles/modals.scss';
-import { ModalContext } from '../../contexts/ModalContext.js';
+import { useContext, useEffect, useState } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
+import GameModalCardContainer from './GameModalCardContainer';
 
 const GameModal = () => {
+	const [genre, setGenre] = useState('')
 
-    const { 
-        openGameModal,
-        setOpenGameModal,
-        openModalBlocker,
-        setOpenModalBlocker,
-    } = useContext(ModalContext);
+	const { setOpenGameModal, setOpenModalBlocker } = useContext(ModalContext)
 
-		const games = [
-			{
-				title: 'Manor Lords',
-				thumbnail: 'https://images.gog-statics.com/1e07143b952181ab7b723c2df2adfe26d9f653b38d7fd4717631cb881a305732_196.jpg',
-				platforms: ['windows'],
-				price: '39.99',
-				discount: '30%'
-			}
-		]
+  useEffect(() => {
+    const gamesGenre = document.querySelectorAll('.games-modal-link');
+
+    const handleMouseEnter = (e) => {
+      const currentGenre = e.target;
+      setGenre(currentGenre.innerText);
+      
+      gamesGenre.forEach((genre) => {
+        if (genre !== currentGenre) {
+          genre.classList.remove('active');
+        }
+      });
+
+      currentGenre.classList.add('active');
+    };
+
+    gamesGenre.forEach((genre) => {
+      genre.addEventListener('mouseenter', handleMouseEnter);
+    });
+
+    return () => {
+      gamesGenre.forEach((genre) => {
+        genre.removeEventListener('mouseenter', handleMouseEnter);
+      });
+    };
+  }, [genre]);
 
     return (
-        <div className='games-modal' onClick={((e) => e.stopPropagation())}>
-            <div className='games-genre-list'>
-                <p className='games-modal-link'>Abenteuer</p>
-                <p className='games-modal-link'>Action</p>
-                <p className='games-modal-link'>Simulation</p>
-                <p className='games-modal-link'>Rollenspiel</p>
-            </div>
-            <div className='games-card-container'>
-							{games.map((game) => {
-
-								return (
-								<div className='game-card' key={game.title}>
-									<div className='game-card-thumbnail-wrapper'>
-										<img src={game.thumbnail} alt="" />
-									</div>
-									<div className='game-card-info-wrapper'>
-										<div className='game-card-platforms-wrapper'>
-											{game.platforms.map((platform) => (
-												<small key={platform} className='game-card-platform'><i className={`bi bi-${platform}`}></i></small>
-											))}
-										</div>
-										<small className='game-card-price-tag'>{game.price} €</small>
-									</div>
-								</div>
-								)
-							})}
-						</div>
+      <div className='games-modal' onClick={((e) => e.stopPropagation())}>
+        <div className='games-genre-list'>
+          <p className='games-modal-link' >Neu erschienen</p>
+          <p className='games-modal-link' >Bestseller</p>
+          <p className='games-modal-link' >Angebote</p>
+					<hr style={{borderBottom: "1px solid #fff"}}/>
+          <p className='games-modal-link' >Abenteuer</p>
+          <p className='games-modal-link' >Action</p>
+          <p className='games-modal-link' >Shooter</p>
+          <p className='games-modal-link' >Rollenspiel</p>
+          <p className='games-modal-link' >Strategie</p>
+          <p className='games-modal-link' >Fantasy</p>
         </div>
+        {genre && <div className='games-content'>
+					<GameModalCardContainer genre={genre} />
+					<div className=''>
+						<NavLink to={`/games/genres/${genre.toLowerCase()}`} className='genre-link' onClick={((e) => {setOpenGameModal(false); setOpenModalBlocker(false);})}>Zu allen {genre}-Spielen</NavLink>
+					</div>
+        </div>}
+      </div>
     )
 }
 
