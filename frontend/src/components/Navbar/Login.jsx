@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import "../../styles/modals.scss";
+import { LogginContext } from "../../contexts/LogginContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showLogin, setShowLogin] = useState(true);
+
+	const { setLoggedInUser } = useContext(LogginContext)
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
@@ -103,11 +106,18 @@ const Login = () => {
 
       if (!resp.ok) {
         const data = await resp.json();
-        toast(data.message);
+        toast.warn(data.message);
       } else {
         const data = await resp.json();
         console.log(data);
-        toast(data.message);
+        toast.success(data.message);
+				setLoggedInUser({
+					benutzername: data.user.benutzername,
+					email: data.email,
+					id: data.user._id,
+					profilePic: data.user.profilePic,
+					token: data.token,
+				})
       }
     } catch (error) {
       console.error("Error appending data to server", error);

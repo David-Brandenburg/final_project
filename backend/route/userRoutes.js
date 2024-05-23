@@ -10,6 +10,9 @@ router.post("/create", createUser);
 // Route to log In
 router.post("/login", loginUser);
 
+// Route to log out
+// router.post("/logout", logoutUser);
+
 // Route to check token
 router.post("/checktoken", checkToken);
 
