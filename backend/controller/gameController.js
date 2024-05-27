@@ -23,7 +23,7 @@ async function getGamesByGenres(req, res) {
 			return res.status(404).send({ message: 'No games found', ok: false })
 		}
 
-		const gamesByGenre = games.filter((game) => game.genres.includes(genre))
+		const gamesByGenre = games.filter((game) => game.genres.includes(genre.toLowerCase()))
 
 		return res.status(200).json(gamesByGenre)
 	} catch (error) {

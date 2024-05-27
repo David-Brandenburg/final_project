@@ -1,30 +1,9 @@
 import React, {useEffect, useState} from 'react'
+import slugify from 'slugify';
+import { NavLink } from 'react-router-dom';
 
 const GameModalCardContainer = ({genre}) => {
 	const [games, setGames] = useState(null);
-
-	// useEffect(() => {
-	// 	const fetchGames = async () => {
-	// 		const url = `http://localhost:3001/games/genres/${genre}`
-	// 		try {
-	// 			const response = await fetch(url, {method: 'GET'})
-	// 			if (!response.ok) {
-	// 				const data = await response.json();
-	// 				throw new Error(data.message)
-	// 			} else {
-	// 				const data = await response.json();
-	// 				if (data.length < 1) {
-	// 					setGames(null)
-	// 				} else {
-	// 					setGames(data.slice(0,6));
-	// 				}
-	// 			}
-	// 		} catch (error) {
-	// 			console.error(error);
-	// 		}
-	// 	};
-	// 	fetchGames();
-	// }, [genre])
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -72,7 +51,7 @@ const GameModalCardContainer = ({genre}) => {
 				</div>
 				: games.map((game, index) => {
 				return (
-				<div className='game-card' key={game.title + index}>
+				<NavLink to={`games/${slugify(game.title)}`} className='game-card' key={game.title + index}>
 					<div className='game-card-thumbnail-wrapper'>
 						<img src={game.thumbnail} alt="" />
 					</div>
@@ -90,7 +69,7 @@ const GameModalCardContainer = ({genre}) => {
 							<small className={`game-card-price-tag${game.discount > 0 ? '-discount' : ''}`}>{game.price}€</small>
 						</div>
 					</div>
-				</div>
+				</NavLink>
 				)
 			})}
 		</div>
