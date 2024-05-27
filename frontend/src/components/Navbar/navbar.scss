@@ -31,7 +31,7 @@ nav {
 
     .nav-link {
       text-transform: uppercase;
-      padding: 8px 28px 8px 16px;
+      padding: 17px 28px 17px 16px;
       color: #fff;
       font-family: $defaultFont;
       position: relative;
@@ -44,7 +44,7 @@ nav {
         font-size: 12px;
         font-family: "Bootstrap-Icons";
         position: absolute;
-        top: 11px;
+        top: 19px;
         right: 14px;
       }
       &:last-child {
@@ -62,15 +62,43 @@ nav {
     .nav-left {
       display: flex;
       gap: 10px;
+      align-items: center;
       .logo-wrapper {
         display: inline-flex;
         img {
-          width: 70px;
+          height: 35px;
           filter: invert(1);
         }
       }
       .item-wrapper {
         display: flex;
+        position: relative;
+        align-items: center;
+        .dropdown-wrapper {
+          position: relative;
+          .nav-link {
+            text-transform: uppercase;
+            padding: 17px 28px 17px 16px;
+            color: #fff;
+            font-family: $defaultFont;
+            position: relative;
+            font-size: 14px;
+            &:visited {
+              color: #fff;
+            }
+            &::after {
+              content: "\F22C";
+              font-size: 12px;
+              font-family: "Bootstrap-Icons";
+              position: absolute;
+              top: 19px;
+              right: 14px;
+            }
+            &:hover {
+              color: color-mix(in lab, $accentColorLightBlue 65%, #fff);
+            }
+          }
+        }
       }
     }
 
@@ -122,6 +150,10 @@ nav {
         }
         .cart-modal {
           position: absolute;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
           width: 500px;
           height: 400px;
           color: var(--mainColor);
@@ -134,6 +166,32 @@ nav {
           right: 200px;
           transform: translate(250px);
           cursor: default;
+          .trennung {
+            border-top: 1px solid var(--mainBorder);
+            width: 75%;
+          }
+          & > h3 {
+            margin: 10px;
+          }
+          .bi {
+            font-size: 40px;
+          }
+          .btn {
+            text-align: center;
+            width: 80%;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid var(--mainBorder);
+            border-radius: 5px;
+            background: var(--mainColor);
+            color: var(--background);
+            font-size: 1.2rem;
+            cursor: pointer;
+            &:hover {
+              background: var(--mainHover);
+              color: var(--mainColor);
+            }
+          }
         }
       }
       .screenmode-wrapper {
