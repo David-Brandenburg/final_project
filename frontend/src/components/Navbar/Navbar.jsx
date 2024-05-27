@@ -6,9 +6,21 @@ import Logo from "../../assets/pixelPlaza.webp";
 import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
+import CartModal from "./CartModal.jsx";
 
 const Navbar = () => {
-  const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal } = useContext(ModalContext);
+  const {
+    openModalBlocker,
+    setOpenModalBlocker,
+    openSearch,
+    setOpenSearch,
+    openCart,
+    setOpenCart,
+    openLoginModal,
+    setOpenLoginModal,
+    openGameModal,
+    setOpenGameModal,
+  } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
 
   const cartItems = ["Assassins Creed", "Cyberpunk"];
@@ -33,7 +45,7 @@ const Navbar = () => {
     setOpenSearch(false);
     setOpenCart(false);
     setOpenLoginModal(false);
-		setOpenGameModal(false);
+    setOpenGameModal(false);
   };
 
   const handleOpenCart = (e) => {
@@ -42,7 +54,7 @@ const Navbar = () => {
     if ((openSearch || openLoginModal || openGameModal) && openModalBlocker) {
       setOpenSearch(false);
       setOpenLoginModal(false);
-			setOpenGameModal(false);
+      setOpenGameModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }
@@ -55,7 +67,7 @@ const Navbar = () => {
     if ((openSearch || openCart || openGameModal) && openModalBlocker) {
       setOpenSearch(false);
       setOpenCart(false);
-			setOpenGameModal(false);
+      setOpenGameModal(false);
     } else {
       setOpenModalBlocker((prev) => !prev);
     }
@@ -73,27 +85,44 @@ const Navbar = () => {
     }
   };
 
-	useEffect(() => {
-		const gamesLink = document.getElementById('gamesLink');
-		gamesLink.addEventListener("mouseover", (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-			setOpenGameModal(true)
-			setOpenModalBlocker(true)
-			setOpenSearch(false);
-			setOpenCart(false);
-			setOpenLoginModal(false);
-		})
+  useEffect(() => {
+    const gamesLink = document.getElementById("gamesLink");
+    gamesLink.addEventListener("mouseover", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setOpenGameModal(true);
+      setOpenModalBlocker(true);
+      setOpenSearch(false);
+      setOpenCart(false);
+      setOpenLoginModal(false);
+    });
 
-		return () => {
-			gamesLink.addEventListener("mouseout", (e) => {
-				e.stopPropagation();
-				e.preventDefault();
-				setOpenGameModal(false)
-				setOpenModalBlocker(false)
-			})
-		}
-	}, [])
+    const loginLink = document.getElementById("loginLink");
+    loginLink.addEventListener("mouseover", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setOpenGameModal(false);
+      setOpenModalBlocker(true);
+      setOpenSearch(false);
+      setOpenCart(false);
+      setOpenLoginModal(true);
+    });
+
+    return () => {
+      gamesLink.addEventListener("mouseout", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setOpenGameModal(false);
+        setOpenModalBlocker(false);
+      });
+      loginLink.addEventListener("mouseout", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setOpenLoginModal(false);
+        setOpenModalBlocker(false);
+      });
+    };
+  }, []);
 
   return (
     <nav>
@@ -104,18 +133,33 @@ const Navbar = () => {
           </NavLink>
           {!openSearch && (
             <div className="item-wrapper">
-              <div className="dropdown-wrapper" id="gamesLink" onClick={((e) => {setOpenGameModal(false); setOpenModalBlocker(false); e.stopPropagation();})}>
-								<NavLink to="/games" className="nav-link" title="navlink">
-									Spiele
-								</NavLink>
-								{openGameModal && <GameModal />}
+              <div
+                className="dropdown-wrapper"
+                id="gamesLink"
+                onClick={(e) => {
+                  setOpenGameModal(false);
+                  setOpenModalBlocker(false);
+                  e.stopPropagation();
+                }}>
+                <NavLink to="/games" className="nav-link" title="navlink">
+                  Spiele
+                </NavLink>
+                {openGameModal && <GameModal />}
               </div>
-              <NavLink to="/infos" className="nav-link" title="navlink">Infos</NavLink>
-              <NavLink to="/forum" className="nav-link" title="navlink">Forum</NavLink>
-              <NavLink to="/help" className="nav-link" title="navlink">Hilfe</NavLink>
-              <div className="dropdown-wrapper">
-								<p className="nav-link" onClick={handleOpenLogin}>Einloggen</p>
-								{openLoginModal && <Login />}
+              <NavLink to="/infos" className="nav-link" title="navlink">
+                Infos
+              </NavLink>
+              <NavLink to="/forum" className="nav-link" title="navlink">
+                Forum
+              </NavLink>
+              <NavLink to="/help" className="nav-link" title="navlink">
+                Hilfe
+              </NavLink>
+              <div className="dropdown-wrapper" id="loginLink">
+                <p className="nav-link" onClick={handleOpenLogin}>
+                  Einloggen
+                </p>
+                {openLoginModal && <Login />}
               </div>
             </div>
           )}
@@ -150,11 +194,7 @@ const Navbar = () => {
               {cIL}
             </small>
             {/* Cart Count */}
-            {openCart && (
-              <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
-                <p>Cart Modal</p>
-              </div>
-            )}
+            {openCart && <CartModal />}
           </div>
           <div className="screenmode-wrapper" onClick={handleScreenMode}>
             {screenMode === "light" ? (
