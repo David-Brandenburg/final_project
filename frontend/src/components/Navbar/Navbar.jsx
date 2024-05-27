@@ -104,7 +104,7 @@ const Navbar = () => {
           </NavLink>
           {!openSearch && (
             <div className="item-wrapper">
-              <div className="dropdown-wrapper" id="gamesLink" onClick={((e) => {setOpenGameModal(false); e.stopPropagation();})}>
+              <div className="dropdown-wrapper" id="gamesLink" onClick={((e) => {setOpenGameModal(false); setOpenModalBlocker(false); e.stopPropagation();})}>
 								<NavLink to="/games" className="nav-link" title="navlink">
 									Spiele
 								</NavLink>
