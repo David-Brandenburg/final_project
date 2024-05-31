@@ -51,7 +51,7 @@ const GameModalCardContainer = ({genre}) => {
 				</div>
 				: games.map((game, index) => {
 				return (
-				<NavLink to={`games/${slugify(game.title)}`} className='game-card' key={game.title + index}>
+				<NavLink to={`games/${slugify(game.title, '_')}`} className='game-card' key={game.title + index}>
 					<div className='game-card-thumbnail-wrapper'>
 						<img src={game.thumbnail} alt="" />
 					</div>

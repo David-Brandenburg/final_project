@@ -13,7 +13,21 @@ async function getGames(req, res) {
 	}
 };
 
-async function getGame(req, res) {};
+async function getGame(req, res) {
+	const gameTitle = req.params.title;
+	try {
+		const orginalTitle = gameTitle.replace(/_/g, ' ')
+		console.log(orginalTitle)
+		const foundGame = await Game.findOne({ title: orginalTitle })
+		if (!foundGame) {
+			return res.status(404).send({ message: "Game not found!", ok: false })
+		}
+
+		return res.status(200).json(foundGame);
+	} catch (error) {
+		return res.status(500).send({ message: "Internal Server Error", ok: false, error: error.message })
+	}
+};
 
 async function getGamesByGenres(req, res) {
 	const genre = req.params.genre;
