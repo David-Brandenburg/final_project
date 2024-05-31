@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "./HeroSection.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { NavLink } from "react-router-dom";
+import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
 
 const HeroSection = () => {
   const { addToCart } = useContext(AddtoCardContext);
@@ -48,82 +49,88 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="container">
-      <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 5,
-        }}
-        pagination={{ el: ".swiper-pagination", clickable: true }}
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-          clickable: true,
-        }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className="swiper_container">
-        {games
-          .filter((game) => game.discount > 0 && game.rating > 4.0)
-          .slice(0, 10)
-          .map((game) => {
-            const discountedPrice = (game.price * (100 - game.discount)) / 100;
-            return (
-              <SwiperSlide key={game._id}>
-                <img
-                  className="background-image"
-                  src={game.bgPic}
-                  alt="slide_image"
-                />
-                <div className="game-logo">
-                  {game.logo && (
-                    <NavLink to={`/games/${game._id}`}>
-                      <img src={game.logo} alt="game_logo" />{" "}
+    <>
+      <PageSubtitle title="Angebote" icon="star-fill" />
+      <div className="container">
+        <Swiper
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+          loop={true}
+          slidesPerView={"auto"}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 5,
+          }}
+          pagination={{ el: ".swiper-pagination", clickable: true }}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            clickable: true,
+          }}
+          modules={[EffectCoverflow, Pagination, Navigation]}
+          className="swiper_container">
+          {games
+            .filter((game) => game.discount > 0 && game.rating > 4.0)
+            .slice(0, 10)
+            .map((game) => {
+              const discountedPrice =
+                (game.price * (100 - game.discount)) / 100;
+              return (
+                <SwiperSlide key={game._id}>
+                  <img
+                    className="background-image"
+                    src={game.bgPic}
+                    alt="slide_image"
+                  />
+                  <div className="game-logo">
+                    {game.logo && (
+                      <NavLink to={`/games/${game._id}`}>
+                        <img src={game.logo} alt="game_logo" />{" "}
+                      </NavLink>
+                    )}
+                  </div>
+                  <div className="overlay">
+                    <NavLink className="text-wrapper" to={`/games/${game._id}`}>
+                      <div className="text-icon-p">
+                        {game.platforms?.map(getPlatformIcon)}
+                        <p>Jetzt im Angebot</p>
+                      </div>
+                      <h3>{game.title}</h3>
                     </NavLink>
-                  )}
-                </div>
-                <div className="overlay">
-                  <NavLink className="text-wrapper" to={`/games/${game._id}`}>
-                    <div className="text-icon-p">
-                      {game.platforms?.map(getPlatformIcon)}
-                      <p>Jetzt im Angebot</p>
-                    </div>
-                    <h3>{game.title}</h3>
-                  </NavLink>
-                  <div className="price-btn-wrapper">
-                    <div className="rabatt">
-                      <p>-{game.discount}%</p>
-                    </div>
-                    <div className="price">
-                      <p>{discountedPrice.toFixed(2)}€</p>
-                    </div>
-                    <div className="btn" onClick={() => handleAddToCart(game)}>
-                      <i class="bi bi-cart-plus"></i>
-                      <p>In den Einkaufswagen</p>
+                    <div className="price-btn-wrapper">
+                      <div className="rabatt">
+                        <p>-{game.discount}%</p>
+                      </div>
+                      <div className="price">
+                        <p>{discountedPrice.toFixed(2)}€</p>
+                      </div>
+                      <div
+                        className="btn"
+                        onClick={() => handleAddToCart(game)}>
+                        <i class="bi bi-cart-plus"></i>
+                        <p>In den Einkaufswagen</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+                </SwiperSlide>
+              );
+            })}
 
-        <div className="slider_controler">
-          <div className="swiper-button-prev arrow-left">
-            <i className="fas fa-chevron-left"></i>
+          <div className="slider_controler">
+            <div className="swiper-button-prev arrow-left">
+              <i className="fas fa-chevron-left"></i>
+            </div>
+            <div className="swiper-button-next arrow-right">
+              <i className="fas fa-chevron-right"></i>
+            </div>
+            <div className="swiper-pagination"></div>
           </div>
-          <div className="swiper-button-next arrow-right">
-            <i className="fas fa-chevron-right"></i>
-          </div>
-          <div className="swiper-pagination"></div>
-        </div>
-      </Swiper>
-    </div>
+        </Swiper>
+      </div>
+    </>
   );
 };
 
