@@ -1,13 +1,12 @@
-import React from 'react'
-import PageSubtitle from '../../components/PageSubtitle/PageSubtitle';
+import React from "react";
+import HeroSection from "../../components/HomePage/HeroSection";
 
 const HomePage = () => {
-	return (
-		<div className='main-wrapper'>
-			<PageSubtitle title="Angebote" icon='percent' />
-			<PageSubtitle title="Test" icon='pencil-fill' />
-		</div>
-	)
-}
+  return (
+    <div className="main-wrapper">
+      <HeroSection />
+    </div>
+  );
+};
 
 export default HomePage;
