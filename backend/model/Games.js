@@ -12,6 +12,8 @@ const GamesSchema = new mongoose.Schema({
 	rating: { type: String, default: '' },
 	genres: { type: Array, default: [] },
 	dlc: { type: Boolean, default: false },
+	pageThumbnail: { type: String, default: ''},
+	logo: { type: String, default: ''},
 });
 
 const Game = mongoose.model("games", GamesSchema);

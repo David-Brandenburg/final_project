@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.gamepage-wrapper{
+	width: 100%;
+	position: relative;
+	.gamepage-hero{
+		position: relative;
+		.hero-logo{
+			position: absolute;
+			left: 0; bottom: 0;
+		}
+	}
+	.hero-thumbnail{
+		width: 100%;
+	}
+	.hero-logo{
+		width: 42%;
+	}
+
+	.gamepage-info-container{
+		position: absolute;
+		background-color: var(--mainColor);
+		color: #000;
+		border: 1px solid var(--mainBorder);
+		border-radius: 3px;
+		height: 250px;
+		width: 300px;
+		right: 0;
+		top: 10%;
+		transform: translate(25%);
+	}
+}
