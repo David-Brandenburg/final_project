@@ -14,13 +14,15 @@ export const LogginContextProvider = ({ children }) => {
     };
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const savedUser = localStorage.getItem("loggedInUser");
-    return savedUser ? true : false;
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+		if (loggedInUser.token && loggedInUser.benutzername && loggedInUser.email && loggedInUser.id) {
+			setIsLoggedIn(true)
+		} else {
+			setIsLoggedIn(false)
+		}
   }, [loggedInUser]);
 
   return (

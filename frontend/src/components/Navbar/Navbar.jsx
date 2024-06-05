@@ -9,6 +9,7 @@ import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
 import { LogginContext } from "../../contexts/LogginContext.js";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const {
@@ -25,7 +26,7 @@ const Navbar = () => {
   } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
-	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
+	const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } = useContext(LogginContext);
 
   const cIL = cart.length;
 
@@ -76,6 +77,21 @@ const Navbar = () => {
     }
     setOpenLoginModal((prev) => !prev);
   };
+
+	const handleLogout = (e) => {
+		e.preventDefault();
+		toast.success("Du wirst ausgeloggt!")
+		setTimeout(() => {
+			setLoggedInUser({
+				benutzername: '',
+				email: '',
+				id: '',
+				profilePic: '',
+				token: '',
+			})
+			localStorage.setItem("loggedInUser", loggedInUser)
+		}, 2500);
+	};
 
   const handleScreenMode = (e) => {
     e.preventDefault();
@@ -216,6 +232,12 @@ const Navbar = () => {
               <i className="bi bi-brightness-high"></i>
             )}
           </div>
+					{isLoggedIn
+						&&
+							<div className="logout-wrapper" onClick={handleLogout}>
+								<i className="bi bi-door-open"></i>
+							</div>
+						}
         </div>
       </div>
     </nav>

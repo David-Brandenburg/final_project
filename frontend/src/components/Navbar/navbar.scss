@@ -328,10 +328,42 @@ nav {
         display: flex;
         align-items: center;
         cursor: pointer;
+				position: relative;
         &:hover {
           color: $fontColorFull;
+					&::after{
+						content: 'Light / Dark';
+						position: absolute;
+						width: max-content;
+						z-index: 9;
+						font-size: 14px;
+						background: $accentColorLightBlue;
+						padding: 3px;
+						border-radius: 3px;
+						top: -10px;
+						left: 25px;
+					}
         }
       }
+			.logout-wrapper{
+				display: flex;
+        align-items: center;
+        cursor: pointer;
+				position: relative;
+        &:hover {
+          color: $fontColorFull;
+					&::after{
+						content: 'Logout';
+						position: absolute;
+						font-size: 14px;
+						background: $accentColorLightBlue;
+						padding: 3px;
+						border-radius: 3px;
+						top: -10px;
+						left: 25px;
+					}
+        }
+			}
     }
   }
 }

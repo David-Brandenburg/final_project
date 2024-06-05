@@ -11,7 +11,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [showLogin, setShowLogin] = useState(true);
 
-	const { setLoggedInUser } = useContext(LogginContext)
+	const { setLoggedInUser, isLoggedIn } = useContext(LogginContext)
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -104,7 +104,7 @@ const Login = () => {
 				} else {
 					setLoggedInUser({
 						benutzername: data.user.benutzername,
-						email: data.email,
+						email: data.user.email,
 						id: data.user._id,
 						profilePic: data.user.profilePic,
 						token: data.token,
