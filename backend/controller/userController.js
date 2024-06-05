@@ -62,11 +62,33 @@ async function loginUser(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      message: "Internale Server Error!",
+      message: "Internal Server Error!",
       error: error.message,
       ok: false,
     });
   }
 }
 
-export { createUser, loginUser };
+async function getUser(req, res) {
+	const accountId = req.params.accountId;
+	try {
+		const findUser = await User.findById(accountId)
+		if (!findUser) {
+			return res.status(404).send({ message: "User not found!", ok: false })
+		}
+
+		return res.json(findUser)
+	} catch (error) {
+		res.status(500).send({
+      message: "Internal Server Error!",
+      error: error.message,
+      ok: false,
+    });
+	}
+};
+
+async function updateUser(req, res) {
+	
+};
+
+export { createUser, loginUser, getUser };

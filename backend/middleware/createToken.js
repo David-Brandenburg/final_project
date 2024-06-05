@@ -9,7 +9,8 @@ function createToken(user) {
   const currentTimeInSeconds = Math.floor(Date.now() / 1000);
 
   // 30 Tage in Sekunden
-  const thirtyDaysInSeconds = 30 * 24 * 60 * 60;
+  // const thirtyDaysInSeconds = 30 * 24 * 60 * 60;
+  const thirtyDaysInSeconds = 5 * 60;
 
   // Ablaufzeit des Tokens auf 30 Tage nach der aktuellen Zeit setzen
   const expirationTime = currentTimeInSeconds + thirtyDaysInSeconds;
