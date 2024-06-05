@@ -10,9 +10,9 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { NavLink } from "react-router-dom";
 import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
 import slugify from "slugify";
+import AddToCartBtn from "../AddToCartBtn.jsx";
 
 const HeroSection = () => {
-  const { addToCart } = useContext(AddtoCardContext);
   const [games, setGames] = useState([]);
 
   const fetchGames = async () => {
@@ -43,10 +43,6 @@ const HeroSection = () => {
       default:
         return null;
     }
-  };
-
-  const handleAddToCart = (game) => {
-    addToCart(game);
   };
 
   return (
@@ -88,7 +84,7 @@ const HeroSection = () => {
                   />
                   <div className="game-logo">
                     {game.logo && (
-                      <NavLink to={`/games/${slugify(game.title, '_')}`}>
+                      <NavLink to={`/games/${slugify(game.title, "_")}`}>
                         <img src={game.logo} alt="game_logo" />{" "}
                       </NavLink>
                     )}
@@ -108,12 +104,16 @@ const HeroSection = () => {
                       <div className="price">
                         <p>{discountedPrice.toFixed(2)}€</p>
                       </div>
-                      <div
-                        className="btn"
-                        onClick={() => handleAddToCart(game)}>
-                        <i className="bi bi-cart-plus"></i>
-                        <p>In den Einkaufswagen</p>
-                      </div>
+                      <AddToCartBtn
+                        className={"btn"}
+                        game={game}
+                        text={
+                          <>
+                            <i className="bi bi-cart-plus"></i>
+                            <p>In den Einkaufswagen</p>
+                          </>
+                        }
+                      />
                     </div>
                   </div>
                 </SwiperSlide>
