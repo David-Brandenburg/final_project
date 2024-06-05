@@ -1,11 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { ModalContext } from "../../contexts/ModalContext";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext";
+import { LogginContext } from "../../contexts/LogginContext";
 import { useContext, useState, useEffect } from "react";
+import { is } from "date-fns/locale";
 
 const CartModal = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
-  const { setOpenModalBlocker, setOpenCart } = useContext(ModalContext);
+  const { setOpenModalBlocker, setOpenCart, setOpenLoginModal } =
+    useContext(ModalContext);
+  const { isLoggedin } = useContext(LogginContext);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = useState(0);
 
   const handleBeliebteTitel = (e) => {
@@ -24,6 +28,17 @@ const CartModal = () => {
     setTotalDiscountedPrice(totalPrice.toFixed(2));
   }, [cart]);
 
+  const handleZurKasse = () => {
+    setOpenModalBlocker(false);
+    setOpenCart(false);
+  };
+
+  const handleLoginModal = () => {
+    setOpenModalBlocker(false);
+    setOpenCart(false);
+    setOpenLoginModal(true); // Öffne das Login-Modal
+  };
+
   return (
     <>
       {cart.length > 0 && (
@@ -35,21 +50,27 @@ const CartModal = () => {
             </div>
             <div className="cart-artikel-price-btn">
               <p>{totalDiscountedPrice} €</p>
-              <NavLink
-                to="/cart"
-                onClick={() => {
-                  setOpenModalBlocker(false);
-                  setOpenCart(false);
-                }}
-                className="btn"
-                title="navlink">
-                Zur Kasse
-              </NavLink>
+              {isLoggedin ? (
+                <NavLink
+                  to="/cart"
+                  onClick={handleZurKasse}
+                  className="btn"
+                  title="navlink">
+                  Zur Kasse
+                </NavLink>
+              ) : (
+                <button
+                  onClick={handleLoginModal}
+                  className="btn"
+                  title="login">
+                  Zur Kasse
+                </button>
+              )}
             </div>
           </div>
           <hr className="trennung" />
           <div className="cart-items">
-            {cart.map((item) => {
+            {cart.map((item, index) => {
               const discountedPrice =
                 (item.price * (100 - item.discount)) / 100;
               return (
@@ -60,7 +81,7 @@ const CartModal = () => {
                       <h4>{item.title}</h4>
                       <p
                         className="cart-remove-item"
-                        onClick={() => removeFromCart(item._id)}>
+                        onClick={() => removeFromCart(index)}>
                         Entfernen
                       </p>
                     </div>

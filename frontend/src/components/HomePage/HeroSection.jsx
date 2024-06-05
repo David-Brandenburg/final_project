@@ -87,7 +87,7 @@ const HeroSection = () => {
                   />
                   <div className="game-logo">
                     {game.logo && (
-                      <NavLink to={`/games/${game._id}`}>
+                      <NavLink to={`/games/${game.title}`}>
                         <img src={game.logo} alt="game_logo" />{" "}
                       </NavLink>
                     )}

@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
+import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
 import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
@@ -22,9 +23,9 @@ const Navbar = () => {
     setOpenGameModal,
   } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
+  const { cart } = useContext(AddtoCardContext);
 
-  const cartItems = ["Assassins Creed", "Cyberpunk"];
-  const cIL = cartItems.length;
+  const cIL = cart.length;
 
   const handleOpenSearch = (e) => {
     e.preventDefault();

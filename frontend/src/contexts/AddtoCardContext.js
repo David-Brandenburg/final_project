@@ -22,8 +22,8 @@ export const AddtoCardContextProvider = ({ children }) => {
     setCart((prevCart) => [...prevCart, game]);
   };
 
-  const removeFromCart = (gameId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== gameId));
+  const removeFromCart = (index) => {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
   };
 
   return (
