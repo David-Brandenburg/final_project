@@ -26,7 +26,7 @@ const HeroSection = () => {
       const data = await response.json();
       setGames(data);
       if (response.ok) {
-        console.log("Games fetched successfully");
+        // console.log("Games fetched successfully");
       }
     } catch (error) {
       console.error("Failed to fetch games:", error);

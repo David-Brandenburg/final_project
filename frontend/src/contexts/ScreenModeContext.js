@@ -24,7 +24,6 @@ export const ScreenModeContextProvider = ({children}) => {
 			root.style.setProperty("--mainBorder", "#000")
 			root.style.setProperty("--mainColor", "#fff")
 		}
-		console.log("Current Screenmode:", screen)
 	}, [screenMode])
 
 	return (
