@@ -8,6 +8,7 @@ import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
+import { LogginContext } from "../../contexts/LogginContext.js";
 
 const Navbar = () => {
   const {
@@ -24,6 +25,7 @@ const Navbar = () => {
   } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
+	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
 
   const cIL = cart.length;
 
@@ -87,43 +89,50 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const gamesLink = document.getElementById("gamesLink");
-    gamesLink.addEventListener("mouseover", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setOpenGameModal(true);
-      setOpenModalBlocker(true);
-      setOpenSearch(false);
-      setOpenCart(false);
-      setOpenLoginModal(false);
-    });
+    if (!isLoggedIn) {
+			const loginLink = document.getElementById("loginLink");
+			loginLink.addEventListener("mouseover", (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				setOpenGameModal(false);
+				setOpenModalBlocker(true);
+				setOpenSearch(false);
+				setOpenCart(false);
+				setOpenLoginModal(true);
+			});
 
-    const loginLink = document.getElementById("loginLink");
-    loginLink.addEventListener("mouseover", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      setOpenGameModal(false);
-      setOpenModalBlocker(true);
-      setOpenSearch(false);
-      setOpenCart(false);
-      setOpenLoginModal(true);
-    });
-
-    return () => {
-      gamesLink.addEventListener("mouseout", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setOpenGameModal(false);
-        setOpenModalBlocker(false);
-      });
-      loginLink.addEventListener("mouseout", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setOpenLoginModal(false);
-        setOpenModalBlocker(false);
-      });
-    };
+			return () => {
+				loginLink.addEventListener("mouseout", (e) => {
+					e.stopPropagation();
+					e.preventDefault();
+					setOpenLoginModal(false);
+					setOpenModalBlocker(false);
+				});
+			};
+		}
   }, []);
+
+	useEffect(() => {
+		const gamesLink = document.getElementById("gamesLink");
+		gamesLink.addEventListener("mouseover", (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+			setOpenGameModal(true);
+			setOpenModalBlocker(true);
+			setOpenSearch(false);
+			setOpenCart(false);
+			setOpenLoginModal(false);
+		});
+
+		return () => {
+			gamesLink.addEventListener("mouseout", (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				setOpenGameModal(false);
+				setOpenModalBlocker(false);
+			});
+		};
+	}, [])
 
   return (
     <nav>
@@ -156,12 +165,15 @@ const Navbar = () => {
               <NavLink to="/help" className="nav-link" title="navlink">
                 Hilfe
               </NavLink>
-              <div className="dropdown-wrapper" id="loginLink">
-                <p className="nav-link" onClick={handleOpenLogin}>
-                  Einloggen
-                </p>
-                {openLoginModal && <Login />}
-              </div>
+              {isLoggedIn 
+								? <p className="nav-link">{loggedInUser.benutzername}</p>
+								: <div className="dropdown-wrapper" id="loginLink">
+									<p className="nav-link" onClick={handleOpenLogin}>
+										Einloggen
+									</p>
+									{openLoginModal && <Login />}
+								</div>
+							}
             </div>
           )}
         </div>

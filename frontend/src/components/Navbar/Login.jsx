@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { toast } from "react-toastify";
+import { LogginContext } from "../../contexts/LogginContext.js";
 import "../../styles/modals.scss";
-import { LogginContext } from "../../contexts/LogginContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -12,45 +12,6 @@ const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
 
 	const { setLoggedInUser } = useContext(LogginContext)
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   const checkToken = async () => {
-  //     try {
-  //       if (token) {
-  //         const response = await fetch(
-  //           `http://localhost:3001/accounts/checktoken`,
-  //           {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //               Authorization: `Bearer ${token}`, // Including the token in the request header
-  //             },
-  //           }
-  //         );
-  //         const data = await response.json();
-  //         console.log(data);
-  //         switch (data.message) {
-  //           case "Token not found":
-  //           case "Token Invalid!":
-  //           case "User not found":
-  //             toast.error(data.message);
-
-  //             break;
-  //           case "Successfully Authorized!":
-  //             toast.success(data.message);
-
-  //             break;
-  //         }
-  //       } else {
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   };
-
-  //   checkToken();
-  // }, []);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -111,13 +72,6 @@ const Login = () => {
         const data = await resp.json();
         console.log(data);
         toast.success(data.message);
-				setLoggedInUser({
-					benutzername: data.user.benutzername,
-					email: data.email,
-					id: data.user._id,
-					profilePic: data.user.profilePic,
-					token: data.token,
-				})
       }
     } catch (error) {
       console.error("Error appending data to server", error);
@@ -140,21 +94,24 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await resp.json();
-
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("email", e.target.email.value);
-        localStorage.setItem("UserID", data.user._id);
-      } else {
-        console.log("Token not found!");
-      }
-
-      if (!resp.ok) {
-        toast.error(data.message);
-      } else {
-        toast.success(data.message);
-      }
+			if (!resp.ok){
+				const data = await resp.json();
+				toast.error(data.message)
+			} else {
+				const data = await resp.json();
+				if (!data.token) {
+					console.log("Token not found")
+				} else {
+					setLoggedInUser({
+						benutzername: data.user.benutzername,
+						email: data.email,
+						id: data.user._id,
+						profilePic: data.user.profilePic,
+						token: data.token,
+					})
+					toast.success(data.message)
+				}
+			}
 
       e.target.reset();
     } catch (error) {
@@ -220,7 +177,7 @@ const Login = () => {
               <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
             </svg>
             <input
-              type="text"
+              type="password"
               name="password"
               value={password}
               className={
@@ -277,7 +234,7 @@ const Login = () => {
               <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
             </svg>
             <input
-              type="text"
+              type="password"
               name="password"
               value={password}
               className="login-input"
