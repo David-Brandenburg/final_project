@@ -1,18 +1,27 @@
-@import '../../styles/variables';
+@import "../../styles/variables";
 
-.subtitle-wrapper{
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-	user-select: none;
-	margin: 5px 0;
-	.subtitle-heading{
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font-size: 16px;
-	}
-	.subtitle-hr{
-		border-top: 1px solid ;
-	}
+.subtitle-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  user-select: none;
+  margin: 5px 0;
+  .subtitle-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    .genre-link {
+      color: white;
+      text-decoration: none;
+      align-self: flex-end;
+      margin-left: 495px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .subtitle-hr {
+    border-top: 1px solid;
+  }
 }

@@ -1,0 +1,17 @@
+.main-wrapper {
+  .middle-section {
+    display: flex;
+    margin-top: 50px;
+    gap: 10px;
+    .left {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+}
