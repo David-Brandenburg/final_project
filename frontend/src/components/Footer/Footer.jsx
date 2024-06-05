@@ -16,9 +16,9 @@ const Footer = () => {
             <p>Blog</p>
           </div>
           <div className="icons-right">
-            <i class="bi bi-facebook"></i>
-            <i class="bi bi-twitter"></i>
-            <i class="bi bi-twitch"></i>
+            <i className="bi bi-facebook"></i>
+            <i className="bi bi-twitter"></i>
+            <i className="bi bi-twitch"></i>
           </div>
         </div>
         <div className="footer-mid-row">
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
           <div className="download-btn-wrapper">
             <button className="download-btn">
-              <i class="bi bi-download"></i>
+              <i className="bi bi-download"></i>
               <div className="btn-text-wrapper">
                 <p className="upper-text">PIXEL Plaza herunterladen</p>
                 <p>für windows</p>

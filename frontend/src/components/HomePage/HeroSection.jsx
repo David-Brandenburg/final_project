@@ -9,6 +9,7 @@ import "./HeroSection.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { NavLink } from "react-router-dom";
 import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
+import slugify from "slugify";
 
 const HeroSection = () => {
   const { addToCart } = useContext(AddtoCardContext);
@@ -87,7 +88,7 @@ const HeroSection = () => {
                   />
                   <div className="game-logo">
                     {game.logo && (
-                      <NavLink to={`/games/${game.title}`}>
+                      <NavLink to={`/games/${slugify(game.title, '_')}`}>
                         <img src={game.logo} alt="game_logo" />{" "}
                       </NavLink>
                     )}
@@ -110,7 +111,7 @@ const HeroSection = () => {
                       <div
                         className="btn"
                         onClick={() => handleAddToCart(game)}>
-                        <i class="bi bi-cart-plus"></i>
+                        <i className="bi bi-cart-plus"></i>
                         <p>In den Einkaufswagen</p>
                       </div>
                     </div>
