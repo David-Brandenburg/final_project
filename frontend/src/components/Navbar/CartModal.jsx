@@ -3,7 +3,6 @@ import { ModalContext } from "../../contexts/ModalContext";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext";
 import { LogginContext } from "../../contexts/LogginContext";
 import { useContext, useState, useEffect } from "react";
-import { is } from "date-fns/locale";
 
 const CartModal = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
@@ -17,7 +16,7 @@ const CartModal = () => {
     setOpenModalBlocker(false);
     setOpenCart(false);
   };
-  console.log(cart);
+  // console.log(cart);
 
   useEffect(() => {
     let totalPrice = 0;
