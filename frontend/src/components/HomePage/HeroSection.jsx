@@ -9,9 +9,9 @@ import "./HeroSection.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import { NavLink } from "react-router-dom";
 import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
+import AddToCartBtn from "../AddToCartBtn.jsx";
 
 const HeroSection = () => {
-  const { addToCart } = useContext(AddtoCardContext);
   const [games, setGames] = useState([]);
 
   const fetchGames = async () => {
@@ -42,10 +42,6 @@ const HeroSection = () => {
       default:
         return null;
     }
-  };
-
-  const handleAddToCart = (game) => {
-    addToCart(game);
   };
 
   return (
@@ -107,12 +103,16 @@ const HeroSection = () => {
                       <div className="price">
                         <p>{discountedPrice.toFixed(2)}€</p>
                       </div>
-                      <div
-                        className="btn"
-                        onClick={() => handleAddToCart(game)}>
-                        <i class="bi bi-cart-plus"></i>
-                        <p>In den Einkaufswagen</p>
-                      </div>
+                      <AddToCartBtn
+                        className={"btn"}
+                        game={game}
+                        text={
+                          <>
+                            <i class="bi bi-cart-plus"></i>
+                            <p>In den Einkaufswagen</p>
+                          </>
+                        }
+                      />
                     </div>
                   </div>
                 </SwiperSlide>
