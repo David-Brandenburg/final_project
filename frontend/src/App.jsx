@@ -11,6 +11,8 @@ import GamesPage from "./pages/GamesPage/GamesPage.jsx";
 import GamePage from "./pages/GamesPage/GamePage.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+import { LogginContext } from "./contexts/LogginContext.js";
 
 function App() {
   const {
@@ -25,6 +27,8 @@ function App() {
 		openGameModal,
 		setOpenGameModal,
   } = useContext(ModalContext);
+
+	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
 
 	const { screenMode } = useContext(ScreenModeContext);
 
@@ -59,6 +63,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+					<Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <ErrorPage /> } />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/:title" element={<GamePage />} />
           <Route path="*" element={<ErrorPage />} />
