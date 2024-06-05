@@ -1,12 +1,17 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
+
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./HeroSection.scss";
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from "swiper/modules";
 import { NavLink } from "react-router-dom";
 import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
 import slugify from "slugify";
@@ -53,8 +58,11 @@ const HeroSection = () => {
           effect={"coverflow"}
           grabCursor={true}
           centeredSlides={true}
-          loop={true}
           slidesPerView={"auto"}
+          loop={true}
+          autoplay={{
+            delay: 10000,
+          }}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
@@ -67,7 +75,7 @@ const HeroSection = () => {
             prevEl: ".swiper-button-prev",
             clickable: true,
           }}
-          modules={[EffectCoverflow, Pagination, Navigation]}
+          modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="swiper_container">
           {games
             .filter((game) => game.discount > 0 && game.rating > 4.0)
