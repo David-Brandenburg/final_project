@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import PageSubtitle from "../PageSubtitle/PageSubtitle";
 import "./BeliebteGamesListe.scss";
+import BeliebteGamesModal from "./BeliebteGamesModal.jsx";
 
 const BeliebteGamesListe = () => {
   const [games, setGames] = useState([]);
+  const [hoveredGame, setHoveredGame] = useState(null);
 
   const fetchGames = async () => {
     try {
@@ -24,42 +26,41 @@ const BeliebteGamesListe = () => {
     fetchGames();
   }, []);
 
-  console.log(games);
+  const handleMouseEnter = (game) => {
+    setHoveredGame(game);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredGame(null);
+  };
 
   return (
     <>
       <PageSubtitle title="Beliebte Spiele" icon="heart-fill" Nav={true} />
       {games.length > 0 ? (
-        <div className="container">
+        <div className="beliebte-spiele-wrapper">
           <div className="row">
-            {games.map((game, index) => {
-              return (
-                <div className="col-md-4" key={game.title + index}>
-                  <div className="game-card">
-                    <div className="game-card-thumbnail-wrapper">
-                      <img
-                        src={game.thumbnail}
-                        alt={game.title}
-                        className="game-card-thumbnail"
-                      />
-                    </div>
-                    <div className="game-card-content">
-                      <h3 className="game-card-title">{game.title}</h3>
-                      <p className="game-card-price">{game.price} €</p>
-                      {/* <div className="game-card-platforms">
-                        {game.platforms.map((platform, index) => {
-                          return (
-                            <i
-                              key={platform + index}
-                              className={`bi bi-${platform}`}></i>
-                          );
-                        })}
-                      </div> */}
-                    </div>
+            {games.map((game, index) => (
+              <div className="col-md-4" key={game.title + index}>
+                <div
+                  className="game-card"
+                  onMouseEnter={() => handleMouseEnter(game)}
+                  onMouseLeave={handleMouseLeave}>
+                  {hoveredGame === game && <BeliebteGamesModal game={game} />}
+                  <div className="game-card-thumbnail-wrapper">
+                    <img
+                      src={game.thumbnail}
+                      alt={game.title}
+                      className="game-card-thumbnail"
+                    />
+                  </div>
+                  <div className="game-card-content">
+                    <h3 className="game-card-title">{game.title}</h3>
+                    <p className="game-card-price">{game.price} €</p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       ) : (

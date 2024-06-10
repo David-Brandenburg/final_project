@@ -53,7 +53,7 @@ const HeroSection = () => {
   return (
     <>
       <PageSubtitle title="Angebote" icon="star-fill" />
-      <div className="container">
+      <div className="swiper-wrapper">
         <Swiper
           effect={"coverflow"}
           grabCursor={true}
