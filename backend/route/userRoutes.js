@@ -1,6 +1,7 @@
 import express from "express";
-import { createUser, loginUser, getUser } from "../controller/userController.js";
+import { createUser, loginUser, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo } from "../controller/userController.js";
 import checkToken from "./../middleware/checkToken.js";
+import upload from '../middleware/cloudinary.js';
 
 const router = express.Router();
 
@@ -17,5 +18,11 @@ router.post("/login", loginUser);
 
 // Route to check token
 router.post("/checktoken", checkToken);
+
+router.patch("/updateAccountProfilePic/:accountId", upload.single("profilepic"), updateAccountProfilePic)
+
+router.patch("/updateAccountPassword/:accountId", updateAccountPassword);
+
+router.patch("/updateAccountInfo/:accountId", updateAccountInfo);
 
 export default router;

@@ -8,7 +8,7 @@ const CartModal = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
   const { setOpenModalBlocker, setOpenCart, setOpenLoginModal } =
     useContext(ModalContext);
-  const { isLoggedin } = useContext(LogginContext);
+  const { isLoggedIn } = useContext(LogginContext);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = useState(0);
 
   const handleBeliebteTitel = (e) => {
@@ -49,7 +49,7 @@ const CartModal = () => {
             </div>
             <div className="cart-artikel-price-btn">
               <p>{totalDiscountedPrice} €</p>
-              {isLoggedin ? (
+              {isLoggedIn ? (
                 <NavLink
                   to="/cart"
                   onClick={handleZurKasse}
