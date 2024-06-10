@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import "./BeliebteGamesModal.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import AddToCartBtn from "../AddToCartBtn";
+import { NavLink } from "react-router-dom";
 
 const BeliebteGamesModal = ({ game }) => {
   const discountedPrice = game.price - (game.price * game.discount) / 100;
@@ -20,6 +21,188 @@ const BeliebteGamesModal = ({ game }) => {
       default:
         return null;
     }
+  };
+
+  const getFunctionIcon = (functions) => {
+    switch (functions) {
+      case "Mehrspieler":
+        return (
+          <i key="multiplayer" className="bi bi-people" title="Mehrspieler"></i>
+        );
+      case "Einzelspieler":
+        return (
+          <i
+            key="singleplayer"
+            className="bi bi-person"
+            title="Einzelspieler"></i>
+        );
+      case "crossplatform":
+        return (
+          <i
+            key="crossplatform"
+            className="bi bi-globe"
+            title="Crossplatfrom"></i>
+        );
+      case "Erfolge":
+        return (
+          <i
+            key="achievements"
+            className="bi bi-trophy"
+            title="Achievements"></i>
+        );
+      case "Cloud-Speicherstände":
+        return (
+          <i
+            key="cloud"
+            className="bi bi-cloud-upload"
+            title="Cloud-Speicherstände"></i>
+        );
+      case "Controller-Unterstützung":
+        return (
+          <i
+            key="controller"
+            className="bi bi-controller"
+            title="Controller-Unterstützung"></i>
+        );
+      case "Einblendungen":
+        return (
+          <i key="ads" className="bi bi-megaphone" title="Einblendungen"></i>
+        );
+      case "Koop":
+        return <i key="coop" className="bi bi-people-fill" title="Koop"></i>;
+      default:
+        return null;
+    }
+  };
+
+  const heartfill = (rating) => {
+    let hearts;
+
+    switch (true) {
+      case rating >= 4.75:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+          </div>
+        );
+        break;
+      case rating >= 4.25:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+          </div>
+        );
+        break;
+      case rating >= 3.75:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 3.25:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 2.75:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 2.25:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 1.75:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 1.25:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 0.75:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 0.25:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+
+      default:
+        hearts = (
+          <div className="game-modal-rating-hearts">
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+    }
+
+    return hearts;
   };
 
   return (
@@ -64,7 +247,7 @@ const BeliebteGamesModal = ({ game }) => {
           </div>
         </Swiper>
       </div>
-      <div className="game-modal-info-wrapper">
+      <NavLink to={`/game/${game._id}`} className="game-modal-info-wrapper">
         <div className="game-modal-header-wrapper">
           <div className="game-modal-header-left">
             <h2 className="game-modal-title">{game.title}</h2>
@@ -74,11 +257,7 @@ const BeliebteGamesModal = ({ game }) => {
             </div>
           </div>
           <div className="game-modal-header-right">
-            <i className="bi bi-heart"></i>
-            <i className="bi bi-heart"></i>
-            <i className="bi bi-heart"></i>
-            <i className="bi bi-heart"></i>
-            <i className="bi bi-heart"></i>
+            {heartfill(game.rating)}
             <p>{game.rating}</p>
           </div>
         </div>
@@ -90,16 +269,14 @@ const BeliebteGamesModal = ({ game }) => {
 
         <div className="game-modal-functions">
           <h3>Funktionen:</h3>
-          {game.functions.map((func, index) => (
-            <span className="game-modal-fuctions-span" key={func + index}>
-              {func},{" "}
-            </span>
-          ))}
+          {game.functions.map(getFunctionIcon)}
         </div>
         <div className="game-modal-price">
-          <div className="game-modal-rabatt">
-            <p>-{game.discount}%</p>
-          </div>
+          {game.discount >= 1 && (
+            <div className="game-modal-rabatt">
+              <p>-{game.discount}%</p>
+            </div>
+          )}
           <div className="game-modal-price-text">
             <p>{discountedPrice.toFixed(2)}€</p>{" "}
           </div>
@@ -109,7 +286,7 @@ const BeliebteGamesModal = ({ game }) => {
             text={<i className="bi bi-cart-plus"></i>}
           />
         </div>
-      </div>
+      </NavLink>
     </div>
   );
 };
