@@ -10,6 +10,7 @@ import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import { toast } from "react-toastify";
+import defaultPic from '../../assets/defaultProfilepic.webp';
 
 const Navbar = () => {
   const {
@@ -89,7 +90,7 @@ const Navbar = () => {
 				profilePic: '',
 				token: '',
 			})
-			localStorage.setItem("loggedInUser", loggedInUser)
+			localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser))
 		}, 2500);
 	};
 
@@ -150,6 +151,8 @@ const Navbar = () => {
 		};
 	}, [])
 
+	useEffect(() => {}, [loggedInUser.profilePic])
+
   return (
     <nav>
       <div className="nav-wrapper" onClick={handleCloseAll}>
@@ -183,7 +186,7 @@ const Navbar = () => {
               </NavLink>
               {isLoggedIn 
 								? <NavLink to="/profile" className="nav-link">
-										<img className="nav-link-profile-img" src={loggedInUser.profilePic !== '' ? loggedInUser.profilePic : null} alt="" />
+										<img className="nav-link-profile-img" src={loggedInUser.profilePic === '' ? defaultPic : loggedInUser.profilePic } alt="" />
 										<p>{loggedInUser.benutzername}</p>
 									</NavLink>
 								: <div className="dropdown-wrapper" id="loginLink">

@@ -7,8 +7,9 @@ const UserSchema = new mongoose.Schema({
   benutzername: { type: String, required: true },
   email: { type: String, required: true },
   hashpw: { type: String, required: true },
-	profilePic: { type: String },
-});
+	profilePic: { type: String, default: '' },
+	isAdmin: { type: Boolean, default: false }
+}, {versionKey: false});
 
 const User = mongoose.model("Accounts", UserSchema);
 

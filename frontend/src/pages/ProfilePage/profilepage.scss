@@ -9,7 +9,7 @@
 		width: 300px;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		// align-items: center;
 		gap: 20px;
 		user-select: none;
 		pointer-events: none;
@@ -27,7 +27,18 @@
 				.profilePic{
 					width: 100%;
 					height: 100%;
+					object-fit: cover;
+					object-position: center center;
 				}
+			}
+		}
+		.profileInfo-content{
+			display: flex;
+			flex-direction: column;
+			padding: 0 10px;
+			.profileInfo-content-row{
+				display: flex;
+				justify-content: space-between;
 			}
 		}
 	}
