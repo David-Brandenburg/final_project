@@ -3,12 +3,12 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "./BeliebteGamesModal.scss";
+import "../HomePage/GamesModal.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import AddToCartBtn from "../AddToCartBtn";
 import { NavLink } from "react-router-dom";
 
-const BeliebteGamesModal = ({ game }) => {
+const GamesModal = ({ game }) => {
   const discountedPrice = game.price - (game.price * game.discount) / 100;
   const getPlatformIcon = (platform) => {
     switch (platform) {
@@ -291,4 +291,4 @@ const BeliebteGamesModal = ({ game }) => {
   );
 };
 
-export default BeliebteGamesModal;
+export default GamesModal;
