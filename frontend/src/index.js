@@ -7,20 +7,23 @@ import { ModalContextProvider } from "./contexts/ModalContext.js";
 import { ScreenModeContextProvider } from "./contexts/ScreenModeContext.js";
 import { LogginContextProvider } from "./contexts/LogginContext.js";
 import { AddtoCardContextProvider } from "./contexts/AddtoCardContext.js";
+import { LanguageProvider } from "./contexts/LanguageContext.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AddtoCardContextProvider>
-    <LogginContextProvider>
-      <ScreenModeContextProvider>
-        <ModalContextProvider>
-          <Router>
-            <React.StrictMode>
-              <App />
-            </React.StrictMode>
-          </Router>
-        </ModalContextProvider>
-      </ScreenModeContextProvider>
-    </LogginContextProvider>
-  </AddtoCardContextProvider>
+  <LanguageProvider>
+    <AddtoCardContextProvider>
+      <LogginContextProvider>
+        <ScreenModeContextProvider>
+          <ModalContextProvider>
+            <Router>
+              <React.StrictMode>
+                <App />
+              </React.StrictMode>
+            </Router>
+          </ModalContextProvider>
+        </ScreenModeContextProvider>
+      </LogginContextProvider>
+    </AddtoCardContextProvider>
+  </LanguageProvider>
 );

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import "../../styles/modals.scss";
 import { ModalContext } from "../../contexts/ModalContext.js";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -11,9 +12,10 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showLogin, setShowLogin] = useState(true);
+  const { language } = useLanguage();
 
-	const { setLoggedInUser, isLoggedIn } = useContext(LogginContext);
-	const { setOpenModalBlocker } = useContext(ModalContext);
+  const { setOpenModalBlocker } = useContext(ModalContext);
+  const { setLoggedInUser } = useContext(LogginContext);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -95,25 +97,25 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-			if (!resp.ok){
-				const data = await resp.json();
-				toast.error(data.message)
-			} else {
-				const data = await resp.json();
-				if (!data.token) {
-					console.log("Token not found")
-				} else {
-					setLoggedInUser({
-						benutzername: data.user.benutzername,
-						email: data.user.email,
-						id: data.user._id,
-						profilePic: data.user.profilePic,
-						token: data.token,
-					})
-					toast.success(data.message)
-					setOpenModalBlocker(false)
-				}
-			}
+      if (!resp.ok) {
+        const data = await resp.json();
+        toast.error(data.message);
+      } else {
+        const data = await resp.json();
+        if (!data.token) {
+          console.log("Token not found");
+        } else {
+          setLoggedInUser({
+            benutzername: data.user.benutzername,
+            email: data.user.email,
+            id: data.user._id,
+            profilePic: data.user.profilePic,
+            token: data.token,
+          });
+          toast.success(data.message);
+          setOpenModalBlocker(false);
+        }
+      }
 
       e.target.reset();
     } catch (error) {
@@ -125,7 +127,9 @@ const Login = () => {
     <div className="login-modal" onClick={(e) => e.stopPropagation()}>
       {!showLogin && (
         <form className="login-form" onSubmit={handleSubmit}>
-          <h1 className=" ">Sign Up</h1>
+          <h1 className=" ">
+            {language === "en" ? "Sign Up" : "Registrieren"}
+          </h1>
           <div className="">
             <svg
               viewBox="0 0 16 16"
@@ -141,7 +145,7 @@ const Login = () => {
               name="benutzername"
               value={username}
               className="login-input"
-              placeholder="Username"
+              placeholder={language === "en" ? "Username" : "Benutzername"}
               autoComplete="off"
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -163,7 +167,11 @@ const Login = () => {
               className={
                 "login-input" + (emailError ? " invalid-email" : " valid-email")
               }
-              placeholder="@ zeichen & .de, .com, etc."
+              placeholder={
+                language === "en"
+                  ? "@ Sign & .de, .com, etc."
+                  : "@ zeichen & .de, .com, etc."
+              }
               autoComplete="off"
               onChange={handleEmailChange}
             />
@@ -186,7 +194,11 @@ const Login = () => {
                 "login-input" +
                 (passwordError ? " invalid-email" : " valid-email")
               }
-              placeholder="min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              placeholder={
+                language === "en"
+                  ? "min. 8 Signs, 1 A-Z, 1 a-z, 1 Number"
+                  : "min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              }
               autoComplete="off"
               onChange={handlePasswordChange}
             />
@@ -194,17 +206,17 @@ const Login = () => {
 
           <div className="login-btn-wrapper">
             <button className="login-button" type="submit">
-              Sign Up!
+              {language === "en" ? "Sign Up!" : "Registrieren"}
             </button>
             <button className="login-button" onClick={() => setShowLogin(true)}>
-              Log In!
+              {language === "en" ? "Log In!" : "Einloggen"}
             </button>
           </div>
         </form>
       )}
       {showLogin && (
         <form className="login-form" onSubmit={handleSubmitLogin}>
-          <h1 className=" ">Login</h1>
+          <h1 className=" ">{language === "en" ? "Login" : "Einloggen"}</h1>
           <div className="">
             <svg
               viewBox="0 0 16 16"
@@ -220,7 +232,11 @@ const Login = () => {
               name="email"
               value={email}
               className="login-input"
-              placeholder="@ zeichen & .de, .com, etc."
+              placeholder={
+                language === "en"
+                  ? "@ Sign & .de, .com, etc."
+                  : "@ zeichen & .de, .com, etc."
+              }
               autoComplete="off"
               onChange={handleEmailChange}
             />
@@ -240,7 +256,11 @@ const Login = () => {
               name="password"
               value={password}
               className="login-input"
-              placeholder="min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              placeholder={
+                language === "en"
+                  ? "min. 8 Signs, 1 A-Z, 1 a-z, 1 Number"
+                  : "min. 8 Zeichen, 1 A-Z, 1 a-z, 1 Zahl"
+              }
               autoComplete="off"
               onChange={handlePasswordChange}
             />
@@ -250,10 +270,10 @@ const Login = () => {
             <button
               className="login-button"
               onClick={() => setShowLogin(false)}>
-              Sign Up!
+              {language === "en" ? "Sign Up!" : "Registrieren"}
             </button>
             <button className="login-button" type="submit">
-              Log In!
+              {language === "en" ? "Log In!" : "Einloggen"}
             </button>
           </div>
         </form>

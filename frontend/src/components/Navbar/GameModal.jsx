@@ -4,10 +4,53 @@ import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../contexts/ModalContext";
 import GameModalCardContainer from "./GameModalCardContainer";
 import slugify from "slugify";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const GameModal = () => {
   const [genre, setGenre] = useState("");
-
+  const { language } = useLanguage();
+  const messages = {
+    "beliebte-titel": {
+      en: "Browse all bestsellers",
+      de: "Zu allen beliebten Titeln",
+    },
+    "neu-erschienen": {
+      en: "Browse all new releases",
+      de: "Zu allen neu erschienenen",
+    },
+    angebote: {
+      en: "Browse all on sale now",
+      de: "Zu allen Angeboten",
+    },
+    abenteuer: {
+      en: "Browse all adventure games",
+      de: "Zu allen Abenteuerspielen",
+    },
+    rollenspiel: {
+      en: "Browse all RPGs",
+      de: "Zu allen Rollenspielen",
+    },
+    strategie: {
+      en: "Browse all strategy games",
+      de: "Zu allen Strategiespielen",
+    },
+    action: {
+      en: "Browse all action games",
+      de: "Zu allen Actionspielen",
+    },
+    shooter: {
+      en: "Browse all shooter games",
+      de: "Zu allen Shootern",
+    },
+    fantasy: {
+      en: "Browse all fantasy games",
+      de: "Zu allen Fantasy-Spielen",
+    },
+    "science-fiction": {
+      en: "Browse all science-fiction games",
+      de: "Zu allen Science-Fiction-Spielen",
+    },
+  };
   const { setOpenGameModal, setOpenModalBlocker } = useContext(ModalContext);
 
   useEffect(() => {
@@ -15,7 +58,23 @@ const GameModal = () => {
 
     const handleMouseEnter = (e) => {
       const currentGenre = e.target;
-      setGenre(slugify(currentGenre.innerText.toLowerCase()));
+      if (currentGenre.innerText === "New releases") {
+        setGenre("neu-erschienen");
+      } else if (currentGenre.innerText === "Bestsellers") {
+        setGenre("beliebte-titel");
+      } else if (currentGenre.innerText === "On sale now") {
+        setGenre("angebote");
+      } else if (currentGenre.innerText === "Adventure") {
+        setGenre("abenteuer");
+      } else if (currentGenre.innerText === "RPG") {
+        setGenre("rollenspiel");
+      } else if (currentGenre.innerText === "Strategy") {
+        setGenre("strategie");
+      } else {
+        setGenre(slugify(currentGenre.innerText.toLowerCase()));
+      }
+
+      console.log(currentGenre);
 
       gamesGenre.forEach((genre) => {
         if (genre !== currentGenre) {
@@ -37,18 +96,34 @@ const GameModal = () => {
     };
   }, [genre]);
 
+  const getMessage = (genre, language) => {
+    return messages[genre]?.[language] || `Zu allen ${slugify(genre)}-Spielen`;
+  };
+
   return (
     <div className="games-modal" onClick={(e) => e.stopPropagation()}>
       <div className="games-genre-list">
-        <p className="games-modal-link">Neu erschienen</p>
-        <p className="games-modal-link">Beliebte Titel</p>
-        <p className="games-modal-link">Angebote</p>
+        <p className="games-modal-link">
+          {language === "en" ? "New releases" : "Neu erschienen"}
+        </p>
+        <p className="games-modal-link">
+          {language === "en" ? "Bestsellers" : "Beliebte Titel"}
+        </p>
+        <p className="games-modal-link">
+          {language === "en" ? "On sale now" : "Angebote"}
+        </p>
         <hr style={{ borderBottom: "1px solid #fff" }} />
-        <p className="games-modal-link">Abenteuer</p>
+        <p className="games-modal-link">
+          {language === "en" ? "Adventure" : "Abenteuer"}
+        </p>
         <p className="games-modal-link">Action</p>
         <p className="games-modal-link">Shooter</p>
-        <p className="games-modal-link">Rollenspiel</p>
-        <p className="games-modal-link">Strategie</p>
+        <p className="games-modal-link">
+          {language === "en" ? "RPG" : "Rollenspiel"}
+        </p>
+        <p className="games-modal-link">
+          {language === "en" ? "Strategy" : "Strategie"}
+        </p>
         <p className="games-modal-link">Fantasy</p>
         <p className="games-modal-link">Science-Fiction</p>
       </div>
@@ -63,13 +138,7 @@ const GameModal = () => {
                 setOpenGameModal(false);
                 setOpenModalBlocker(false);
               }}>
-              {genre === "beliebte-titel"
-                ? "Zu allen beliebten Titeln"
-                : genre === "neu-erschienen"
-                ? "Zu allen Neuerscheinungen"
-                : genre === "angebote"
-                ? "Zu allen Angeboten"
-                : `Zu allen ${slugify(genre)}-Spielen`}
+              {getMessage(genre, language)}
             </NavLink>
           </div>
         </div>

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import slugify from "slugify";
 import { NavLink } from "react-router-dom";
 import AddToCartBtn from "../AddToCartBtn";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const GameModalCardContainer = ({ genre }) => {
   const [games, setGames] = useState(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -47,8 +49,12 @@ const GameModalCardContainer = ({ genre }) => {
     <div className="games-card-container">
       {!games ? (
         <div className="games-card-error-wrapper">
-          <h3>Error</h3>
-          <p>Something went wrong</p>
+          <h3>{language === "en" ? "Error" : "Fehler"}</h3>
+          <p>
+            {language === "en"
+              ? "Something went wrong"
+              : "Etwas ist schief gelaufen!"}
+          </p>
         </div>
       ) : (
         games.map((game, index) => {

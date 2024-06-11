@@ -10,7 +10,8 @@ import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import { toast } from "react-toastify";
-import defaultPic from '../../assets/defaultProfilepic.webp';
+import defaultPic from "../../assets/defaultProfilepic.webp";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const Navbar = () => {
   const {
@@ -27,7 +28,9 @@ const Navbar = () => {
   } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
-	const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } = useContext(LogginContext);
+  const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } =
+    useContext(LogginContext);
+  const { language, toggleLanguage } = useLanguage();
 
   const cIL = cart.length;
 
@@ -79,20 +82,20 @@ const Navbar = () => {
     setOpenLoginModal((prev) => !prev);
   };
 
-	const handleLogout = (e) => {
-		e.preventDefault();
-		toast.success("Du wirst ausgeloggt!")
-		setTimeout(() => {
-			setLoggedInUser({
-				benutzername: '',
-				email: '',
-				id: '',
-				profilePic: '',
-				token: '',
-			})
-			localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser))
-		}, 2500);
-	};
+  const handleLogout = (e) => {
+    e.preventDefault();
+    toast.success("Du wirst ausgeloggt!");
+    setTimeout(() => {
+      setLoggedInUser({
+        benutzername: "",
+        email: "",
+        id: "",
+        profilePic: "",
+        token: "",
+      });
+      localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+    }, 2500);
+  };
 
   const handleScreenMode = (e) => {
     e.preventDefault();
@@ -107,51 +110,51 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-			const loginLink = document.getElementById("loginLink");
-			loginLink.addEventListener("mouseover", (e) => {
-				e.stopPropagation();
-				e.preventDefault();
-				setOpenGameModal(false);
-				setOpenModalBlocker(true);
-				setOpenSearch(false);
-				setOpenCart(false);
-				setOpenLoginModal(true);
-			});
+      const loginLink = document.getElementById("loginLink");
+      loginLink.addEventListener("mouseover", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setOpenGameModal(false);
+        setOpenModalBlocker(true);
+        setOpenSearch(false);
+        setOpenCart(false);
+        setOpenLoginModal(true);
+      });
 
-			return () => {
-				loginLink.addEventListener("mouseout", (e) => {
-					e.stopPropagation();
-					e.preventDefault();
-					setOpenLoginModal(false);
-					setOpenModalBlocker(false);
-				});
-			};
-		}
+      return () => {
+        loginLink.addEventListener("mouseout", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          setOpenLoginModal(false);
+          setOpenModalBlocker(false);
+        });
+      };
+    }
   }, []);
 
-	useEffect(() => {
-		const gamesLink = document.getElementById("gamesLink");
-		gamesLink.addEventListener("mouseover", (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-			setOpenGameModal(true);
-			setOpenModalBlocker(true);
-			setOpenSearch(false);
-			setOpenCart(false);
-			setOpenLoginModal(false);
-		});
+  useEffect(() => {
+    const gamesLink = document.getElementById("gamesLink");
+    gamesLink.addEventListener("mouseover", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setOpenGameModal(true);
+      setOpenModalBlocker(true);
+      setOpenSearch(false);
+      setOpenCart(false);
+      setOpenLoginModal(false);
+    });
 
-		return () => {
-			gamesLink.addEventListener("mouseout", (e) => {
-				e.stopPropagation();
-				e.preventDefault();
-				setOpenGameModal(false);
-				setOpenModalBlocker(false);
-			});
-		};
-	}, [])
+    return () => {
+      gamesLink.addEventListener("mouseout", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setOpenGameModal(false);
+        setOpenModalBlocker(false);
+      });
+    };
+  }, []);
 
-	useEffect(() => {}, [loggedInUser.profilePic])
+  useEffect(() => {}, [loggedInUser.profilePic]);
 
   return (
     <nav>
@@ -171,31 +174,40 @@ const Navbar = () => {
                   e.stopPropagation();
                 }}>
                 <NavLink to="/games" className="nav-link" title="navlink">
-                  Spiele
+                  {language === "en" ? "Store" : "Spiele"}
                 </NavLink>
                 {openGameModal && <GameModal />}
               </div>
               <NavLink to="/infos" className="nav-link" title="navlink">
-                Infos
+                {language === "en" ? "Infos" : "Infos"}
               </NavLink>
               <NavLink to="/forum" className="nav-link" title="navlink">
-                Forum
+                {language === "en" ? "Forum" : "Forum"}
               </NavLink>
               <NavLink to="/help" className="nav-link" title="navlink">
-                Hilfe
+                {language === "en" ? "Help" : "Hilfe"}
               </NavLink>
-              {isLoggedIn 
-								? <NavLink to="/profile" className="nav-link">
-										<img className="nav-link-profile-img" src={loggedInUser.profilePic === '' ? defaultPic : loggedInUser.profilePic } alt="" />
-										<p>{loggedInUser.benutzername}</p>
-									</NavLink>
-								: <div className="dropdown-wrapper" id="loginLink">
-									<p className="nav-link" onClick={handleOpenLogin}>
-										Einloggen
-									</p>
-									{openLoginModal && <Login />}
-								</div>
-							}
+              {isLoggedIn ? (
+                <NavLink to="/profile" className="nav-link">
+                  <img
+                    className="nav-link-profile-img"
+                    src={
+                      loggedInUser.profilePic === ""
+                        ? defaultPic
+                        : loggedInUser.profilePic
+                    }
+                    alt=""
+                  />
+                  <p>{loggedInUser.benutzername}</p>
+                </NavLink>
+              ) : (
+                <div className="dropdown-wrapper" id="loginLink">
+                  <p className="nav-link" onClick={handleOpenLogin}>
+                    Einloggen
+                  </p>
+                  {openLoginModal && <Login />}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -238,12 +250,11 @@ const Navbar = () => {
               <i className="bi bi-brightness-high"></i>
             )}
           </div>
-					{isLoggedIn
-						&&
-							<div className="logout-wrapper" onClick={handleLogout}>
-								<i className="bi bi-door-open"></i>
-							</div>
-						}
+          {isLoggedIn && (
+            <div className="logout-wrapper" onClick={handleLogout}>
+              <i className="bi bi-door-open"></i>
+            </div>
+          )}
         </div>
       </div>
     </nav>

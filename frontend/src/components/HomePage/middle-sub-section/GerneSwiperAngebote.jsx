@@ -8,12 +8,14 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import "./GerneSwiperAngebote.scss";
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../../contexts/LanguageContext";
 
 const GerneSwiperAngebote = () => {
   const [games, setGames] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genreDiscounts, setGenreDiscounts] = useState({});
   const [genreBackgrounds, setGenreBackgrounds] = useState({});
+  const { language } = useLanguage();
 
   const fetchGames = async () => {
     try {
@@ -65,9 +67,64 @@ const GerneSwiperAngebote = () => {
     setGenreBackgrounds(backgrounds);
   }, [genres, games]);
 
+  function getGenreTranslation(genre, language) {
+    if (genre === "strategie") {
+      return language === "en" ? "Strategy" : "Strategie";
+    } else if (genre === "bauen") {
+      return language === "en" ? "Building" : "Bauen";
+    } else if (genre === "historisch") {
+      return language === "en" ? "Historical" : "Historisch";
+    } else if (genre === "neu-erschienen") {
+      return language === "en" ? "New releases" : "Neu erschienen";
+    } else if (genre === "rollenspiel") {
+      return language === "en" ? "Role-playing" : "Rollenspiel";
+    } else if (genre === "action") {
+      return language === "en" ? "Action" : "Action";
+    } else if (genre === "open-world") {
+      return language === "en" ? "Open World" : "Open-World";
+    } else if (genre === "beliebte-titel") {
+      return language === "en" ? "Bestsellers" : "Beliebte Titel";
+    } else if (genre === "fantasy") {
+      return language === "en" ? "Fantasy" : "Fantasy";
+    } else if (genre === "simulation") {
+      return language === "en" ? "Simulation" : "Simulation";
+    } else if (genre === "science-fiction") {
+      return language === "en" ? "Science Fiction" : "Science-Fiction";
+    } else if (genre === "rundenbasiert") {
+      return language === "en" ? "Turn-based" : "Rundenbasiert";
+    } else if (genre === "überleben") {
+      return language === "en" ? "Survival" : "Überleben";
+    } else if (genre === "abenteuer") {
+      return language === "en" ? "Adventure" : "Abenteuer";
+    } else if (genre === "erzählung") {
+      return language === "en" ? "Narrative" : "Erzählung";
+    } else if (genre === "shooter") {
+      return language === "en" ? "Shooter" : "Shooter";
+    } else if (genre === "egoperspektive") {
+      return language === "en" ? "First-person" : "Egoperspektive";
+    } else if (genre === "point-and-click") {
+      return language === "en" ? "Point-and-click" : "Point-and-Click";
+    } else if (genre === "detektivgeschichten") {
+      return language === "en" ? "Detective stories" : "Detektivgeschichten";
+    } else if (genre === "exploration") {
+      return language === "en" ? "Exploration" : "Exploration";
+    } else if (genre === "echtzeit") {
+      return language === "en" ? "Real-time" : "Echtzeit";
+    } else if (genre === "angebote") {
+      return language === "en" ? "Offers" : "Angebote";
+    } else if (genre === "puzzle") {
+      return language === "en" ? "Puzzle" : "Puzzle";
+    } else {
+      return genre;
+    }
+  }
+
   return (
     <>
-      <PageSubtitle title="Angebote in Genres" icon="tag" />
+      <PageSubtitle
+        title={language === "en" ? "On sale by genre" : "Angebote in Genres"}
+        icon="tag"
+      />
       <Swiper
         grabCursor={true}
         centeredSlides={true}
@@ -83,7 +140,6 @@ const GerneSwiperAngebote = () => {
         className="">
         {genres.map(
           (genre, index) =>
-            // Prüfe, ob das Genre einen Rabatt über 0 hat
             genreDiscounts[genre] !== null &&
             genreDiscounts[genre] > 0 && (
               <SwiperSlide key={index}>
@@ -98,20 +154,21 @@ const GerneSwiperAngebote = () => {
                       }}
                     />
                     <div className="genre-kachel">
-                      <h3>{genre.charAt(0).toUpperCase() + genre.slice(1)}</h3>
+                      <h3>{getGenreTranslation(genre, language)}</h3>
                       <p className="genre-kachel-discount">
-                        {`- ${genreDiscounts[genre]}`}
+                        {`- ${genreDiscounts[genre]}%`}
                       </p>
                       <p className="genre-kachel-angebote-text">
-                        Durchstöbere unsere Sonderangebote
+                        {language === "en"
+                          ? "Browse our special offers"
+                          : "Durchstöbere unsere Sonderangebote"}
                       </p>
                     </div>
-                  </div>{" "}
+                  </div>
                 </NavLink>
               </SwiperSlide>
             )
         )}
-
         <div className="slider_controler">
           <div className="swiper-button-prev arrow-left">
             <i className="fas fa-chevron-left"></i>

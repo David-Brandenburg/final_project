@@ -16,9 +16,11 @@ import { NavLink } from "react-router-dom";
 import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
 import slugify from "slugify";
 import AddToCartBtn from "../AddToCartBtn.jsx";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const HeroSection = () => {
   const [games, setGames] = useState([]);
+  const { language } = useLanguage();
 
   const fetchGames = async () => {
     try {
@@ -52,7 +54,10 @@ const HeroSection = () => {
 
   return (
     <>
-      <PageSubtitle title="Angebote" icon="star-fill" />
+      <PageSubtitle
+        title={language === "en" ? "On Sale" : "Angebote"}
+        icon="star-fill"
+      />
       <div className="swiper-wrapper">
         <Swiper
           effect={"coverflow"}
@@ -101,7 +106,11 @@ const HeroSection = () => {
                     <NavLink className="text-wrapper" to={`/games/${game._id}`}>
                       <div className="text-icon-p">
                         {game.platforms?.map(getPlatformIcon)}
-                        <p>Jetzt im Angebot</p>
+                        <p>
+                          {language === "en"
+                            ? "Now on Sale"
+                            : "Jetzt im Angebot"}
+                        </p>
                       </div>
                       <h3>{game.title}</h3>
                     </NavLink>
@@ -118,7 +127,11 @@ const HeroSection = () => {
                         text={
                           <>
                             <i className="bi bi-cart-plus"></i>
-                            <p>In den Einkaufswagen</p>
+                            <p>
+                              {language === "en"
+                                ? "Add to Cart"
+                                : "In den Warenkorb"}
+                            </p>
                           </>
                         }
                       />

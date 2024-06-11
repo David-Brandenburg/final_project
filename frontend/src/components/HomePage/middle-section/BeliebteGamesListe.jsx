@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import PageSubtitle from "../../PageSubtitle/PageSubtitle.jsx";
 import "./BeliebteGamesListe.scss";
 import GamesModal from "../GamesModal.jsx";
+import { useLanguage } from "../../../contexts/LanguageContext.js";
 
 const BeliebteGamesListe = () => {
   const [games, setGames] = useState([]);
   const [hoveredGame, setHoveredGame] = useState(null);
+  const { language } = useLanguage();
 
   const fetchGames = async () => {
     try {
@@ -36,7 +38,11 @@ const BeliebteGamesListe = () => {
 
   return (
     <>
-      <PageSubtitle title="Beliebte Spiele" icon="heart-fill" Nav={true} />
+      <PageSubtitle
+        title={language === "en" ? "Bestsellers" : "Beliebte Spiele"}
+        icon="heart-fill"
+        Nav={true}
+      />
       {games.length > 0 ? (
         <div className="beliebte-spiele-wrapper">
           <div className="row">
@@ -67,8 +73,12 @@ const BeliebteGamesListe = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3>Error</h3>
-              <p>Something went wrong</p>
+              <h3>{language === "en" ? "Error" : "Fehler"}</h3>
+              <p>
+                {language === "en"
+                  ? "Something went wrong"
+                  : "Etwas ist schief gelaufen"}
+              </p>
             </div>
           </div>
         </div>
