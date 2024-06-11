@@ -176,6 +176,13 @@ async function updateAccountInfo(req, res) {
 			}
 		}
 
+		if (benutzername) {
+			const checkDuplicateBenutzername = await User.findOne({ benutzername: benutzername })
+			if (checkDuplicateBenutzername) {
+				return res.status(409).send({ message: "Benutzername bereits vergeben!", ok: false })
+			}
+		}
+
 		const updatedAccountInfo = await User.updateOne({ _id: account._id }, { $set: {
 			benutzername,
 			vorname,

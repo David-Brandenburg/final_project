@@ -23,7 +23,6 @@ const ProfilePage = () => {
 			} else {
 				const data = await resp.json()
 				setUser(data)
-				console.log(data)
 			}
 		} catch (error) {
 			console.error(error);
@@ -48,7 +47,6 @@ const ProfilePage = () => {
 		const url = `http://localhost:3001/accounts/updateAccountProfilePic/${loggedInUser.id}`;
 		try {
 			const response = await fetch(url, { method: 'PATCH', body: formData })
-
 			if (!response.ok){
 				const data = await response.json();
 				toast.error(data.message);
@@ -60,7 +58,6 @@ const ProfilePage = () => {
 				fetchUser()
 				e.target.reset();
 			}
-
 		} catch (error) {
 			console.error(error);
 		}
@@ -92,11 +89,47 @@ const ProfilePage = () => {
 				setPasswordToUpdate({})
 				e.target.reset()
 			}
-			
 		} catch (e) {
 			console.error(e);
 		}
 	};
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setObjectToUpdate((prev) => {
+			if (value === '') {
+				const { [name]: _, ...updatedObject } = prev;
+				return updatedObject;
+			} else {
+				return { ...prev, [name]: value };
+			}
+		});
+	};
+	
+	const submitAccountInfo = async (e) => {
+		e.preventDefault();
+		const url = `http://localhost:3001/accounts/updateAccountInfo/${loggedInUser.id}`;
+		try {
+			const resp = await fetch(url, {method: 'PATCH', headers: {"Content-Type": "application/json"}, body: JSON.stringify(objectToUpdate)})
+			if (!resp.ok) {
+				const data = await resp.json();
+				toast.error(data.message);
+				throw new Error(data.message);
+			} else {
+				const data = await resp.json();
+				toast.success(data.message);
+				setObjectToUpdate({});
+				fetchUser()
+				e.target.reset();
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
+		console.log(objectToUpdate)
+	}, [objectToUpdate])
 
 	return (
 		<div className='main-wrapper profile-wrapper'>
@@ -125,6 +158,26 @@ const ProfilePage = () => {
 							<button className='profile-btn' disabled={!hasFile}>Upload Image</button>
 						</form>
 						<hr />
+						<form className='profile-form-row' onSubmit={submitAccountInfo}>
+							<div className='profile-inside-row'>
+								<label htmlFor="">Benutzername ändern:</label>
+								<input type="text" name="benutzername" id="benutzername" onChange={handleInputChange} />
+							</div>
+							<div className='profile-inside-row'>
+								<label htmlFor="">Email ändern:</label>
+								<input type="email" name="email" id="email" onChange={handleInputChange} />
+							</div>
+							<div className='profile-inside-row'>
+								<label htmlFor="">Vorname ändern:</label>
+								<input type="text" name="vorname" id="vorname" onChange={handleInputChange} />
+							</div>
+							<div className='profile-inside-row'>
+								<label htmlFor="">Nachname ändern:</label>
+								<input type="text" name="nachname" id="nachname" onChange={handleInputChange} />
+							</div>
+							<button className='profile-btn' disabled={Object.keys(objectToUpdate).length < 1 ? true : false }>Change Account Info</button>
+						</form>
+						<hr />
 						<form className='profile-form-row' onSubmit={submitPassword}>
 							<div className='profile-inside-row'>
 								<label htmlFor="password">Current Password:</label>
@@ -135,22 +188,6 @@ const ProfilePage = () => {
 								<input type="password" name="newpassword" id="newpassword" onChange={handlePasswordChange}/>
 							</div>
 							<button className='profile-btn' disabled={Object.keys(passwordToUpdate).length < 2 ? true : false }>Change Password</button>
-						</form>
-						<hr />
-						<form className='profile-form-row'>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Email ändern:</label>
-								<input type="email" name="email" id="email" />
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Vorname ändern:</label>
-								<input type="text" name="vorname" id="vorname" />
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Nachname ändern:</label>
-								<input type="text" name="nachname" id="nachname" />
-							</div>
-							<button className='profile-btn'>Change Account Info</button>
 						</form>
 					</div>
 				</>
