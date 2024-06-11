@@ -17,6 +17,7 @@ export const LogginContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+		console.log("loggedInUser updated:", loggedInUser)
     localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
 		if (loggedInUser.token && loggedInUser.benutzername && loggedInUser.email && loggedInUser.id) {
 			setIsLoggedIn(true)

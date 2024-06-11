@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import "../../styles/modals.scss";
+import { ModalContext } from "../../contexts/ModalContext.js";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -11,7 +12,8 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [showLogin, setShowLogin] = useState(true);
 
-	const { setLoggedInUser, isLoggedIn } = useContext(LogginContext)
+	const { setLoggedInUser, isLoggedIn } = useContext(LogginContext);
+	const { setOpenModalBlocker } = useContext(ModalContext);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -70,7 +72,6 @@ const Login = () => {
         toast.warn(data.message);
       } else {
         const data = await resp.json();
-        console.log(data);
         toast.success(data.message);
       }
     } catch (error) {
@@ -110,6 +111,7 @@ const Login = () => {
 						token: data.token,
 					})
 					toast.success(data.message)
+					setOpenModalBlocker(false)
 				}
 			}
 

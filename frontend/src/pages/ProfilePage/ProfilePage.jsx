@@ -11,7 +11,7 @@ const ProfilePage = () => {
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
 	
-	const { loggedInUser } = useContext(LogginContext);
+	const { loggedInUser, setLoggedInUser } = useContext(LogginContext);
 
 	const fetchUser = useMemo(() => async () => {
 		try {
@@ -127,10 +127,6 @@ const ProfilePage = () => {
 		}
 	};
 
-	useEffect(() => {
-		console.log(objectToUpdate)
-	}, [objectToUpdate])
-
 	return (
 		<div className='main-wrapper profile-wrapper'>
 			{user &&
@@ -144,10 +140,27 @@ const ProfilePage = () => {
 								}
 							</div>
 						</div>
-						<h2>{user.benutzername}</h2>
-						<p>{user.email}</p>
-						<p>{user.vorname}</p>
-						<p>{user.nachname}</p>
+						<div className='profileInfo-content'>
+							<div className='profileInfo-content-row'>
+								<p>Nutzername:</p>
+								<p>{user.benutzername}</p>
+							</div>
+							<hr style={{margin: "5px 0"}}/>
+							<div className='profileInfo-content-row'>
+								<p>E-Mail:</p>
+								<p>{user.email}</p>
+							</div>
+							<hr style={{margin: "5px 0"}}/>
+							<div className='profileInfo-content-row'>
+								<p>Vorname:</p>
+								<p style={{color: user.vorname ? "unser" : "gray"}}>{user.vorname ? user.vorname : "Nicht angegeben"}</p>
+							</div>
+							<hr style={{margin: "5px 0"}}/>
+							<div className='profileInfo-content-row'>
+								<p>Nachname:</p>
+								<p style={{color: user.nachname ? "unser" : "gray"}}>{user.nachname ? user.nachname : "Nicht angegeben"}</p>
+							</div>
+						</div>
 					</div>
 					<div className='profile-content'>
 						<form className='profile-form-row' encType='multipart/form-data' onSubmit={sumbitProfilePicUpload}>
