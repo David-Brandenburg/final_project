@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
 import HeroSection from "../../components/HomePage/HeroSection";
-import BeliebteGamesListe from "../../components/HomePage/BeliebteGamesListe";
+import GamesListe from "../../components/HomePage/middle-section/BeliebteGamesListe";
 import "./homepage.scss";
-import NeueErschinenGamesListe from "../../components/HomePage/NeueErschinenGamesListe";
+import NeueErschinenGamesListe from "../../components/HomePage/middle-section/NeueErschinenGamesListe";
+import GerneSwiperAngebote from "../../components/HomePage/middle-sub-section/GerneSwiperAngebote";
 
 const HomePage = () => {
   return (
@@ -10,11 +10,14 @@ const HomePage = () => {
       <HeroSection />
       <div className="middle-section">
         <div className="left">
-          <BeliebteGamesListe />
+          <GamesListe />
         </div>
         <div className="right">
           <NeueErschinenGamesListe />
         </div>
+      </div>
+      <div className="middle-sub-section">
+        <GerneSwiperAngebote />
       </div>
     </div>
   );

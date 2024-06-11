@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import PageSubtitle from "../PageSubtitle/PageSubtitle.jsx";
-import "./NeueErschinenGamesListe.scss";
-import BeliebteGamesModal from "./BeliebteGamesModal.jsx";
+import PageSubtitle from "../../PageSubtitle/PageSubtitle.jsx";
+import "./BeliebteGamesListe.scss";
+import GamesModal from "../GamesModal.jsx";
 
-const NeueErschinenGamesListe = () => {
+const BeliebteGamesListe = () => {
   const [games, setGames] = useState([]);
   const [hoveredGame, setHoveredGame] = useState(null);
 
   const fetchGames = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/games/genres/neu-erschienen`
+        `http://localhost:3001/games/genres/beliebte-titel`
       );
       const data = await response.json();
       setGames(data);
@@ -36,17 +36,17 @@ const NeueErschinenGamesListe = () => {
 
   return (
     <>
-      <PageSubtitle title="Neu Erscheinung" icon="dropbox" Nav={true} />
+      <PageSubtitle title="Beliebte Spiele" icon="heart-fill" Nav={true} />
       {games.length > 0 ? (
         <div className="beliebte-spiele-wrapper">
           <div className="row">
-            {games.slice(0, 5).map((game, index) => (
+            {games.map((game, index) => (
               <div className="col-md-4" key={game.title + index}>
                 <div
                   className="game-card"
                   onMouseEnter={() => handleMouseEnter(game)}
                   onMouseLeave={handleMouseLeave}>
-                  {hoveredGame === game && <BeliebteGamesModal game={game} />}
+                  {hoveredGame === game && <GamesModal game={game} />}
                   <div className="game-card-thumbnail-wrapper">
                     <img
                       src={game.thumbnail}
@@ -77,4 +77,4 @@ const NeueErschinenGamesListe = () => {
   );
 };
 
-export default NeueErschinenGamesListe;
+export default BeliebteGamesListe;
