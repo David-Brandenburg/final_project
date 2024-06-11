@@ -5,12 +5,14 @@
 	flex-direction: row!important;
 	gap: 10px;
 	.profile-sidebar{
-		background-color: #424242;
+		background: var(--background);
 		width: 300px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 20px;
+		user-select: none;
+		pointer-events: none;
 		.profilePic-content{
 			display: flex;
 			flex-direction: column;

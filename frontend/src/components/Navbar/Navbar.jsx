@@ -182,7 +182,10 @@ const Navbar = () => {
                 Hilfe
               </NavLink>
               {isLoggedIn 
-								? <NavLink to="/profile" className="nav-link">{loggedInUser.benutzername}</NavLink>
+								? <NavLink to="/profile" className="nav-link">
+										<img className="nav-link-profile-img" src={loggedInUser.profilePic !== '' ? loggedInUser.profilePic : null} alt="" />
+										<p>{loggedInUser.benutzername}</p>
+									</NavLink>
 								: <div className="dropdown-wrapper" id="loginLink">
 									<p className="nav-link" onClick={handleOpenLogin}>
 										Einloggen
