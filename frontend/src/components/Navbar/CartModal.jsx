@@ -3,6 +3,7 @@ import { ModalContext } from "../../contexts/ModalContext";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext";
 import { LogginContext } from "../../contexts/LogginContext";
 import { useContext, useState, useEffect } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const CartModal = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
@@ -10,6 +11,7 @@ const CartModal = () => {
     useContext(ModalContext);
   const { isLoggedIn } = useContext(LogginContext);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = useState(0);
+  const { language } = useLanguage();
 
   const handleBeliebteTitel = (e) => {
     e.stopPropagation();
@@ -44,8 +46,13 @@ const CartModal = () => {
         <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
           <div className="cart-upper-wrapper">
             <div className="cart-artikel-title">
-              <h3>Dein Einkaufwagen</h3>
-              <p>{cart.length} Artikel hinzugefügt</p>
+              <h3>
+                {language === "en" ? "Your Shopping Cart" : "Dein Einkaufwagen"}
+              </h3>
+              <p>
+                {cart.length}
+                {language === "en" ? " Items added" : " Artikel hinzugefügt"}
+              </p>
             </div>
             <div className="cart-artikel-price-btn">
               <p>{totalDiscountedPrice} €</p>
@@ -55,14 +62,14 @@ const CartModal = () => {
                   onClick={handleZurKasse}
                   className="btn"
                   title="navlink">
-                  Zur Kasse
+                  {language === "en" ? "Go to Checkout" : "Zur Kasse"}
                 </NavLink>
               ) : (
                 <button
                   onClick={handleLoginModal}
                   className="btn"
                   title="login">
-                  Zur Kasse
+                  {language === "en" ? "Go to Checkout" : "Zur Kasse"}
                 </button>
               )}
             </div>
@@ -81,7 +88,7 @@ const CartModal = () => {
                       <p
                         className="cart-remove-item"
                         onClick={() => removeFromCart(index)}>
-                        Entfernen
+                        {language === "en" ? "Remove" : "Entfernen"}
                       </p>
                     </div>
                     <div className="cart-info-right">
@@ -99,15 +106,23 @@ const CartModal = () => {
       {!cart.length > 0 && (
         <div className="cart-modal-empty" onClick={(e) => e.stopPropagation()}>
           <i className="bi bi-cart4"></i>
-          <h3>Dein Warenkorb ist leer!</h3>
+          <h3>
+            {language === "en"
+              ? "Your cart is empty!"
+              : "Dein Warenkorb ist leer!"}
+          </h3>
           <hr className="trennung" />
-          <h3>Finde tolle Spiele und Angebote</h3>
+          <h3>
+            {language === "en"
+              ? "Explore great games and offers"
+              : "Finde tolle Spiele und Angebote"}
+          </h3>
           <NavLink
             to="/games"
             onClick={handleBeliebteTitel}
             className="btn"
             title="navlink">
-            Beliebte Titel
+            {language === "en" ? "Browse Bestsellers" : "Beliebte Titel"}
           </NavLink>
         </div>
       )}

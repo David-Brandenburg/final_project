@@ -36,9 +36,9 @@ nav {
       font-family: $defaultFont;
       position: relative;
       font-size: 14px;
-			display: inline-flex;
-			align-items: center;
-			gap: 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       &:visited {
         color: #fff;
       }
@@ -53,14 +53,14 @@ nav {
       &:last-child {
         color: $accentColorLightBlue;
         cursor: pointer;
-				&::after{
-					content: '';
-				}
+        &::after {
+          content: "";
+        }
         &:hover {
           color: $accentColorOrange;
-					.nav-link-profile-img{
-						border-color: $accentColorOrange;
-					}
+          .nav-link-profile-img {
+            border-color: $accentColorOrange;
+          }
         }
       }
       &:hover {
@@ -116,11 +116,11 @@ nav {
             }
           }
         }
-				.nav-link-profile-img{
-					width: 35px;
-					border-radius: 50px;
-					border: 2px solid $accentColorLightBlue;
-				}
+        .nav-link-profile-img {
+          width: 35px;
+          border-radius: 50px;
+          border: 2px solid $accentColorLightBlue;
+        }
       }
     }
 
@@ -342,42 +342,42 @@ nav {
         display: flex;
         align-items: center;
         cursor: pointer;
-				position: relative;
+        position: relative;
         &:hover {
           color: $fontColorFull;
-					&::after{
-						content: 'Light / Dark';
-						position: absolute;
-						width: max-content;
-						z-index: 9;
-						font-size: 14px;
-						background: $accentColorLightBlue;
-						padding: 3px;
-						border-radius: 3px;
-						top: -10px;
-						left: 25px;
-					}
+          &::after {
+            content: "Light / Dark";
+            position: absolute;
+            width: max-content;
+            z-index: 9;
+            font-size: 14px;
+            background: $accentColorLightBlue;
+            padding: 3px;
+            border-radius: 3px;
+            top: -10px;
+            left: 25px;
+          }
         }
       }
-			.logout-wrapper{
-				display: flex;
+      .logout-wrapper {
+        display: flex;
         align-items: center;
         cursor: pointer;
-				position: relative;
+        position: relative;
         &:hover {
           color: $fontColorFull;
-					&::after{
-						content: 'Logout';
-						position: absolute;
-						font-size: 14px;
-						background: $accentColorLightBlue;
-						padding: 3px;
-						border-radius: 3px;
-						top: -10px;
-						left: 25px;
-					}
+          &::after {
+            content: "Logout";
+            position: absolute;
+            font-size: 14px;
+            background: $accentColorLightBlue;
+            padding: 3px;
+            border-radius: 3px;
+            top: -10px;
+            left: 25px;
+          }
         }
-			}
+      }
     }
   }
 }
