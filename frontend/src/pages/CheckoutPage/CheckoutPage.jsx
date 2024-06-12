@@ -17,11 +17,13 @@ const CheckoutPage = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
   const { language } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [showModalVisa, setShowModalVisa] = useState("");
 
   const handleCheckboxChange = (method) => {
     // Updated to accept 'method' parameter
-
     setPaymentMethod((prevMethod) => (prevMethod === method ? "" : method)); // Set the selected payment method
+    setShowModalVisa(method);
+    console.log(showModalVisa);
   };
 
   const btnStyleSwitch = () => {
@@ -177,7 +179,7 @@ const CheckoutPage = () => {
         </h2>
         <div className="checkout-right-first-wrapper">
           <div className="checkout-right-first">
-            <ul className="checkout-right-frist-list">
+            <ul className="checkout-right-first-list">
               <li>
                 <label className="square-checkbox">
                   <input
@@ -220,6 +222,19 @@ const CheckoutPage = () => {
                   : " Kredit-/Debitkarte"}
               </label>
             </li>
+            {showModalVisa === "VISA" && (
+              <div className="checkout-visa-wrapper">
+                <label>
+                  <input type="text" placeholder="Card Number" />
+                </label>
+                <label>
+                  <input type="text" placeholder="Name on Card" />
+                </label>
+                <label>
+                  <input type="text" placeholder="Expiry Date" />
+                </label>
+              </div>
+            )}
 
             <li>
               <label className="circular-checkbox">

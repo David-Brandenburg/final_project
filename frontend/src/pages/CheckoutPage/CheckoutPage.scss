@@ -91,7 +91,7 @@
       border-top: var(--mainBorder) 1px solid;
       border-bottom: var(--mainBorder) 1px solid;
       .checkout-right-first {
-        .checkout-right-frist-list {
+        .checkout-right-first-list {
           padding-bottom: 10px;
           border-bottom: var(--mainBorder) 1px solid;
           .square-checkbox {
@@ -164,6 +164,13 @@
           align-items: center;
           padding: 10px 0;
           border-bottom: var(--mainBorder) 1px solid;
+        }
+        .checkout-visa-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 0;
         }
         img {
           position: relative;
