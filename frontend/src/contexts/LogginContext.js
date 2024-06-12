@@ -9,7 +9,6 @@ export const LogginContextProvider = ({ children }) => {
       benutzername: '',
       email: '',
       id: '',
-      profilePic: '',
       token: '',
     };
   });
