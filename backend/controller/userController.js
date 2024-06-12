@@ -113,7 +113,7 @@ async function updateAccountProfilePic(req, res) {
 			return res.status(400).send({ message: "Update failed", ok: false })
 		}
 
-		res.status(200).send({ message: "Successfully updated profile pic!", ok: true, data: updatedAccount })
+		res.status(200).send({ message: "Successfully updated profile pic!", ok: true, profilePic: secureUrl })
 	} catch (error) {
 		res.status(500).send({
       message: "Internal Server Error!",

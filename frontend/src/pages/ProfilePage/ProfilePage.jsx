@@ -4,9 +4,11 @@ import { LogginContext } from '../../contexts/LogginContext'
 import { toast } from 'react-toastify';
 import defaultPic from '../../assets/defaultProfilepic.webp';
 
+const defaultBtnText = 'Upload Image'
 
-const ProfilePage = () => {
+const ProfilePage = ({setProfilePicChange}) => {
 	const [user, setUser] = useState(null);
+	const [buttonText, setButtonText] = useState(defaultBtnText)
 	const [hasFile, setHasFile] = useState(false)
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
@@ -46,18 +48,28 @@ const ProfilePage = () => {
 		const formData = new FormData(e.target);
 		const url = `http://localhost:3001/accounts/updateAccountProfilePic/${loggedInUser.id}`;
 		try {
+			setButtonText('Loading...')
 			const response = await fetch(url, { method: 'PATCH', body: formData })
 			if (!response.ok){
 				const data = await response.json();
 				toast.error(data.message);
+				setButtonText("Failed!")
 				throw new Error("Something went wrong");
 			} else {
 				const data = await response.json();
 				toast.success(data.message)
+				setButtonText("Success!")
 				setHasFile(false)
 				fetchUser()
+				localStorage.setItem("profilePic", data.profilePic)
+				setTimeout(() => {
+					setProfilePicChange(true)
+				}, 500);
 				e.target.reset();
 			}
+			setTimeout(() => {
+				setButtonText(defaultBtnText)
+			}, 2000);
 		} catch (error) {
 			console.error(error);
 		}
@@ -168,7 +180,7 @@ const ProfilePage = () => {
 								<label htmlFor="profilepic">Profilbild ändern:</label>
 								<input type="file" name="profilepic" id="profilepic" onChange={handleFileChange} />
 							</div>
-							<button className='profile-btn' disabled={!hasFile}>Upload Image</button>
+							<button className='profile-btn' disabled={!hasFile}>{buttonText}</button>
 						</form>
 						<hr />
 						<form className='profile-form-row' onSubmit={submitAccountInfo}>

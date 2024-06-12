@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
@@ -11,9 +11,10 @@ import CartModal from "./CartModal.jsx";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import { toast } from "react-toastify";
 import defaultPic from "../../assets/defaultProfilepic.webp";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
-const Navbar = () => {
+const Navbar = ({ profilePicChange, setProfilePicChange }) => {
+	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"))
   const {
     openModalBlocker,
     setOpenModalBlocker,
@@ -154,7 +155,10 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {}, [loggedInUser.profilePic]);
+	useEffect(() => {
+		setNavAvatar(localStorage.getItem("profilePic"))
+		setProfilePicChange(false)
+	}, [loggedInUser, profilePicChange])
 
   return (
     <nav>
@@ -189,15 +193,7 @@ const Navbar = () => {
               </NavLink>
               {isLoggedIn ? (
                 <NavLink to="/profile" className="nav-link">
-                  <img
-                    className="nav-link-profile-img"
-                    src={
-                      loggedInUser.profilePic === ""
-                        ? defaultPic
-                        : loggedInUser.profilePic
-                    }
-                    alt=""
-                  />
+                  <img className="nav-link-profile-img" src={ navAvatar ? navAvatar : defaultPic } alt="" />
                   <p>{loggedInUser.benutzername}</p>
                 </NavLink>
               ) : (

@@ -15,6 +15,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import { LogginContext } from "./contexts/LogginContext.js";
 
 function App() {
+	const [profilePicChange, setProfilePicChange] = useState(false)
   const {
     openModalBlocker,
     setOpenModalBlocker,
@@ -52,7 +53,7 @@ function App() {
   };
   return (
     <>
-      <Navbar />
+      <Navbar profilePicChange={profilePicChange} setProfilePicChange={setProfilePicChange}/>
       <ToastContainer
         autoClose={3000}
         theme={screenMode}
@@ -63,7 +64,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-					<Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <ErrorPage /> } />
+					<Route path="/profile" element={isLoggedIn ? <ProfilePage setProfilePicChange={setProfilePicChange}/> : <ErrorPage /> } />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/:title" element={<GamePage />} />
           <Route path="*" element={<ErrorPage />} />

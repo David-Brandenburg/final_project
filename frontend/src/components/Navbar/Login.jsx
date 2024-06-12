@@ -109,9 +109,9 @@ const Login = () => {
             benutzername: data.user.benutzername,
             email: data.user.email,
             id: data.user._id,
-            profilePic: data.user.profilePic,
             token: data.token,
           });
+					localStorage.setItem("profilePic", data.user.profilePic)
           toast.success(data.message);
           setOpenModalBlocker(false);
         }
