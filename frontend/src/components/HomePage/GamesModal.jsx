@@ -7,8 +7,10 @@ import "../HomePage/GamesModal.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import AddToCartBtn from "../AddToCartBtn";
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const GamesModal = ({ game }) => {
+  const { language } = useLanguage();
   const discountedPrice = game.price - (game.price * game.discount) / 100;
   const getPlatformIcon = (platform) => {
     switch (platform) {
@@ -205,6 +207,293 @@ const GamesModal = ({ game }) => {
     return hearts;
   };
 
+  const messages = {
+    Indie: {
+      en: "Indie",
+      de: "Indie",
+    },
+    Strategie: {
+      en: "Strategy",
+      de: "Strategie",
+    },
+    Action: {
+      en: "Action",
+      de: "Action",
+    },
+    Abenteuer: {
+      en: "Adventure",
+      de: "Abenteuer",
+    },
+    Rollenspiel: {
+      en: "RPG",
+      de: "Rollenspiel",
+    },
+    Fantasy: {
+      en: "Fantasy",
+      de: "Fantasy",
+    },
+    "Science-Fiction": {
+      en: "Science-Fiction",
+      de: "Science-Fiction",
+    },
+    Shooter: {
+      en: "Shooter",
+      de: "Shooter",
+    },
+    Atmosphärisch: {
+      en: "Atmospheric",
+      de: "Atmosphärisch",
+    },
+    Überleben: {
+      en: "Survival",
+      de: "Überleben",
+    },
+    Horror: {
+      en: "Horror",
+      de: "Horror",
+    },
+    "Spannende Geschichte": {
+      en: "Exciting Story",
+      de: "Spannende Geschichte",
+    },
+    Erkundung: {
+      en: "Exploration",
+      de: "Erkundung",
+    },
+    "Toller Soundtrack": {
+      en: "Great Soundtrack",
+      de: "Toller Soundtrack",
+    },
+    "First-Person": {
+      en: "First-Person",
+      de: "First-Person",
+    },
+    "Third Person": {
+      en: "Third-Person",
+      de: "Third-Person",
+    },
+    "Offene Spielwelt": {
+      en: "Open World",
+      de: "Offene Spielwelt",
+    },
+    Sandbox: {
+      en: "Sandbox",
+      de: "Sandbox",
+    },
+    FPS: {
+      en: "FPS",
+      de: "FPS",
+    },
+    Postapokalyptisch: {
+      en: "Postapocalyptic",
+      de: "Postapokalyptisch",
+    },
+    Historisch: {
+      en: "Historical",
+      de: "Historisch",
+    },
+    Ressourcenverwaltung: {
+      en: "Resource Management",
+      de: "Ressourcenverwaltung",
+    },
+    Crafting: {
+      en: "Crafting",
+      de: "Crafting",
+    },
+    Mittelalterlich: {
+      en: "Medieval",
+      de: "Mittelalterlich",
+    },
+    Bauen: {
+      en: "Building",
+      de: "Bauen",
+    },
+    Basenbau: {
+      en: "Base Building",
+      de: "Basenbau",
+    },
+    Städtebauer: {
+      en: "City Builder",
+      de: "Städtebauer",
+    },
+    Kämpfen: {
+      en: "Combat",
+      de: "Kämpfen",
+    },
+    Wissenschaft: {
+      en: "Science",
+      de: "Wissenschaft",
+    },
+    Rundenbasiert: {
+      en: "Turn-based",
+      de: "Rundenbasiert",
+    },
+    Klassisch: {
+      en: "Classic",
+      de: "Klassisch",
+    },
+    Taktisch: {
+      en: "Tactical",
+      de: "Taktisch",
+    },
+    Isometrisch: {
+      en: "Isometric",
+      de: "Isometrisch",
+    },
+    "Good Old Game": {
+      en: "Good Old Game",
+      de: "Good Old Game",
+    },
+    "Taktik-RPG": {
+      en: "Tactical RPG",
+      de: "Taktik-RPG",
+    },
+    cRPG: {
+      en: "cRPG",
+      de: "cRPG",
+    },
+    Rätsel: {
+      en: "Puzzle",
+      de: "Rätsel",
+    },
+    Detektivgeschichten: {
+      en: "Detective Stories",
+      de: "Detektivgeschichten",
+    },
+    Leicht: {
+      en: "Easy",
+      de: "Leicht",
+    },
+    Lustig: {
+      en: "Funny",
+      de: "Lustig",
+    },
+    "Point&Click": {
+      en: "Point&Click",
+      de: "Point&Click",
+    },
+    Mystery: {
+      en: "Mystery",
+      de: "Mystery",
+    },
+    Ermittlung: {
+      en: "Investigation",
+      de: "Ermittlung",
+    },
+    kurz: {
+      en: "Short",
+      de: "kurz",
+    },
+    Erzählung: {
+      en: "Narrative",
+      de: "Erzählung",
+    },
+    Noir: {
+      en: "Noir",
+      de: "Noir",
+    },
+    Gemütlich: {
+      en: "Cozy",
+      de: "Gemütlich",
+    },
+    "Keine Gewalt": {
+      en: "No Violence",
+      de: "Keine Gewalt",
+    },
+    "2D": {
+      en: "2D",
+      de: "2D",
+    },
+    Weltraum: {
+      en: "Space",
+      de: "Weltraum",
+    },
+    "Von-Oben-Ansicht": {
+      en: "Top-Down",
+      de: "Von-Oben-Ansicht",
+    },
+    "Prozedural Generiert": {
+      en: "Procedurally Generated",
+      de: "Prozedural Generiert",
+    },
+    "Bullet Hell": {
+      en: "Bullet Hell",
+      de: "Bullet Hell",
+    },
+    Fliegen: {
+      en: "Flying",
+      de: "Fliegen",
+    },
+    "Looter Shooter": {
+      en: "Looter Shooter",
+      de: "Looter Shooter",
+    },
+    Verwaltung: {
+      en: "Management",
+      de: "Verwaltung",
+    },
+    "Schwarzer Humor": {
+      en: "Black Humor",
+      de: "Schwarzer Humor",
+    },
+    "Psychologischer Horror": {
+      en: "Psychological Horror",
+      de: "Psychologischer Horror",
+    },
+    Überlebenshorror: {
+      en: "Survival Horror",
+      de: "überlebenshorror",
+    },
+    Lovecraft: {
+      en: "Lovecraft",
+      de: "Lovecraft",
+    },
+    Fischen: {
+      en: "Fishing",
+      de: "Fischen",
+    },
+    "Mehrere Enden": {
+      en: "Multiple Endings",
+      de: "Mehrere Enden",
+    },
+    "Weibliche Protagonistin": {
+      en: "Female Protagonist",
+      de: "Weibliche Protagonistin",
+    },
+    "Entscheidungen Zählen": {
+      en: "Choices Matter",
+      de: "Entscheidungen Zählen",
+    },
+    "Nicht jugendfrei": {
+      en: "Not for Children",
+      de: "Nicht Jugendfrei",
+    },
+    "LGBTQ+": {
+      en: "LGBTQ+",
+      de: "LGBTQ+",
+    },
+    "Hunde Streicheln": {
+      en: "Petting Dogs",
+      de: "Hunde Streicheln",
+    },
+    Echtzeit: {
+      en: "Real-time",
+      de: "Echtzeit",
+    },
+    Magie: {
+      en: "Magic",
+      de: "Magie",
+    },
+    Brettspiel: {
+      en: "Board Game",
+      de: "Brettspiel",
+    },
+  };
+
+  const getMessages = (tags, language) => {
+    return tags.map((tag) => messages[tag]?.[language] || tag);
+  };
+
   return (
     <div className="game-modal-wrapper">
       <div className="game-modal-swiper-wrapper">
@@ -253,7 +542,11 @@ const GamesModal = ({ game }) => {
             <h2 className="game-modal-title">{game.title}</h2>
             <div className="game-modal-platform">
               {game.platforms?.map(getPlatformIcon)}
-              <p>Deutsch (audio,text)</p>
+              <p>
+                {language === "en"
+                  ? "English (audio, text)"
+                  : "Deutsch (audio, text)"}
+              </p>
             </div>
           </div>
           <div className="game-modal-header-right">
@@ -262,13 +555,13 @@ const GamesModal = ({ game }) => {
           </div>
         </div>
         <div className="game-modal-tags">
-          {game.tags.map((tag, index) => (
-            <span key={tag + index}>{tag}, </span>
+          {getMessages(game.tags, language).map((message, index) => (
+            <span key={index}>{message}, </span>
           ))}
         </div>
 
         <div className="game-modal-functions">
-          <h3>Funktionen:</h3>
+          <h3>{language === "en" ? "Functions:" : "Funktionen:"}</h3>
           {game.functions.map(getFunctionIcon)}
         </div>
         <div className="game-modal-price">
