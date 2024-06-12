@@ -58,7 +58,7 @@ const CartModal = () => {
               <p>{totalDiscountedPrice} €</p>
               {isLoggedIn ? (
                 <NavLink
-                  to="/cart"
+                  to="/checkout"
                   onClick={handleZurKasse}
                   className="btn"
                   title="navlink">

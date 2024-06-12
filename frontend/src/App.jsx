@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import { LogginContext } from "./contexts/LogginContext.js";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
 
 function App() {
   const {
@@ -24,13 +25,13 @@ function App() {
     setOpenCart,
     openLoginModal,
     setOpenLoginModal,
-		openGameModal,
-		setOpenGameModal,
+    openGameModal,
+    setOpenGameModal,
   } = useContext(ModalContext);
 
-	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
+  const { loggedInUser, isLoggedIn } = useContext(LogginContext);
 
-	const { screenMode } = useContext(ScreenModeContext);
+  const { screenMode } = useContext(ScreenModeContext);
 
   const handleModalClose = (e) => {
     e.preventDefault();
@@ -46,9 +47,9 @@ function App() {
     if (openLoginModal) {
       setOpenLoginModal(false);
     }
-		if (openGameModal) {
-			setOpenGameModal(false);
-		}
+    if (openGameModal) {
+      setOpenGameModal(false);
+    }
   };
   return (
     <>
@@ -63,10 +64,17 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-					<Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <ErrorPage /> } />
+          <Route
+            path="/profile"
+            element={isLoggedIn ? <ProfilePage /> : <ErrorPage />}
+          />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/:title" element={<GamePage />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route
+            path="/checkout"
+            element={isLoggedIn ? <CheckoutPage /> : <ErrorPage />}
+          />
         </Routes>
       </main>
       <Footer />
