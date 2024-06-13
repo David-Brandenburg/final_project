@@ -13,9 +13,10 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import { LogginContext } from "./contexts/LogginContext.js";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
 
 function App() {
-	const [profilePicChange, setProfilePicChange] = useState(false)
+  const [profilePicChange, setProfilePicChange] = useState(false);
   const {
     openModalBlocker,
     setOpenModalBlocker,
@@ -25,13 +26,13 @@ function App() {
     setOpenCart,
     openLoginModal,
     setOpenLoginModal,
-		openGameModal,
-		setOpenGameModal,
+    openGameModal,
+    setOpenGameModal,
   } = useContext(ModalContext);
 
-	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
+  const { loggedInUser, isLoggedIn } = useContext(LogginContext);
 
-	const { screenMode } = useContext(ScreenModeContext);
+  const { screenMode } = useContext(ScreenModeContext);
 
   const handleModalClose = (e) => {
     e.preventDefault();
@@ -47,13 +48,16 @@ function App() {
     if (openLoginModal) {
       setOpenLoginModal(false);
     }
-		if (openGameModal) {
-			setOpenGameModal(false);
-		}
+    if (openGameModal) {
+      setOpenGameModal(false);
+    }
   };
   return (
     <>
-      <Navbar profilePicChange={profilePicChange} setProfilePicChange={setProfilePicChange}/>
+      <Navbar
+        profilePicChange={profilePicChange}
+        setProfilePicChange={setProfilePicChange}
+      />
       <ToastContainer
         autoClose={3000}
         theme={screenMode}
@@ -64,10 +68,23 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-					<Route path="/profile" element={isLoggedIn ? <ProfilePage setProfilePicChange={setProfilePicChange}/> : <ErrorPage /> } />
+          <Route
+            path="/profile"
+            element={
+              isLoggedIn ? (
+                <ProfilePage setProfilePicChange={setProfilePicChange} />
+              ) : (
+                <ErrorPage />
+              )
+            }
+          />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/:title" element={<GamePage />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route
+            path="/checkout"
+            element={isLoggedIn ? <CheckoutPage /> : <ErrorPage />}
+          />
         </Routes>
       </main>
       <Footer />
