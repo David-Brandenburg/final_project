@@ -178,7 +178,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
                   e.stopPropagation();
                 }}>
                 <NavLink to="/games" className="nav-link" title="navlink">
-                  {language === "en" ? "Store" : "Spiele"}
+                  {language === "en" ? "Games" : "Spiele"}
                 </NavLink>
                 {openGameModal && <GameModal />}
               </div>

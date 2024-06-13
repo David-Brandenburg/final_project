@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ScreenModeContext } from "./contexts/ScreenModeContext.js";
@@ -29,7 +29,7 @@ function App() {
 		setOpenGameModal,
   } = useContext(ModalContext);
 
-	const { loggedInUser, isLoggedIn } = useContext(LogginContext);
+	const { isLoggedIn } = useContext(LogginContext);
 
 	const { screenMode } = useContext(ScreenModeContext);
 
