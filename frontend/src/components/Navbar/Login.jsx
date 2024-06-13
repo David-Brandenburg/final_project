@@ -1,9 +1,11 @@
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
-import "../../styles/modals.scss";
+import "./Login.scss";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import { useLanguage } from "../../contexts/LanguageContext.js";
+import Logo from "../../assets/pixelPlaza.webp";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -111,7 +113,7 @@ const Login = () => {
             id: data.user._id,
             token: data.token,
           });
-					localStorage.setItem("profilePic", data.user.profilePic)
+          localStorage.setItem("profilePic", data.user.profilePic);
           toast.success(data.message);
           setOpenModalBlocker(false);
         }
@@ -122,14 +124,23 @@ const Login = () => {
       console.error("Error appending data to server!", error);
     }
   };
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
 
   return (
     <div className="login-modal" onClick={(e) => e.stopPropagation()}>
       {!showLogin && (
         <form className="login-form" onSubmit={handleSubmit}>
-          <h1 className=" ">
-            {language === "en" ? "Sign Up" : "Registrieren"}
-          </h1>
+          <div className="login-header-wrapper">
+            <img src={Logo} alt="logo" />
+            <h1 className=" ">
+              {language === "en" ? "Sign Up" : "Registrieren"}
+            </h1>
+          </div>
           <div className="">
             <svg
               viewBox="0 0 16 16"
@@ -216,7 +227,10 @@ const Login = () => {
       )}
       {showLogin && (
         <form className="login-form" onSubmit={handleSubmitLogin}>
-          <h1 className=" ">{language === "en" ? "Login" : "Einloggen"}</h1>
+          <div className="login-header-wrapper">
+            <img src={Logo} alt="logo" />
+            <h1 className=" ">{language === "en" ? "Login" : "Einloggen"}</h1>
+          </div>
           <div className="">
             <svg
               viewBox="0 0 16 16"
@@ -267,13 +281,15 @@ const Login = () => {
           </div>
 
           <div className="login-btn-wrapper">
+            <button className="login-button" type="submit">
+              {language === "en" ? "Log In!" : "Einloggen"}
+            </button>
+            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+            <hr />
             <button
               className="login-button"
               onClick={() => setShowLogin(false)}>
               {language === "en" ? "Sign Up!" : "Registrieren"}
-            </button>
-            <button className="login-button" type="submit">
-              {language === "en" ? "Log In!" : "Einloggen"}
             </button>
           </div>
         </form>
