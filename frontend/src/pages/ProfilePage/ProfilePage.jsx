@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import './profilepage.scss'
-import { LogginContext } from '../../contexts/LogginContext'
+import { LogginContext } from '../../contexts/LogginContext.js'
 import { toast } from 'react-toastify';
 import defaultPic from '../../assets/defaultProfilepic.webp';
-
-const defaultBtnText = 'Upload Image'
+import { useLanguage } from '../../contexts/LanguageContext.js'
+import './profilepage.scss'
 
 const ProfilePage = ({setProfilePicChange}) => {
+	const { language } = useLanguage();
 	const [user, setUser] = useState(null);
-	const [buttonText, setButtonText] = useState(defaultBtnText)
 	const [hasFile, setHasFile] = useState(false)
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
+	const [indexTab, setIndexTab] = useState('accountandsecurity')
 	
-	const { loggedInUser, setLoggedInUser } = useContext(LogginContext);
+	const { loggedInUser, setLoggedInUser, isAdmin } = useContext(LogginContext);
 
 	const fetchUser = useMemo(() => async () => {
 		try {
@@ -48,17 +48,15 @@ const ProfilePage = ({setProfilePicChange}) => {
 		const formData = new FormData(e.target);
 		const url = `http://localhost:3001/accounts/updateAccountProfilePic/${loggedInUser.id}`;
 		try {
-			setButtonText('Loading...')
+			toast.info(language === 'en' ? 'Uploading Image..' : 'Bild hochladen..')
 			const response = await fetch(url, { method: 'PATCH', body: formData })
 			if (!response.ok){
 				const data = await response.json();
 				toast.error(data.message);
-				setButtonText("Failed!")
 				throw new Error("Something went wrong");
 			} else {
 				const data = await response.json();
 				toast.success(data.message)
-				setButtonText("Success!")
 				setHasFile(false)
 				fetchUser()
 				localStorage.setItem("profilePic", data.profilePic)
@@ -67,9 +65,6 @@ const ProfilePage = ({setProfilePicChange}) => {
 				}, 500);
 				e.target.reset();
 			}
-			setTimeout(() => {
-				setButtonText(defaultBtnText)
-			}, 2000);
 		} catch (error) {
 			console.error(error);
 		}
@@ -144,76 +139,122 @@ const ProfilePage = ({setProfilePicChange}) => {
 			{user &&
 				<>
 					<div className='profile-sidebar'>
-						<div className='profilePic-content'>
-							<div className='profilePic-wrapper'>
-								{user.profilePic && user.profilePic !== ''
-									? <img className='profilePic' src={user.profilePic} alt="" />
-									: <img className='profilePic' src={defaultPic} alt="" />
-								}
-							</div>
-						</div>
-						<div className='profileInfo-content'>
-							<div className='profileInfo-content-row'>
-								<p>Nutzername:</p>
-								<p>{user.benutzername}</p>
-							</div>
-							<hr style={{margin: "5px 0"}}/>
-							<div className='profileInfo-content-row'>
-								<p>E-Mail:</p>
-								<p>{user.email}</p>
-							</div>
-							<hr style={{margin: "5px 0"}}/>
-							<div className='profileInfo-content-row'>
-								<p>Vorname:</p>
-								<p style={{color: user.vorname ? "unser" : "gray"}}>{user.vorname ? user.vorname : "Nicht angegeben"}</p>
-							</div>
-							<hr style={{margin: "5px 0"}}/>
-							<div className='profileInfo-content-row'>
-								<p>Nachname:</p>
-								<p style={{color: user.nachname ? "unser" : "gray"}}>{user.nachname ? user.nachname : "Nicht angegeben"}</p>
-							</div>
-						</div>
+						{indexTab === 'accountandsecurity' &&
+							<>
+								<div className='profilePic-content'>
+									<div className='profilePic-wrapper'>
+										{user.profilePic && user.profilePic !== ''
+											? <img className='profilePic' src={user.profilePic} alt="" />
+											: <img className='profilePic' src={defaultPic} alt="" />
+										}
+									</div>
+								</div>
+								<div className='profileInfo-content'>
+									<div className='profileInfo-content-row'>
+										<p>{language === 'en' ? 'Username' : 'Nutzername'}:</p>
+										<p>{user.benutzername}</p>
+									</div>
+									<hr style={{margin: "5px 0"}}/>
+									<div className='profileInfo-content-row'>
+										<p>E-Mail:</p>
+										<p>{user.email}</p>
+									</div>
+									<hr style={{margin: "5px 0"}}/>
+									<div className='profileInfo-content-row'>
+										<p>{language === 'en' ? 'Firstname' : 'Vorname'}:</p>
+										<p style={{color: user.vorname ? "unser" : "gray"}}>{user.vorname ? user.vorname : "Nicht angegeben"}</p>
+									</div>
+									<hr style={{margin: "5px 0"}}/>
+									<div className='profileInfo-content-row'>
+										<p>{language === 'en' ? 'Lastname' : 'Nachname'}:</p>
+										<p style={{color: user.nachname ? "unser" : "gray"}}>{user.nachname ? user.nachname : "Nicht angegeben"}</p>
+									</div>
+								</div>
+							</>
+						}
+						{indexTab === 'adminanddashboard' &&
+							<>
+								<div className='admin-index-tab-menu'>
+									<p className='admin-index-tab-item'>Games</p>
+									<hr style={{margin: "0"}}/>
+									<p className='admin-index-tab-item'>Publisher</p>
+									<hr style={{margin: "0"}}/>
+									<p className='admin-index-tab-item'>Genre</p>
+									<hr style={{margin: "0"}}/>
+									<p className='admin-index-tab-item'>Platforms</p>
+								</div>
+							</>
+						}
 					</div>
 					<div className='profile-content'>
-						<form className='profile-form-row' encType='multipart/form-data' onSubmit={sumbitProfilePicUpload}>
-							<div className='profile-inside-row'>
-								<label htmlFor="profilepic">Profilbild ändern:</label>
-								<input type="file" name="profilepic" id="profilepic" onChange={handleFileChange} />
-							</div>
-							<button className='profile-btn' disabled={!hasFile}>{buttonText}</button>
-						</form>
-						<hr />
-						<form className='profile-form-row' onSubmit={submitAccountInfo}>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Benutzername ändern:</label>
-								<input type="text" name="benutzername" id="benutzername" onChange={handleInputChange} />
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Email ändern:</label>
-								<input type="email" name="email" id="email" onChange={handleInputChange} />
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Vorname ändern:</label>
-								<input type="text" name="vorname" id="vorname" onChange={handleInputChange} />
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="">Nachname ändern:</label>
-								<input type="text" name="nachname" id="nachname" onChange={handleInputChange} />
-							</div>
-							<button className='profile-btn' disabled={Object.keys(objectToUpdate).length < 1 ? true : false }>Change Account Info</button>
-						</form>
-						<hr />
-						<form className='profile-form-row' onSubmit={submitPassword}>
-							<div className='profile-inside-row'>
-								<label htmlFor="password">Current Password:</label>
-								<input type="password" name="password" id="password" onChange={handlePasswordChange}/>
-							</div>
-							<div className='profile-inside-row'>
-								<label htmlFor="newpassword">Enter new password:</label>
-								<input type="password" name="newpassword" id="newpassword" onChange={handlePasswordChange}/>
-							</div>
-							<button className='profile-btn' disabled={Object.keys(passwordToUpdate).length < 2 ? true : false }>Change Password</button>
-						</form>
+						<div className='profile-index-tab-menu'>
+							<p 
+								onClick={((e) => setIndexTab('accountandsecurity'))}
+								className={indexTab === 'accountandsecurity' ? 'indextab-active' : null}
+								>{language === 'en' ? 'Account and Security' : 'Account und Sicherheit'}</p>
+							<p 
+								onClick={((e) => setIndexTab('socialsandlinks'))}
+								className={indexTab === 'socialsandlinks' ? 'indextab-active' : null}
+								>{language === 'en' ? 'Socials and Links' : 'Soziales und Verlinkungen'}</p>
+							{isAdmin && 
+								<p
+									onClick={((e) => setIndexTab('adminanddashboard'))}
+									className={indexTab === 'adminanddashboard' ? 'indextab-active' : null }
+									>{language === 'en' ? 'Admin and Dashboard' : 'Admin und Dashboard'}</p>
+								}
+						</div>
+						<hr style={{margin: "0"}}/>
+						{indexTab === 'accountandsecurity' ?
+							<>
+								<form className='profile-form-row' encType='multipart/form-data' onSubmit={sumbitProfilePicUpload}>
+									<div className='profile-inside-row'>
+										<label htmlFor="profilepic">{language === 'en' ? 'Change Profilepicture' : 'Profilbild ändern'}:</label>
+										<input type="file" name="profilepic" id="profilepic" onChange={handleFileChange} />
+									</div>
+									<button className='profile-btn' disabled={!hasFile}>{language === 'en' ? 'Upload Image' : 'Bild hochladen'}</button>
+								</form>
+								<hr style={{width: "350px"}} />
+								<form className='profile-form-row' onSubmit={submitAccountInfo}>
+									<div className='profile-inside-row'>
+										<label htmlFor="">{language === 'en' ? 'Change Username': 'Benutzername ändern'}:</label>
+										<input type="text" name="benutzername" id="benutzername" onChange={handleInputChange} />
+									</div>
+									<div className='profile-inside-row'>
+										<label htmlFor="">{language === 'en' ? 'Change E-Mail' : 'E-Mail ändern'}:</label>
+										<input type="email" name="email" id="email" onChange={handleInputChange} />
+									</div>
+									<div className='profile-inside-row'>
+										<label htmlFor="">{language === 'en' ? 'Change Firstname' : 'Vorname ändern'}:</label>
+										<input type="text" name="vorname" id="vorname" onChange={handleInputChange} />
+									</div>
+									<div className='profile-inside-row'>
+										<label htmlFor="">{language === 'en' ? 'Change Lastname' : 'Nachname ändern'}:</label>
+										<input type="text" name="nachname" id="nachname" onChange={handleInputChange} />
+									</div>
+									<button className='profile-btn' disabled={Object.keys(objectToUpdate).length < 1 ? true : false }>{language === 'en' ? 'Change Account Info' : 'Account Informationen ändern'}</button>
+								</form>
+								<hr style={{width: "350px"}} />
+								<form className='profile-form-row' onSubmit={submitPassword}>
+									<div className='profile-inside-row'>
+										<label htmlFor="password">{language === 'en' ? 'Current Password' : 'Aktuelles Passwort'}:</label>
+										<input type="password" name="password" id="password" onChange={handlePasswordChange}/>
+									</div>
+									<div className='profile-inside-row'>
+										<label htmlFor="newpassword">{language === 'en' ? 'Enter new password' : 'Neues Passwort eingeben'}:</label>
+										<input type="password" name="newpassword" id="newpassword" onChange={handlePasswordChange}/>
+									</div>
+									<button className='profile-btn' disabled={Object.keys(passwordToUpdate).length < 2 ? true : false }>{language === 'en' ? 'Change Password' : 'Passwort ändern'}</button>
+								</form>
+							</>
+						: indexTab === 'socialsandlinks' ?
+							<>
+								Soziales und Verlinkunden..
+							</>
+						: indexTab === 'adminanddashboard' ?
+							<>
+							</>
+						: <p>Error</p>
+						}
 					</div>
 				</>
 			}
@@ -221,4 +262,4 @@ const ProfilePage = ({setProfilePicChange}) => {
 	)
 }
 
-export default ProfilePage
+export default ProfilePage;

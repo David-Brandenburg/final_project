@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import userRoutes from "./route/userRoutes.js";
 import gameRoutes from "./route/gameRoutes.js";
+import apiRoutes from "./route/apiRoutes.js";
 import requestLogger from "./middleware/requestlogger.js";
 dotenv.config();
 
@@ -35,6 +36,8 @@ mongoose
 app.use("/accounts", userRoutes);
 
 app.use("/games", gameRoutes);
+
+app.use("/api", apiRoutes);
 //
 // MVC Routes end
 

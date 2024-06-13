@@ -66,6 +66,12 @@ nav {
       &:hover {
         color: color-mix(in lab, $accentColorLightBlue 65%, #fff);
       }
+			&.active{
+				color: $accentColorOrange;
+				> .nav-link-profile-img{
+					border-color: $accentColorOrange!important;
+				}
+			}
     }
 
     .nav-left {
@@ -114,6 +120,9 @@ nav {
             &:hover {
               color: color-mix(in lab, $accentColorLightBlue 65%, #fff);
             }
+						&.active{
+							color: $accentColorOrange;
+						}
           }
         }
         .nav-link-profile-img {

@@ -9,10 +9,8 @@
 		width: 300px;
 		display: flex;
 		flex-direction: column;
-		// align-items: center;
 		gap: 20px;
 		user-select: none;
-		pointer-events: none;
 		.profilePic-content{
 			display: flex;
 			flex-direction: column;
@@ -41,15 +39,51 @@
 				justify-content: space-between;
 			}
 		}
+		.admin-index-tab-menu{
+			display: flex;
+			flex-direction: column;
+			width: 300px;
+			.admin-index-tab-item{
+				padding: 12px 6px;
+				width: 100%;
+				// background: color-mix(in lab, var(--background), var(--mainColor) 5%);
+				&:hover{
+					cursor: pointer;
+					background: color-mix(in lab, var(--background), var(--mainColor) 5%);
+				}
+			}
+		}
 	}
 	.profile-content{
 		display: flex;
 		gap: 10px;
 		flex-direction: column;
+		width: 100%;
+		.profile-index-tab-menu{
+			display: flex;
+			width: 100%;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 20px;
+			& > p{
+				text-transform: uppercase;
+				color: color-mix(in lab, $accentColorLightBlue , #fff);
+				cursor: pointer;
+				user-select: none;
+				&:hover:not(.indextab-active){
+					color: $accentColorLightBlue;
+				}
+			}
+			.indextab-active{
+				color: $accentColorOrange;
+				cursor: default;
+			}
+		}
 		.profile-form-row{
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
+			width: 350px;
 		}
 	}
 
