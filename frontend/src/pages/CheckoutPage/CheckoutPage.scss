@@ -169,9 +169,144 @@
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          align-items: center;
           padding: 10px 0;
+          li {
+            border: none;
+          }
+          p {
+            font-size: 0.8rem;
+          }
+          label {
+            font-size: 0.8rem;
+            color: var(--mainColor);
+          }
+          input {
+            padding: 5px;
+            border: 1px solid var(--mainBorder);
+            border-radius: 5px;
+            margin: 5px 0;
+          }
+          .square-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            input {
+              display: none;
+            }
+            .checkmark {
+              width: 15px;
+              height: 15px;
+              background-color: #fff;
+              border: 2px solid #ccc;
+              margin-right: 10px;
+              position: relative;
+              display: inline-block;
+              transition: background-color 0.2s, border-color 0.2s;
+
+              &::after {
+                content: "";
+                position: absolute;
+                display: none;
+              }
+            }
+
+            input:checked + .checkmark {
+              background-color: #007bff;
+              border-color: #007bff;
+
+              &::after {
+                display: block;
+              }
+
+              &::after {
+                top: 50%;
+                left: 50%;
+                width: 7.5px;
+                height: 7.5px;
+                background: white;
+                transform: translate(-50%, -50%);
+              }
+            }
+          }
         }
+        .checkout-sofort-wrapper {
+          padding: 10px 0;
+
+          p {
+            font-size: 0.8rem;
+          }
+        }
+        .checkout-paypal-wrapper {
+          padding: 10px 0;
+          p {
+            font-size: 0.8rem;
+          }
+          .square-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            input {
+              display: none;
+            }
+            .checkmark {
+              width: 15px;
+              height: 15px;
+              background-color: #fff;
+              border: 2px solid #ccc;
+              margin-right: 10px;
+              position: relative;
+              display: inline-block;
+              transition: background-color 0.2s, border-color 0.2s;
+
+              &::after {
+                content: "";
+                position: absolute;
+                display: none;
+              }
+            }
+
+            input:checked + .checkmark {
+              background-color: #007bff;
+              border-color: #007bff;
+
+              &::after {
+                display: block;
+              }
+
+              &::after {
+                top: 50%;
+                left: 50%;
+                width: 7.5px;
+                height: 7.5px;
+                background: white;
+                transform: translate(-50%, -50%);
+              }
+            }
+          }
+        }
+        .checkout-skrill-wrapper {
+          padding: 10px 0;
+          p {
+            font-size: 0.8rem;
+          }
+        }
+        .checkout-paysafecard-wrapper {
+          padding: 10px 0;
+          border-bottom: var(--mainBorder) 1px solid;
+          p {
+            font-size: 0.6rem;
+            font-weight: 700;
+          }
+          small {
+            font-size: 0.6rem;
+            color: var(--mainColor);
+            text-decoration: none;
+            padding-top: 10px;
+          }
+        }
+
         img {
           position: relative;
           top: 5px;
@@ -219,6 +354,22 @@
       padding: 10px 10px;
       border-bottom: var(--mainBorder) 1px solid;
       .checkout-right-thrid-list {
+        .checkout-gift-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 10px 0;
+          label {
+            font-size: 0.8rem;
+            color: var(--mainColor);
+          }
+          input {
+            padding: 5px;
+            border: 1px solid var(--mainBorder);
+            border-radius: 5px;
+            margin: 5px 0;
+          }
+        }
         .square-checkbox {
           display: flex;
           align-items: center;
@@ -275,18 +426,21 @@
         font-weight: 700;
       }
       .btn {
-        text-align: center;
-        width: 50%;
-        padding: 5px;
-        border: 1px solid var(--mainBorder);
-        border-radius: 5px;
-        background: var(--mainColor);
-        color: var(--background);
+        display: flex;
+        background-color: $accentColorLightBlue;
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
         font-size: 1.2rem;
+        font-weight: 700;
+        width: 50%;
         cursor: pointer;
+        p {
+          margin-left: 0.5rem;
+        }
         &:hover {
-          background: var(--mainHover);
-          color: var(--mainColor);
+          background-color: $accentColorDarkOrange;
+          color: #fff;
         }
       }
       .paypal-btn {

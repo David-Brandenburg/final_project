@@ -17,13 +17,14 @@ const CheckoutPage = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
   const { language } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [showModalVisa, setShowModalVisa] = useState("");
+  const [showModal, setShowModal] = useState("");
+  const [showGiftModal, setShowGiftModal] = useState(false);
 
   const handleCheckboxChange = (method) => {
     // Updated to accept 'method' parameter
     setPaymentMethod((prevMethod) => (prevMethod === method ? "" : method)); // Set the selected payment method
-    setShowModalVisa(method);
-    console.log(showModalVisa);
+    setShowModal(method);
+    console.log(showModal);
   };
 
   const btnStyleSwitch = () => {
@@ -82,8 +83,14 @@ const CheckoutPage = () => {
         );
 
       default:
-        return "Proceed to Payment";
+        return language === "en"
+          ? "Pay for your order now"
+          : "Bestellung jetzt bezahlen";
     }
+  };
+
+  const handleGiftCheckbox = () => {
+    setShowGiftModal((prev) => !prev);
   };
 
   return (
@@ -185,6 +192,7 @@ const CheckoutPage = () => {
                   <input
                     type="checkbox"
                     onChange={() => handleCheckboxChange}
+                    disabled
                   />
                   <span className="checkmark"></span>
                   <i className="bi bi-wallet2"></i>
@@ -222,17 +230,39 @@ const CheckoutPage = () => {
                   : " Kredit-/Debitkarte"}
               </label>
             </li>
-            {showModalVisa === "VISA" && (
+            {showModal === "VISA" && (
               <div className="checkout-visa-wrapper">
                 <label>
-                  <input type="text" placeholder="Card Number" />
+                  {language === "en" ? "Card number" : "Kartennummer"}
                 </label>
+                <input type="text" placeholder="1234 5678 9012 3456" />
+                <label>{language === "en" ? "CVC / CVV" : "CVC / CVV"}</label>
+                <input
+                  type="text"
+                  placeholder={language === "en" ? "3 digit" : "3 Stellen"}
+                />
                 <label>
-                  <input type="text" placeholder="Name on Card" />
+                  {language === "en" ? "Expiry Date" : "Ablaufdatum"}
                 </label>
-                <label>
-                  <input type="text" placeholder="Expiry Date" />
-                </label>
+                <input type="text" placeholder="MM/JJ" />
+                <li>
+                  <label className="square-checkbox">
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange}
+                    />
+                    <span className="checkmark"></span>
+
+                    {language === "en"
+                      ? "Save for future payments"
+                      : "Für zukünftige Zahlungen speichern"}
+                  </label>{" "}
+                </li>
+                <p>
+                  {language === "en"
+                    ? "A secure, encrypted payment token will be created once your bank approves the purchase. We do not store your card details directly in our database."
+                    : "Ein sicherer, verschlüsselter Token wird erzeugt, sobald deine Bank die Zahlung genehmigt hat. Wir speichern deine Zahlungsdaten nicht direkt in unserer Datenbank."}
+                </p>
               </div>
             )}
 
@@ -260,6 +290,15 @@ const CheckoutPage = () => {
                 {language === "en" ? "Sofort" : "Sofort"}{" "}
               </label>{" "}
             </li>
+            {showModal === "Sofort" && (
+              <div className="checkout-sofort-wrapper">
+                <p>
+                  {language === "en"
+                    ? "After clicking 'Pay for your order now', you will be redirected to the Sofort page to finish your transaction"
+                    : "Sobald du auf „Bestellung jetzt bezahlen“ klickst, wirst du auf die Webseite von Sofort weitergeleitet, um den Zahlungsvorgang abzuschließen."}{" "}
+                </p>
+              </div>
+            )}
             <li>
               <label className="circular-checkbox">
                 <input
@@ -272,6 +311,23 @@ const CheckoutPage = () => {
                 {language === "en" ? "PayPal" : "PayPal"}{" "}
               </label>{" "}
             </li>
+            {showModal === "Paypal" && (
+              <div className="checkout-paypal-wrapper">
+                <li>
+                  <label className="square-checkbox">
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange}
+                    />
+                    <span className="checkmark"></span>
+
+                    {language === "en"
+                      ? "Save my details for future purchases"
+                      : "Meine Daten für zukünftige Käufe speichern"}
+                  </label>{" "}
+                </li>
+              </div>
+            )}
             <li>
               <label className="circular-checkbox">
                 <input
@@ -284,6 +340,15 @@ const CheckoutPage = () => {
                 {language === "en" ? "Skrill" : "Skrill"}{" "}
               </label>{" "}
             </li>
+            {showModal === "Skrill" && (
+              <div className="checkout-skrill-wrapper">
+                <p>
+                  {language === "en"
+                    ? "After clicking 'Pay for your order now', you will be redirected to the Skrill page to finish your transaction"
+                    : "Sobald du auf „Bestellung jetzt bezahlen“ klickst, wirst du auf die Webseite von Skrill weitergeleitet, um den Zahlungsvorgang abzuschließen."}{" "}
+                </p>
+              </div>
+            )}
             <li>
               <label className="circular-checkbox">
                 <input
@@ -296,13 +361,27 @@ const CheckoutPage = () => {
                 {language === "en" ? "Paysafecard" : "Paysafecard"}{" "}
               </label>{" "}
             </li>
+            {showModal === "PaySafeCard" && (
+              <div className="checkout-paysafecard-wrapper">
+                <p>
+                  {language === "en"
+                    ? "After clicking 'Pay for your order now', you will be redirected to the PaySafeCard page to finish your transaction"
+                    : "Sobald du auf „Bestellung jetzt bezahlen“ klickst, wirst du auf die Webseite von paysafecard weitergeleitet, um den Zahlungsvorgang abzuschließen."}{" "}
+                </p>
+                <small>
+                  {language === "en"
+                    ? "Please note that we charge in EUR, and, if a currency exchange is required, Paysafecard will charge an additional fee."
+                    : "Beachte bitte, dass wir in EUR abrechnen. Falls eine Währungsumwandlung erforderlich ist, berechnet paysafecard eine zusätzliche Gebühr."}
+                </small>
+              </div>
+            )}
           </ul>
         </div>
         <div className="checkout-right-third-wrapper">
           <ul className="checkout-right-thrid-list">
             <li>
               <label className="square-checkbox">
-                <input type="checkbox" onChange={() => handleCheckboxChange} />
+                <input type="checkbox" onChange={handleGiftCheckbox} />
                 <span className="checkmark"></span>
 
                 {language === "en"
@@ -310,6 +389,26 @@ const CheckoutPage = () => {
                   : "Diese Bestellung verschenken"}
               </label>{" "}
             </li>
+            {showGiftModal && (
+              <div className="checkout-gift-wrapper">
+                <input
+                  type="email"
+                  placeholder={
+                    language === "en"
+                      ? "Gift recipient's email"
+                      : "E-Mail-Adresse des Empfängers"
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder={
+                    language === "en"
+                      ? "Personal note to gift recipient (optional)"
+                      : "Persönliche Nachricht an den Empfänger (optional"
+                  }
+                />{" "}
+              </div>
+            )}
           </ul>
         </div>
         <div className="checkout-right-forth-wrapper">
