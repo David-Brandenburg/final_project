@@ -52,6 +52,7 @@ function App() {
       setOpenGameModal(false);
     }
   };
+
   return (
     <>
       <Navbar
