@@ -1,0 +1,128 @@
+.gamespage-wrapper {
+  display: flex;
+  flex-direction: column;
+  color: var(--mainColor);
+  height: 100vh;
+  .gamespage-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--mainColor);
+    .gamespage-header-search {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 15px;
+      width: 40%;
+      i {
+        color: black;
+        padding: 0.5rem;
+      }
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--mainColor);
+        border-radius: 5px;
+        margin-right: 1rem;
+      }
+    }
+  }
+  .gamespage-main-wrapper {
+    padding: 1rem;
+    .gamespage-main-filter-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 25%;
+      height: 600px; /* set a fixed height for the div */
+      overflow-y: scroll;
+      .gamespage-main-filter-li {
+        padding: 0.5rem;
+        .square-checkbox {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          font-size: 0.8rem;
+          input {
+            display: none;
+          }
+          .checkmark {
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            margin-right: 10px;
+            position: relative;
+            display: inline-block;
+            transition: background-color 0.2s, border-color 0.2s;
+
+            &::after {
+              content: "";
+              position: absolute;
+              display: none;
+            }
+          }
+
+          input:checked + .checkmark {
+            background-color: #007bff;
+            border-color: #007bff;
+
+            &::after {
+              display: block;
+            }
+
+            &::after {
+              top: 50%;
+              left: 50%;
+              width: 7.5px;
+              height: 7.5px;
+              background: white;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+      .gamespage-main-filter-silder-result-wrapper {
+        display: flex;
+        flex-direction: column;
+        .gamespage-main-filter-silder-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          #gamespage-main-filter-silder .range-slider__thumb {
+            background: orange;
+          }
+          #gamespage-main-filter-silder .range-slider__range {
+            background: #ffbf00;
+          }
+        }
+        .gamespage-main-filter-result-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem;
+          margin-top: 1rem;
+          .gamespage-main-filter-result-min {
+            border: 1px solid var(--mainColor);
+            border-radius: 5px;
+            padding: 0.5rem;
+            text-align: end;
+            width: 50%;
+            margin: 5px;
+          }
+          .gamespage-main-filter-result-max {
+            border: 1px solid var(--mainColor);
+            border-radius: 5px;
+            padding: 0.5rem;
+            text-align: end;
+            width: 50%;
+            margin: 5px;
+          }
+        }
+      }
+    }
+  }
+  .gamespage-main-games-wrapper {
+  }
+}
