@@ -4,6 +4,8 @@
 	display: flex;
 	flex-direction: row!important;
 	gap: 10px;
+	max-height: calc(100dvh - $navbarHeight - 86px);
+	// overflow-y: scroll;
 	.profile-sidebar{
 		background: var(--background);
 		width: 300px;
@@ -44,10 +46,20 @@
 			flex-direction: column;
 			width: 300px;
 			.admin-index-tab-item{
-				padding: 12px 6px;
+				padding: 12px;
 				width: 100%;
-				// background: color-mix(in lab, var(--background), var(--mainColor) 5%);
-				&:hover{
+				&.active{
+					color: $accentColorLightBlue;
+					background: color-mix(in lab, var(--background), var(--mainColor) 5%);
+					position: relative;
+					&::after{
+						content: '\F22D';
+						position: absolute;
+						right: 6px;
+						font-family: 'Bootstrap-Icons';
+					}
+				}
+				&:hover:not(.active){
 					cursor: pointer;
 					background: color-mix(in lab, var(--background), var(--mainColor) 5%);
 				}

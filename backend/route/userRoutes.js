@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, loginUser, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo } from "../controller/userController.js";
+import { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo } from "../controller/userController.js";
 import checkToken from "./../middleware/checkToken.js";
 import upload from '../middleware/cloudinary.js';
 
@@ -7,6 +7,8 @@ const router = express.Router();
 
 // Route to create a new User
 router.post("/create", createUser);
+
+router.get("/", getUsers);
 
 router.get("/:accountId", getUser);
 

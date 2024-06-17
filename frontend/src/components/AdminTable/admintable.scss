@@ -1,0 +1,53 @@
+@import '../../styles/variables';
+
+
+.adminTable-wrapper{
+	overflow-y: scroll;
+	&::-webkit-scrollbar{
+		display: none;
+	}
+	.adminTable{
+		width: 100%;
+		border-collapse: collapse;
+		overflow-x: hidden;
+		thead{
+			position: sticky;
+			top: 0px;
+			background: color-mix(in lab, var(--background), var(--mainBorder) 80%);
+			user-select: none;
+			// border-bottom: 1px solid transparent;
+			outline: 1px solid var(--mainColor);
+			th{
+				padding: 12px 0;
+				text-transform: uppercase;
+				&:not(:last-child){
+					border-right: 1px solid var(--mainColor);
+				}
+			}
+		}
+		tbody{
+			height: 100%;
+			overflow-x: scroll;
+			tr:nth-child(even){
+				background: var(--background);
+			}
+			tr{
+				text-align: start;
+				td{
+					padding: 8px 0;
+					padding-left: 6px;
+					padding-right: 6px;
+					&:not(:last-child){
+						border-right: 1px solid var(--mainColor);
+					}
+					&:hover{
+						background-color: $accentColorLightBlue;
+					}
+				}
+				&:hover{
+					background-color: color-mix(in lab, $accentColorLightBlue , #fff 20%);
+				}
+			}
+		}
+	}
+}

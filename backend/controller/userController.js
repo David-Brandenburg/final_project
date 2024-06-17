@@ -70,6 +70,23 @@ async function loginUser(req, res) {
   }
 }
 
+async function getUsers(req, res) {
+	try {
+		const accounts = await User.find();
+		if (!accounts) {
+			return res.status(404).send({ message: 'No users found!', ok: false})
+		}
+
+		return res.status(200).json(accounts);
+	} catch (error) {
+		res.status(500).send({
+      message: "Internal Server Error!",
+      error: error.message,
+      ok: false,
+    });
+	}
+};
+
 async function getUser(req, res) {
 	const accountId = req.params.accountId;
 	try {
@@ -203,4 +220,4 @@ async function updateAccountInfo(req, res) {
 	}
 };
 
-export { createUser, loginUser, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo };
+export { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo };

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import defaultPic from '../../assets/defaultProfilepic.webp';
 import { useLanguage } from '../../contexts/LanguageContext.js'
 import './profilepage.scss'
+import AdminTable from '../../components/AdminTable/AdminTable.jsx';
 
 const ProfilePage = ({setProfilePicChange}) => {
 	const { language } = useLanguage();
@@ -11,9 +12,10 @@ const ProfilePage = ({setProfilePicChange}) => {
 	const [hasFile, setHasFile] = useState(false)
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
-	const [indexTab, setIndexTab] = useState('accountandsecurity')
+	const [indexTab, setIndexTab] = useState('accountandsecurity');
+	const [adminTab, setAdminTab] = useState('accounts');
 	
-	const { loggedInUser, setLoggedInUser, isAdmin } = useContext(LogginContext);
+	const { loggedInUser, isAdmin } = useContext(LogginContext);
 
 	const fetchUser = useMemo(() => async () => {
 		try {
@@ -139,7 +141,7 @@ const ProfilePage = ({setProfilePicChange}) => {
 			{user &&
 				<>
 					<div className='profile-sidebar'>
-						{indexTab === 'accountandsecurity' &&
+						{(indexTab === 'accountandsecurity' || indexTab === 'socialsandlinks') &&
 							<>
 								<div className='profilePic-content'>
 									<div className='profilePic-wrapper'>
@@ -150,38 +152,82 @@ const ProfilePage = ({setProfilePicChange}) => {
 									</div>
 								</div>
 								<div className='profileInfo-content'>
-									<div className='profileInfo-content-row'>
-										<p>{language === 'en' ? 'Username' : 'Nutzername'}:</p>
-										<p>{user.benutzername}</p>
-									</div>
-									<hr style={{margin: "5px 0"}}/>
-									<div className='profileInfo-content-row'>
-										<p>E-Mail:</p>
-										<p>{user.email}</p>
-									</div>
-									<hr style={{margin: "5px 0"}}/>
-									<div className='profileInfo-content-row'>
-										<p>{language === 'en' ? 'Firstname' : 'Vorname'}:</p>
-										<p style={{color: user.vorname ? "unser" : "gray"}}>{user.vorname ? user.vorname : "Nicht angegeben"}</p>
-									</div>
-									<hr style={{margin: "5px 0"}}/>
-									<div className='profileInfo-content-row'>
-										<p>{language === 'en' ? 'Lastname' : 'Nachname'}:</p>
-										<p style={{color: user.nachname ? "unser" : "gray"}}>{user.nachname ? user.nachname : "Nicht angegeben"}</p>
-									</div>
+									{indexTab === 'accountandsecurity' &&
+										<>
+											<div className='profileInfo-content-row'>
+												<p>{language === 'en' ? 'Username' : 'Nutzername'}:</p>
+												<p>{user.benutzername}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>E-Mail:</p>
+												<p>{user.email}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>{language === 'en' ? 'Firstname' : 'Vorname'}:</p>
+												<p style={{color: user.vorname ? "unser" : "gray"}}>{user.vorname ? user.vorname : "Nicht angegeben"}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>{language === 'en' ? 'Lastname' : 'Nachname'}:</p>
+												<p style={{color: user.nachname ? "unser" : "gray"}}>{user.nachname ? user.nachname : "Nicht angegeben"}</p>
+											</div>
+										</>
+									}
+									{indexTab === 'socialsandlinks' &&
+										<>
+											<div className='profileInfo-content-row'>
+												<p>Steam:</p>
+												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>Epic Games:</p>
+												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>Ubisoft:</p>
+												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>EA Play:</p>
+												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+											</div>
+											<hr style={{margin: "5px 0"}}/>
+											<div className='profileInfo-content-row'>
+												<p>Battle.net:</p>
+												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+											</div>
+										</>
+									}
 								</div>
 							</>
 						}
 						{indexTab === 'adminanddashboard' &&
 							<>
 								<div className='admin-index-tab-menu'>
-									<p className='admin-index-tab-item'>Games</p>
-									<hr style={{margin: "0"}}/>
-									<p className='admin-index-tab-item'>Publisher</p>
-									<hr style={{margin: "0"}}/>
-									<p className='admin-index-tab-item'>Genre</p>
-									<hr style={{margin: "0"}}/>
-									<p className='admin-index-tab-item'>Platforms</p>
+									<p 
+										className={`admin-index-tab-item ${adminTab === 'accounts' ? 'active' : ''}`}
+										onClick={((e) => setAdminTab('accounts'))}
+										>Accounts</p>
+									<hr style={{margin: "0", width: 'calc(100% - 24px)', alignSelf: 'center'}}/>
+									<p 
+										className={`admin-index-tab-item ${adminTab === 'games' ? 'active' : ''}`}
+										onClick={((e) => setAdminTab('games'))}
+										>{language === 'en' ? 'Games' : 'Spiele'}</p>
+									<hr style={{margin: "0", width: 'calc(100% - 24px)', alignSelf: 'center'}}/>
+									<p 
+										className={`admin-index-tab-item ${adminTab === '' ? 'active' : ''}`}
+										onClick={((e) => setAdminTab(null))}
+										>{language === 'en' ? 'Placeholder' : 'Platzhalter'}</p>
+									<hr style={{margin: "0", width: 'calc(100% - 24px)', alignSelf: 'center'}}/>
+									<p 
+										className={`admin-index-tab-item ${adminTab === 'logs' ? 'active' : ''}`}
+										onClick={((e) => setAdminTab('logs'))}
+										>Logs</p>
 								</div>
 							</>
 						}
@@ -190,16 +236,16 @@ const ProfilePage = ({setProfilePicChange}) => {
 						<div className='profile-index-tab-menu'>
 							<p 
 								onClick={((e) => setIndexTab('accountandsecurity'))}
-								className={indexTab === 'accountandsecurity' ? 'indextab-active' : null}
+								className={indexTab === 'accountandsecurity' ? 'indextab-active' : ''}
 								>{language === 'en' ? 'Account and Security' : 'Account und Sicherheit'}</p>
 							<p 
 								onClick={((e) => setIndexTab('socialsandlinks'))}
-								className={indexTab === 'socialsandlinks' ? 'indextab-active' : null}
+								className={indexTab === 'socialsandlinks' ? 'indextab-active' : ''}
 								>{language === 'en' ? 'Socials and Links' : 'Soziales und Verlinkungen'}</p>
 							{isAdmin && 
 								<p
 									onClick={((e) => setIndexTab('adminanddashboard'))}
-									className={indexTab === 'adminanddashboard' ? 'indextab-active' : null }
+									className={indexTab === 'adminanddashboard' ? 'indextab-active' : '' }
 									>{language === 'en' ? 'Admin and Dashboard' : 'Admin und Dashboard'}</p>
 								}
 						</div>
@@ -248,10 +294,11 @@ const ProfilePage = ({setProfilePicChange}) => {
 							</>
 						: indexTab === 'socialsandlinks' ?
 							<>
-								Soziales und Verlinkunden..
+								Under construction..
 							</>
 						: indexTab === 'adminanddashboard' ?
 							<>
+								<AdminTable adminTab={adminTab} />
 							</>
 						: <p>Error</p>
 						}
