@@ -20,6 +20,12 @@ const GamesPage = () => {
   const [inputValueMax, setInputValueMax] = useState(maxPrice);
   const [hoveredGame, setHoveredGame] = useState(null);
   const [filterCondition, setFilterCondition] = useState("ALL");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItemsSort, setSelectedItemsSort] = useState([]);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const items = ["Price", "Release Date", "Title"];
 
   const fetchGames = async () => {
     try {
@@ -133,6 +139,15 @@ const GamesPage = () => {
 
   const handleMouseLeave = () => {
     setHoveredGame(null);
+  };
+
+  const handleCheckboxChange = (e) => {
+    const value = e.target.value;
+    setSelectedItemsSort((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
   };
 
   return (
@@ -346,8 +361,36 @@ const GamesPage = () => {
         </div>
         <div className="gamespage-main-games-wrapper">
           <div className="gamespage-main-games-header">
-            <div></div>
-            <div></div>
+            <div className="gamespage-main-games-header-left-pagination">
+              <i class="bi bi-caret-left"></i>
+              <i class="bi bi-caret-right"></i>
+            </div>
+            <div className="gamespage-main-games-header-middle">
+              <div className="gamespage-main-games-header-middle-sort-wrapper">
+                {language === "en" ? "Sort by:" : "Sortieren nach:"}
+                <div className="gamespage-main-games-header-middle-sort">
+                  {selectedItemsSort}
+                  <i class="bi bi-caret-down" onClick={toggleDropdown}></i>
+                </div>
+                {isOpen && (
+                  <ul className="gamespage-main-games-header-dropdown-list">
+                    {items.map((item) => (
+                      <li key={item}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            value={item}
+                            checked={selectedItemsSort.includes(item)}
+                            onChange={handleCheckboxChange}
+                          />
+                          {item}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
             <div></div>
           </div>
           <div className="gamespage-main-games-middle">
