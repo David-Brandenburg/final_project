@@ -14,6 +14,8 @@ import "./styles/App.scss";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import { LogginContext } from "./contexts/LogginContext.js";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
+import AdminEditModal from "./components/AdminModals/AdminEditModal.jsx";
+import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -28,6 +30,10 @@ function App() {
     setOpenLoginModal,
     openGameModal,
     setOpenGameModal,
+		adminEditModal,
+		setAdminEditModal,
+		adminDeleteModal,
+		setAdminDeleteModal,
   } = useContext(ModalContext);
 
 	const { isLoggedIn } = useContext(LogginContext);
@@ -51,6 +57,12 @@ function App() {
     if (openGameModal) {
       setOpenGameModal(false);
     }
+		if (adminEditModal) {
+			setAdminEditModal('');
+		}
+		if (adminDeleteModal) {
+			setAdminDeleteModal('');
+		}
   };
 
   return (
@@ -90,7 +102,10 @@ function App() {
       </main>
       <Footer />
       {openModalBlocker && (
-        <div className="modal-blocker" onClick={handleModalClose} />
+        <div className="modal-blocker" onClick={handleModalClose}>
+					{adminEditModal && <AdminEditModal />}
+					{adminDeleteModal && <AdminDeleteModal />}
+				</div>
       )}
     </>
   );

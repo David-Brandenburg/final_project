@@ -46,6 +46,18 @@
 				}
 				&:hover{
 					background-color: color-mix(in lab, $accentColorLightBlue , #fff 20%);
+					color: var(--mainBorder);
+				}
+				.edit-delete-td{
+					text-align: center;
+					width: 120px!important;
+					user-select: none;
+					> .bi{
+						&:hover{
+							color: $accentColorDarkOrange;
+							cursor: pointer;
+						}
+					}
 				}
 			}
 		}
