@@ -26,10 +26,12 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
     setOpenLoginModal,
     openGameModal,
     setOpenGameModal,
+		adminEditModal,
+		setAdminEditModal,
   } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
-  const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } =
+  const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn, setIsAdmin } =
     useContext(LogginContext);
   const { language, toggleLanguage } = useLanguage();
 
@@ -55,6 +57,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
     setOpenCart(false);
     setOpenLoginModal(false);
     setOpenGameModal(false);
+		setAdminEditModal('');
   };
 
   const handleOpenCart = (e) => {
@@ -64,8 +67,10 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
       setOpenSearch(false);
       setOpenLoginModal(false);
       setOpenGameModal(false);
-    } else {
-      setOpenModalBlocker((prev) => !prev);
+    } else if (adminEditModal) {
+			setAdminEditModal('')
+		} else {
+			setOpenModalBlocker((prev) => !prev);
     }
     setOpenCart((prev) => !prev);
   };
@@ -86,6 +91,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
   const handleLogout = (e) => {
     e.preventDefault();
     toast.success("Du wirst ausgeloggt!");
+		setIsAdmin(false)
     setTimeout(() => {
       setLoggedInUser({
         benutzername: "",
@@ -139,6 +145,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
       e.stopPropagation();
       e.preventDefault();
       setOpenGameModal(true);
+			setAdminEditModal('');
       setOpenModalBlocker(true);
       setOpenSearch(false);
       setOpenCart(false);

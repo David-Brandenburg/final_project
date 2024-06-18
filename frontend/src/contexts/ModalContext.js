@@ -9,6 +9,9 @@ export const ModalContextProvider = ({ children }) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openGameModal, setOpenGameModal] = useState(false);
   const [openLovedGamesModal, setOpenLovedGamesModal] = useState(false);
+	const [adminEditModal, setAdminEditModal] = useState('');
+	const [adminDeleteModal, setAdminDeleteModal] = useState('');
+	const [adminTab, setAdminTab] = useState('accounts');
 
   return (
     <ModalContext.Provider
@@ -25,6 +28,12 @@ export const ModalContextProvider = ({ children }) => {
         setOpenGameModal,
         openLovedGamesModal,
         setOpenLovedGamesModal,
+				adminEditModal,
+				setAdminEditModal,
+				adminDeleteModal,
+				setAdminDeleteModal,
+				adminTab,
+				setAdminTab
       }}>
       {children}
     </ModalContext.Provider>

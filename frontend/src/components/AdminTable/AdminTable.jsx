@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './admintable.scss';
 import { toast } from 'react-toastify';
+import { ModalContext } from '../../contexts/ModalContext';
 
-const AdminTable = ({ adminTab }) => {
-	const [data, setData] = useState(null)
+const AdminTable = () => {
+	const [data, setData] = useState(null);
+
+	const { setOpenModalBlocker, setAdminEditModal, adminTab } = useContext(ModalContext)
 
 	const fetchData = async (e) => {
 		try {
@@ -24,12 +27,17 @@ const AdminTable = ({ adminTab }) => {
 
 	useEffect(() => {
 		fetchData();
-		console.log(adminTab)
 	}, [adminTab])
 
 	useEffect(() => {
 		console.log(data)
 	}, [data])
+
+	const handleEditEntry = (e, id) => {
+		e.preventDefault();
+		setOpenModalBlocker(true);
+		setAdminEditModal(id);
+	};
 
 	return (
 		<div className='adminTable-wrapper'>
@@ -52,6 +60,9 @@ const AdminTable = ({ adminTab }) => {
 							key !== 'discount' &&
 							key !== 'bgPic' &&
 							key !== 'rating' &&
+							key !== 'platformAccounts' &&
+							key !== 'sold' &&
+							key !== 'salesHistory' &&
 							key !== 'description'
 						)
 						.map((key) => (
@@ -79,6 +90,9 @@ const AdminTable = ({ adminTab }) => {
 									key !== 'discount' &&
 									key !== 'bgPic' &&
 									key !== 'rating' &&
+									key !== 'platformAccounts' &&
+									key !== 'sold' &&
+									key !== 'salesHistory' &&
 									key !== 'description'
 								)
 								.map(([key, value]) => {
@@ -114,7 +128,7 @@ const AdminTable = ({ adminTab }) => {
 										</td>
 									);
 								})}
-							<td style={{textAlign: 'center', width: '100px'}}><i className="bi bi-pencil-square"></i> &nbsp; | &nbsp; <i className="bi bi-trash3"></i></td>
+								<td className='edit-delete-td'><i className="bi bi-pencil-square" onClick={((e) => handleEditEntry(e, item._id))}></i> &nbsp; | &nbsp; <i className="bi bi-trash3"></i></td>
 						</tr>
 					))}
 				</tbody>

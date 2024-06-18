@@ -5,6 +5,7 @@ import defaultPic from '../../assets/defaultProfilepic.webp';
 import { useLanguage } from '../../contexts/LanguageContext.js'
 import './profilepage.scss'
 import AdminTable from '../../components/AdminTable/AdminTable.jsx';
+import { ModalContext } from '../../contexts/ModalContext.js';
 
 const ProfilePage = ({setProfilePicChange}) => {
 	const { language } = useLanguage();
@@ -13,8 +14,8 @@ const ProfilePage = ({setProfilePicChange}) => {
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
 	const [indexTab, setIndexTab] = useState('accountandsecurity');
-	const [adminTab, setAdminTab] = useState('accounts');
-	
+	// const [adminTab, setAdminTab] = useState('accounts');
+	const { adminTab, setAdminTab } = useContext(ModalContext);
 	const { loggedInUser, isAdmin } = useContext(LogginContext);
 
 	const fetchUser = useMemo(() => async () => {
@@ -58,7 +59,7 @@ const ProfilePage = ({setProfilePicChange}) => {
 				throw new Error("Something went wrong");
 			} else {
 				const data = await response.json();
-				toast.success(data.message)
+				toast.success(data.message, {delay: 1500})
 				setHasFile(false)
 				fetchUser()
 				localStorage.setItem("profilePic", data.profilePic)
@@ -179,27 +180,37 @@ const ProfilePage = ({setProfilePicChange}) => {
 										<>
 											<div className='profileInfo-content-row'>
 												<p>Steam:</p>
-												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+												<p 
+													style={{color: user.platformAccounts.Steam === '' ? 'gray' : 'unset'}}
+												>{user && user.platformAccounts.Steam === '' ? language === 'en' ? 'Not linked' : 'Nicht verlinkt' : user.platformAccounts.Steam}</p>
 											</div>
 											<hr style={{margin: "5px 0"}}/>
 											<div className='profileInfo-content-row'>
 												<p>Epic Games:</p>
-												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+												<p 
+													style={{color: user.platformAccounts.EpicGames === '' ? 'gray' : 'unset'}}
+												>{user && user.platformAccounts.EpicGames === '' ? language === 'en' ? 'Not linked' : 'Nicht verlinkt' : user.platformAccounts.EpicGames}</p>
 											</div>
 											<hr style={{margin: "5px 0"}}/>
 											<div className='profileInfo-content-row'>
 												<p>Ubisoft:</p>
-												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+												<p 
+													style={{color: user.platformAccounts.Ubisoft === '' ? 'gray' : 'unset'}}
+												>{user && user.platformAccounts.Ubisoft === '' ? language === 'en' ? 'Not linked' : 'Nicht verlinkt' : user.platformAccounts.Ubisoft}</p>
 											</div>
 											<hr style={{margin: "5px 0"}}/>
 											<div className='profileInfo-content-row'>
 												<p>EA Play:</p>
-												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+												<p 
+													style={{color: user.platformAccounts.EAPlay === '' ? 'gray' : 'unset'}}
+												>{user && user.platformAccounts.EAPlay === '' ? language === 'en' ? 'Not linked' : 'Nicht verlinkt' : user.platformAccounts.EAPlay}</p>
 											</div>
 											<hr style={{margin: "5px 0"}}/>
 											<div className='profileInfo-content-row'>
 												<p>Battle.net:</p>
-												<p>{language === 'en' ? 'Not linked' : 'Nicht verlinkt'}</p>
+												<p 
+													style={{color: user.platformAccounts.BattleNET === '' ? 'gray' : 'unset'}}
+												>{user && user.platformAccounts.BattleNET === '' ? language === 'en' ? 'Not linked' : 'Nicht verlinkt' : user.platformAccounts.BattleNET}</p>
 											</div>
 										</>
 									}
@@ -298,7 +309,7 @@ const ProfilePage = ({setProfilePicChange}) => {
 							</>
 						: indexTab === 'adminanddashboard' ?
 							<>
-								<AdminTable adminTab={adminTab} />
+								<AdminTable />
 							</>
 						: <p>Error</p>
 						}
