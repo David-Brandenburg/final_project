@@ -5,6 +5,7 @@ import RangeSlider from "react-range-slider-input";
 import GamesModal from "../../components/HomePage/GamesModal";
 import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
+import { set } from "date-fns";
 
 const GamesPage = () => {
   const { language } = useLanguage();
@@ -22,11 +23,39 @@ const GamesPage = () => {
   const [filterCondition, setFilterCondition] = useState("ALL");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItemsSort, setSelectedItemsSort] = useState([]);
+  const [sortCondition, setSortCondition] = useState("ALL");
+  const [salesHistory, setSalesHistory] = useState([]);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const items = ["Price", "Release Date", "Title"];
-
+  const items =
+    language === "en"
+      ? [
+          "Best selling (recently)",
+          "Best selling (all time)",
+          "Price (ascending)",
+          "Price (descending)",
+          "Discounted (ascending)",
+          "Discounted (descending)",
+          "Title A-Z",
+          "Title Z-A",
+          "Release date (newest)",
+          "Release date (oldest)",
+          "Ratings (descending)",
+        ]
+      : [
+          "Meistverkauft (kürzlich)",
+          "Meistverkauft (aller Zeiten)",
+          "Preis (aufsteigend)",
+          "Preis (absteigend)",
+          "Reduziert (aufsteigend)",
+          "Reduziert (absteigend)",
+          "Title A-Z",
+          "Title Z-A",
+          "Erscheinungsdatum (vom neusten)",
+          "Erscheinungsdatum (zum ältesten)",
+          "Bewertungen (absteigend)",
+        ];
   const fetchGames = async () => {
     try {
       const response = await fetch("http://localhost:3001/games");
@@ -39,6 +68,7 @@ const GamesPage = () => {
 
   useEffect(() => {
     fetchGames();
+    checkSalesHistoryDate();
   }, []);
 
   const handleReduzierteTitle = () => {
@@ -52,18 +82,6 @@ const GamesPage = () => {
       prevCondition === "DLC" ? "ALL" : "DLC"
     );
   };
-
-  const filteredGames = games.filter((game) => {
-    if (filterCondition === "DISCOUNTED") {
-      return game.price < 10;
-    } else if (filterCondition === "DLC") {
-      return game.DLC;
-    } else if (filterCondition === "PRICE_RANGE") {
-      return game.price >= minPrice && game.price <= maxPrice;
-    } else {
-      return true;
-    }
-  });
 
   const handleModal = (method) => {
     if (method === "DLC") {
@@ -143,19 +161,91 @@ const GamesPage = () => {
 
   const handleCheckboxChange = (e) => {
     const value = e.target.value;
-    setSelectedItemsSort((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value]
-    );
+    setSelectedItemsSort(value);
+    setSortCondition(value);
+    setIsOpen(!isOpen);
   };
+
+  const filterGames = (games) => {
+    return games.filter((game) => {
+      if (filterCondition === "DISCOUNTED") {
+        return game.price < 10;
+      } else if (filterCondition === "DLC") {
+        return game.DLC;
+      } else if (filterCondition === "PRICE_RANGE") {
+        return game.price >= minPrice && game.price <= maxPrice;
+      } else {
+        return true;
+      }
+    });
+  };
+
+  const checkSalesHistoryDate = () => {
+    {
+      games.forEach((game) => {
+        {
+          game.salesHistory.map((sale) => {
+            salesHistory.push({
+              saleDate: sale.date,
+              gameTitle: game.title,
+            });
+          });
+        }
+      });
+    }
+  };
+
+  function wasPurchasedInJune(salesHistory) {
+    return salesHistory.some((sale) => {
+      const dateParts = sale.date.split("-");
+      const month = dateParts[1];
+      return month === "06";
+    });
+  }
+
+  const sortGames = (games) => {
+    return games.sort((a, b) => {
+      if (sortCondition === "Meistverkauft (kürzlich)") {
+        const aPurchasedInJune = wasPurchasedInJune(a.salesHistory);
+        const bPurchasedInJune = wasPurchasedInJune(b.salesHistory);
+        if (aPurchasedInJune && !bPurchasedInJune) return -1;
+        if (!aPurchasedInJune && bPurchasedInJune) return 1;
+        return b.sold - a.sold;
+      } else if (sortCondition === "Meistverkauft (aller Zeiten)") {
+        return b.sold - a.sold;
+      } else if (sortCondition === "Preis (aufsteigend)") {
+        return a.price - b.price;
+      } else if (sortCondition === "Preis (absteigend)") {
+        return b.price - a.price;
+      } else if (sortCondition === "Reduziert (aufsteigend)") {
+        return a.discount - b.discount;
+      } else if (sortCondition === "Reduziert (absteigend)") {
+        return b.discount - a.discount;
+      } else if (sortCondition === "Title A-Z") {
+        return a.title.localeCompare(b.title);
+      } else if (sortCondition === "Title Z-A") {
+        return b.title.localeCompare(a.title);
+      } else if (sortCondition === "Erscheinungsdatum (vom neusten)") {
+        return new Date(b.releaseDate) - new Date(a.releaseDate);
+      } else if (sortCondition === "Erscheinungsdatum (zum ältesten)") {
+        return new Date(a.releaseDate) - new Date(b.releaseDate);
+      } else if (sortCondition === "Bewertungen (absteigend)") {
+        return b.rating - a.rating;
+      } else {
+        return 0;
+      }
+    });
+  };
+
+  const filteredGames = filterGames(games);
+  const sortedGames = sortGames(filteredGames);
 
   return (
     <div className="main-wrapper gamespage-wrapper">
       <div className="gamespage-header-wrapper">
         <h1>
           {language === "en" ? "PC games / All Games" : " Alle Spiele"}
-          <span> ({filteredGames.length})</span>
+          <span> ({sortedGames.length})</span>
         </h1>
         <div className="gamespage-header-search">
           <i className="bi bi-search"></i>
@@ -362,40 +452,48 @@ const GamesPage = () => {
         <div className="gamespage-main-games-wrapper">
           <div className="gamespage-main-games-header">
             <div className="gamespage-main-games-header-left-pagination">
-              <i class="bi bi-caret-left"></i>
-              <i class="bi bi-caret-right"></i>
+              <i className="bi bi-caret-left"></i>
+              <i className="bi bi-caret-right"></i>
             </div>
             <div className="gamespage-main-games-header-middle">
-              <div className="gamespage-main-games-header-middle-sort-wrapper">
+              <div
+                className="gamespage-main-games-header-middle-sort-wrapper"
+                onClick={toggleDropdown}>
                 {language === "en" ? "Sort by:" : "Sortieren nach:"}
                 <div className="gamespage-main-games-header-middle-sort">
                   {selectedItemsSort}
-                  <i class="bi bi-caret-down" onClick={toggleDropdown}></i>
+                  <i className="bi bi-caret-down"></i>
                 </div>
-                {isOpen && (
-                  <ul className="gamespage-main-games-header-dropdown-list">
+              </div>
+              {isOpen && (
+                <div className="gamespage-main-games-header-dropdown-list">
+                  <ul>
                     {items.map((item) => (
-                      <li key={item}>
-                        <label>
+                      <li
+                        className="gamespage-main-games-header-dropdown-list-item"
+                        key={item}>
+                        <label className="square-checkbox">
                           <input
                             type="checkbox"
                             value={item}
                             checked={selectedItemsSort.includes(item)}
                             onChange={handleCheckboxChange}
                           />
+                          <span className="checkmark"></span>
                           {item}
                         </label>
                       </li>
                     ))}
                   </ul>
-                )}
-              </div>
+                </div>
+              )}
             </div>
+
             <div></div>
           </div>
           <div className="gamespage-main-games-middle">
-            {filteredGames.length > 0 ? (
-              filteredGames.map((game, index) => (
+            {sortedGames.length > 0 ? (
+              sortedGames.map((game, index) => (
                 <div
                   className="gamespage-main-games-middle-gamescard-wrapper"
                   key={game.title + index}>

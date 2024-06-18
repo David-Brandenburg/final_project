@@ -136,35 +136,83 @@
       display: flex;
       padding: 1rem;
       justify-content: space-between;
+
       .gamespage-main-games-header-left-pagination {
       }
       .gamespage-main-games-header-middle {
         .gamespage-main-games-header-middle-sort-wrapper {
           display: flex;
           align-items: center;
+          width: 100%;
           .gamespage-main-games-header-middle-sort {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            position: relative;
             padding: 0.5rem;
-            border: 1px solid var(--mainColor);
             border-radius: 5px;
             margin-right: 1rem;
+            width: 250px;
             i {
               margin-right: 0.5rem;
             }
           }
-          .gamespage-main-games-header-dropdown-list {
-            position: absolute;
-            background-color: black;
-            border: 1px solid var(--mainColor);
-            border-radius: 5px;
-            z-index: 1;
-            .gamespage-main-games-header-dropdown-list-item {
-              padding: 0.5rem;
+        }
+        .gamespage-main-games-header-dropdown-list {
+          position: absolute;
+          height: fit-content;
+          width: fit-content;
+          padding: 10px;
+          background: var(--background);
+          border: 1px solid var(--mainBorder);
+          border-radius: 5px;
+          box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+          color: var(--mainColor);
+          display: flex;
+          .gamespage-main-games-header-dropdown-list-item {
+            padding: 0.5rem;
+            width: 150px;
+            cursor: pointer;
+            .square-checkbox {
+              display: flex;
+              align-items: center;
               cursor: pointer;
-              &:hover {
-                background-color: var(--mainColor);
-                color: white;
+              font-size: 0.8rem;
+              input {
+                display: none;
+              }
+              .checkmark {
+                width: 15px;
+                height: 15px;
+                background-color: #fff;
+                border: 2px solid #ccc;
+                margin-right: 10px;
+                position: relative;
+                display: inline-block;
+                transition: background-color 0.2s, border-color 0.2s;
+
+                &::after {
+                  content: "";
+                  position: absolute;
+                  display: none;
+                }
+              }
+              input:checked + .checkmark {
+                background-color: #007bff;
+                border-color: #007bff;
+
+                &::after {
+                  display: block;
+                }
+
+                &::after {
+                  top: 50%;
+                  left: 50%;
+                  width: 7.5px;
+                  height: 7.5px;
+                  background: white;
+                  transform: translate(-50%, -50%);
+                }
               }
             }
           }
