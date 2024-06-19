@@ -86,6 +86,18 @@ const GamesPage = () => {
     );
   };
 
+  const handleNewArrivals = () => {
+    setFilterCondition((prevCondition) =>
+      prevCondition === "NEW_ARRIVALS" ? "ALL" : "NEW_ARRIVALS"
+    );
+  };
+
+  const handleSoon = () => {
+    setFilterCondition((prevCondition) =>
+      prevCondition === "SOON" ? "ALL" : "SOON"
+    );
+  };
+
   const handleModal = (method) => {
     if (method === "DLC") {
       setShowDLC((prevState) => !prevState);
@@ -177,6 +189,22 @@ const GamesPage = () => {
         return game.DLC;
       } else if (filterCondition === "PRICE_RANGE") {
         return game.price >= minPrice && game.price <= maxPrice;
+      }
+      if (filterCondition === "NEW_ARRIVALS") {
+        const today = new Date();
+        const fourWeeksAgo = new Date();
+        fourWeeksAgo.setDate(today.getDate() - 28);
+        return (
+          game.releaseDate > fourWeeksAgo.toISOString().split("T")[0] &&
+          game.releaseDate <= today.toISOString().split("T")[0]
+        );
+      } else if (filterCondition === "SOON") {
+        const today = new Date();
+        const startOfNextYear = new Date(today.getFullYear() + 1, 0, 1);
+        return (
+          game.releaseDate > today.toISOString().split("T")[0] &&
+          game.releaseDate < startOfNextYear.toISOString().split("T")[0]
+        );
       } else {
         return true;
       }
@@ -414,14 +442,14 @@ const GamesPage = () => {
               <>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" disabled />
+                    <input type="checkbox" onChange={handleNewArrivals} />
                     <span className="checkmark"></span>
                     {language === "en" ? " New arrivals" : " Neuankömmlinge"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" disabled />
+                    <input type="checkbox" onChange={handleSoon} />
                     <span className="checkmark"></span>
                     {language === "en" ? " Upcoming games" : " Bald"}
                   </label>
