@@ -6,6 +6,7 @@ import GamesModal from "../../components/HomePage/GamesModal";
 import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
 import { set } from "date-fns";
+import { se } from "date-fns/locale";
 
 const GamesPage = () => {
   const { language } = useLanguage();
@@ -24,7 +25,8 @@ const GamesPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItemsSort, setSelectedItemsSort] = useState([]);
   const [sortCondition, setSortCondition] = useState("ALL");
-  const [salesHistory, setSalesHistory] = useState([]);
+  const [salesHistory] = useState([]);
+  const [showListGrid, setShowListGrid] = useState(true);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -35,7 +37,6 @@ const GamesPage = () => {
           "Best selling (all time)",
           "Price (ascending)",
           "Price (descending)",
-          "Discounted (ascending)",
           "Discounted (descending)",
           "Title A-Z",
           "Title Z-A",
@@ -48,7 +49,6 @@ const GamesPage = () => {
           "Meistverkauft (aller Zeiten)",
           "Preis (aufsteigend)",
           "Preis (absteigend)",
-          "Reduziert (aufsteigend)",
           "Reduziert (absteigend)",
           "Title A-Z",
           "Title Z-A",
@@ -68,8 +68,11 @@ const GamesPage = () => {
 
   useEffect(() => {
     fetchGames();
-    checkSalesHistoryDate();
   }, []);
+
+  useEffect(() => {
+    checkSalesHistoryDate();
+  }, [games]);
 
   const handleReduzierteTitle = () => {
     setFilterCondition((prevCondition) =>
@@ -181,18 +184,14 @@ const GamesPage = () => {
   };
 
   const checkSalesHistoryDate = () => {
-    {
-      games.forEach((game) => {
-        {
-          game.salesHistory.map((sale) => {
-            salesHistory.push({
-              saleDate: sale.date,
-              gameTitle: game.title,
-            });
-          });
-        }
+    games.forEach((game) => {
+      game.salesHistory.map((sale) => {
+        return salesHistory.push({
+          saleDate: sale.date,
+          gameTitle: game.title,
+        });
       });
-    }
+    });
   };
 
   function wasPurchasedInJune(salesHistory) {
@@ -217,8 +216,6 @@ const GamesPage = () => {
         return a.price - b.price;
       } else if (sortCondition === "Preis (absteigend)") {
         return b.price - a.price;
-      } else if (sortCondition === "Reduziert (aufsteigend)") {
-        return a.discount - b.discount;
       } else if (sortCondition === "Reduziert (absteigend)") {
         return b.discount - a.discount;
       } else if (sortCondition === "Title A-Z") {
@@ -465,6 +462,14 @@ const GamesPage = () => {
                   <i className="bi bi-caret-down"></i>
                 </div>
               </div>
+              <div className="gamespage-main-games-header-middle-grid-list-wrapper">
+                <i
+                  className="bi bi-grid-3x3-gap-fill"
+                  onClick={() => setShowListGrid(true)}></i>
+                <i
+                  class="list bi bi-list-task"
+                  onClick={() => setShowListGrid(false)}></i>
+              </div>
               {isOpen && (
                 <div className="gamespage-main-games-header-dropdown-list">
                   <ul>
@@ -488,10 +493,13 @@ const GamesPage = () => {
                 </div>
               )}
             </div>
-
-            <div></div>
           </div>
-          <div className="gamespage-main-games-middle">
+          <div
+            className={`${
+              showListGrid
+                ? "gamespage-main-games-middle-grid"
+                : "gamespage-main-games-middle-list"
+            }`}>
             {sortedGames.length > 0 ? (
               sortedGames.map((game, index) => (
                 <div
@@ -510,8 +518,23 @@ const GamesPage = () => {
                       />
                     </div>
                     <div className="game-card-content">
-                      <h3 className="game-card-title">{game.title}</h3>
-                      <p className="game-card-price">{game.price} €</p>
+                      <h3>{game.title}</h3>
+                      <div className="game-card-price">
+                        {game.discount >= 1 && (
+                          <div className="game-card-rabatt">
+                            <p>-{game.discount}%</p>
+                          </div>
+                        )}
+                        <div className="game-card-price-text">
+                          <p>
+                            {(
+                              game.price -
+                              (game.price * game.discount) / 100
+                            ).toFixed(2)}
+                            €
+                          </p>{" "}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

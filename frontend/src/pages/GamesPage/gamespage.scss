@@ -138,8 +138,20 @@
       justify-content: space-between;
 
       .gamespage-main-games-header-left-pagination {
+        display: flex;
+        align-items: center;
       }
       .gamespage-main-games-header-middle {
+        display: flex;
+        align-items: center;
+        .gamespage-main-games-header-middle-grid-list-wrapper {
+          display: flex;
+          gap: 0.5rem;
+          font-size: 1rem;
+          .list {
+            font-size: 1.3rem;
+          }
+        }
         .gamespage-main-games-header-middle-sort-wrapper {
           display: flex;
           align-items: center;
@@ -163,6 +175,7 @@
           height: fit-content;
           width: fit-content;
           padding: 10px;
+          top: 150px;
           background: var(--background);
           border: 1px solid var(--mainBorder);
           border-radius: 5px;
@@ -171,7 +184,7 @@
           display: flex;
           .gamespage-main-games-header-dropdown-list-item {
             padding: 0.5rem;
-            width: 150px;
+            width: 300px;
             cursor: pointer;
             .square-checkbox {
               display: flex;
@@ -219,7 +232,7 @@
         }
       }
     }
-    .gamespage-main-games-middle {
+    .gamespage-main-games-middle-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr); /* 5 Spalten */
       grid-template-rows: repeat(1, auto); /* 4 Reihen */
@@ -237,12 +250,68 @@
           }
           .game-card-content {
             padding: 0.5rem;
-            p {
-              font-size: 1rem;
-              font-weight: 400;
-              color: var(--mainColor);
-              text-align: end;
-              margin: 0.5rem;
+
+            .game-card-price {
+              display: flex;
+              justify-content: flex-end;
+              align-items: flex-end;
+              gap: 10px;
+              .game-card-rabatt {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--mainColor);
+                background-color: $accentColorOrange;
+                padding: 0.5rem 0.5rem;
+              }
+            }
+            .game-card-price-text {
+            }
+          }
+        }
+      }
+    }
+    .gamespage-main-games-middle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .gamespage-main-games-middle-gamescard-wrapper {
+        .game-card {
+          display: flex;
+          background-color: var(--background);
+          border-radius: 15px;
+          height: 110px;
+          .game-card-thumbnail-wrapper {
+            .game-card-thumbnail {
+              border-top-left-radius: 15px;
+              border-bottom-left-radius: 15px;
+              object-fit: cover;
+            }
+          }
+          .game-card-content {
+            display: flex;
+            padding: 0.3rem;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 100%;
+            h3 {
+              font-size: 20px;
+              font-weight: bold;
+              align-self: flex-start;
+            }
+            .game-card-price {
+              display: flex;
+              justify-content: flex-end;
+              align-items: flex-end;
+              gap: 10px;
+              .game-card-rabatt {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--mainColor);
+                background-color: $accentColorOrange;
+                padding: 0.5rem 0.5rem;
+              }
+            }
+            .game-card-price-text {
             }
           }
         }
