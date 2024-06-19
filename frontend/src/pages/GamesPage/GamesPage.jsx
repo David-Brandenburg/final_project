@@ -5,8 +5,6 @@ import RangeSlider from "react-range-slider-input";
 import GamesModal from "../../components/HomePage/GamesModal";
 import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
-import { set } from "date-fns";
-import { se } from "date-fns/locale";
 
 const GamesPage = () => {
   const { language } = useLanguage();
