@@ -16,6 +16,7 @@ import { LogginContext } from "./contexts/LogginContext.js";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
 import AdminEditModal from "./components/AdminModals/AdminEditModal.jsx";
 import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
+import AddGamePage from "./pages/addGamePage/addGamePage.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -30,13 +31,13 @@ function App() {
     setOpenLoginModal,
     openGameModal,
     setOpenGameModal,
-		adminEditModal,
-		setAdminEditModal,
-		adminDeleteModal,
-		setAdminDeleteModal,
+    adminEditModal,
+    setAdminEditModal,
+    adminDeleteModal,
+    setAdminDeleteModal,
   } = useContext(ModalContext);
 
-	const { isLoggedIn } = useContext(LogginContext);
+  const { isLoggedIn } = useContext(LogginContext);
 
   const { screenMode } = useContext(ScreenModeContext);
 
@@ -57,12 +58,12 @@ function App() {
     if (openGameModal) {
       setOpenGameModal(false);
     }
-		if (adminEditModal) {
-			setAdminEditModal('');
-		}
-		if (adminDeleteModal) {
-			setAdminDeleteModal('');
-		}
+    if (adminEditModal) {
+      setAdminEditModal("");
+    }
+    if (adminDeleteModal) {
+      setAdminDeleteModal("");
+    }
   };
 
   return (
@@ -98,14 +99,15 @@ function App() {
             path="/checkout"
             element={isLoggedIn ? <CheckoutPage /> : <ErrorPage />}
           />
+          <Route path="/addGamePage" element={<AddGamePage />} />
         </Routes>
       </main>
       <Footer />
       {openModalBlocker && (
         <div className="modal-blocker" onClick={handleModalClose}>
-					{adminEditModal && <AdminEditModal />}
-					{adminDeleteModal && <AdminDeleteModal />}
-				</div>
+          {adminEditModal && <AdminEditModal />}
+          {adminDeleteModal && <AdminDeleteModal />}
+        </div>
       )}
     </>
   );
