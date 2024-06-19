@@ -1,3 +1,4 @@
+import { ar } from "date-fns/locale";
 import mongoose from "mongoose";
 
 // MongoDB Schema
@@ -17,13 +18,14 @@ const GamesSchema = new mongoose.Schema({
   bgPic: { type: String, default: "" },
   pics: { type: Array, default: [] },
   tags: { type: Array, default: [] },
+  trailer: { type: Array, default: [] },
   functions: { type: Array, default: [] },
   salesHistory: [{ date: { type: Date, default: Date.now } }],
   sold: { type: Number, default: 0 },
-  trailer: { type: String, default: "" },
   releaseDate: { type: String, default: "" },
   earlyAccess: { type: Boolean, default: false },
   languages: { type: Array, default: [] },
+  trailerThumbnails: { type: Array, default: [] },
 });
 
 const Game = mongoose.model("games", GamesSchema);
