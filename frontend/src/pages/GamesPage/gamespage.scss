@@ -1,0 +1,321 @@
+@import "../../styles/variables.scss";
+
+.gamespage-wrapper {
+  display: flex;
+  flex-direction: column;
+  color: var(--mainColor);
+
+  .gamespage-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--mainColor);
+    .gamespage-header-search {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 15px;
+      width: 40%;
+      i {
+        color: black;
+        padding: 0.5rem;
+      }
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--mainColor);
+        border-radius: 5px;
+        margin-right: 1rem;
+      }
+    }
+  }
+  .gamespage-main-wrapper {
+    padding: 1rem;
+    display: flex;
+    .gamespage-main-filter-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 25%;
+      height: 600px; /* set a fixed height for the div */
+      overflow-y: scroll;
+      .gamespage-main-filter-li {
+        padding: 0.5rem;
+        .square-checkbox {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          font-size: 0.8rem;
+          input {
+            display: none;
+          }
+          .checkmark {
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            margin-right: 10px;
+            position: relative;
+            display: inline-block;
+            transition: background-color 0.2s, border-color 0.2s;
+
+            &::after {
+              content: "";
+              position: absolute;
+              display: none;
+            }
+          }
+
+          input:checked + .checkmark {
+            background-color: #007bff;
+            border-color: #007bff;
+
+            &::after {
+              display: block;
+            }
+
+            &::after {
+              top: 50%;
+              left: 50%;
+              width: 7.5px;
+              height: 7.5px;
+              background: white;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+      .gamespage-main-filter-silder-result-wrapper {
+        display: flex;
+        flex-direction: column;
+        .gamespage-main-filter-silder-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          padding: 0.5rem;
+          #gamespage-main-filter-silder .range-slider__thumb {
+            background: orange;
+          }
+          #gamespage-main-filter-silder .range-slider__range {
+            background: #ffbf00;
+          }
+        }
+        .gamespage-main-filter-result-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem;
+          margin-top: 1rem;
+          .gamespage-main-filter-result-min {
+            border: 1px solid var(--mainColor);
+            border-radius: 5px;
+            padding: 0.5rem;
+            text-align: end;
+            width: 50%;
+            margin: 5px;
+          }
+          .gamespage-main-filter-result-max {
+            border: 1px solid var(--mainColor);
+            border-radius: 5px;
+            padding: 0.5rem;
+            text-align: end;
+            width: 50%;
+            margin: 5px;
+          }
+        }
+      }
+    }
+  }
+  .gamespage-main-games-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    padding: 1rem;
+    .gamespage-main-games-header {
+      display: flex;
+      padding: 1rem;
+      justify-content: space-between;
+
+      .gamespage-main-games-header-left-pagination {
+        display: flex;
+        align-items: center;
+      }
+      .gamespage-main-games-header-middle {
+        display: flex;
+        align-items: center;
+        .gamespage-main-games-header-middle-grid-list-wrapper {
+          display: flex;
+          gap: 0.5rem;
+          font-size: 1rem;
+          .list {
+            font-size: 1.3rem;
+          }
+        }
+        .gamespage-main-games-header-middle-sort-wrapper {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          .gamespage-main-games-header-middle-sort {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin-right: 1rem;
+            width: 250px;
+            i {
+              margin-right: 0.5rem;
+            }
+          }
+        }
+        .gamespage-main-games-header-dropdown-list {
+          position: absolute;
+          height: fit-content;
+          width: fit-content;
+          padding: 10px;
+          top: 150px;
+          background: var(--background);
+          border: 1px solid var(--mainBorder);
+          border-radius: 5px;
+          box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+          color: var(--mainColor);
+          display: flex;
+          .gamespage-main-games-header-dropdown-list-item {
+            padding: 0.5rem;
+            width: 300px;
+            cursor: pointer;
+            .square-checkbox {
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              font-size: 0.8rem;
+              input {
+                display: none;
+              }
+              .checkmark {
+                width: 15px;
+                height: 15px;
+                background-color: #fff;
+                border: 2px solid #ccc;
+                margin-right: 10px;
+                position: relative;
+                display: inline-block;
+                transition: background-color 0.2s, border-color 0.2s;
+
+                &::after {
+                  content: "";
+                  position: absolute;
+                  display: none;
+                }
+              }
+              input:checked + .checkmark {
+                background-color: #007bff;
+                border-color: #007bff;
+
+                &::after {
+                  display: block;
+                }
+
+                &::after {
+                  top: 50%;
+                  left: 50%;
+                  width: 7.5px;
+                  height: 7.5px;
+                  background: white;
+                  transform: translate(-50%, -50%);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .gamespage-main-games-middle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 5 Spalten */
+      grid-template-rows: repeat(1, auto); /* 4 Reihen */
+      grid-gap: 1.5rem;
+      .gamespage-main-games-middle-gamescard-wrapper {
+        display: contents;
+        .game-card {
+          background-color: var(--background);
+          border-radius: 15px;
+          .game-card-thumbnail {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            width: 100%;
+            object-fit: cover;
+          }
+          .game-card-content {
+            padding: 0.5rem;
+
+            .game-card-price {
+              display: flex;
+              justify-content: flex-end;
+              align-items: flex-end;
+              gap: 10px;
+              .game-card-rabatt {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--mainColor);
+                background-color: $accentColorOrange;
+                padding: 0.5rem 0.5rem;
+              }
+            }
+            .game-card-price-text {
+            }
+          }
+        }
+      }
+    }
+    .gamespage-main-games-middle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .gamespage-main-games-middle-gamescard-wrapper {
+        .game-card {
+          display: flex;
+          background-color: var(--background);
+          border-radius: 15px;
+          height: 110px;
+          .game-card-thumbnail-wrapper {
+            .game-card-thumbnail {
+              border-top-left-radius: 15px;
+              border-bottom-left-radius: 15px;
+              object-fit: cover;
+            }
+          }
+          .game-card-content {
+            display: flex;
+            padding: 0.3rem;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 100%;
+            h3 {
+              font-size: 20px;
+              font-weight: bold;
+              align-self: flex-start;
+            }
+            .game-card-price {
+              display: flex;
+              justify-content: flex-end;
+              align-items: flex-end;
+              gap: 10px;
+              .game-card-rabatt {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--mainColor);
+                background-color: $accentColorOrange;
+                padding: 0.5rem 0.5rem;
+              }
+            }
+            .game-card-price-text {
+            }
+          }
+        }
+      }
+    }
+  }
+}
