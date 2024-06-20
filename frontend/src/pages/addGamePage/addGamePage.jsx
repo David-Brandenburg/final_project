@@ -7,7 +7,7 @@ const initialData = {
   discount: 0,
   title: "",
   platforms: [],
-  description: "",
+  description: {},
   rating: "",
   publisher: "",
   genres: [],
@@ -24,7 +24,6 @@ const initialData = {
   releaseDate: "",
   earlyAccess: false,
   languages: [],
-  trailerThumbnails: [],
 };
 
 const tagOptions = [
@@ -48,6 +47,29 @@ const tagOptions = [
   "Erkundung",
   "Gewalttätig",
   "Amazon Luna",
+  "Indie",
+  "Fantasy",
+  "Lustig",
+  "JRPG",
+  "Magie",
+  "Cartoongrafik",
+  "Retro",
+  "Demo",
+  "Emotional",
+  "LGBTQ+",
+  "Dystopisch",
+  "Textbasiert",
+  "Mythologie",
+  "Steampunk",
+  "Offene Spielwelt",
+  "OST",
+  "Sexuelle Inhalte",
+  "Gore",
+  "Nacktheit",
+  "Nicht jugendfrei",
+  "Mittelalterlich",
+  "Vampire",
+  "Werwölfe",
 ];
 
 const functionOptions = [
@@ -68,6 +90,8 @@ const genreOptions = [
   "Science Fiction",
   "Horror",
   "Erkundung",
+  "JRPG",
+  "Fantasy",
 ];
 
 const languageOptions = [
@@ -487,29 +511,7 @@ function AddGamePage() {
             </button>
           </div>
         </div>
-        <div>
-          <label>Trailer Thumbnails: </label>
-          {data.trailerThumbnails.map((thumb, index) => (
-            <div key={index}>
-              <input
-                value={thumb}
-                onChange={(e) =>
-                  handleArrayChange(e, "trailerThumbnails", index)
-                }
-              />
-              <button
-                type="button"
-                onClick={() => removeInputField("trailerThumbnails", index)}>
-                -
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => addInputField("trailerThumbnails")}>
-            Add Trailer Thumbnail
-          </button>
-        </div>
+
         <button type="submit">Save</button>
       </form>
     </div>
