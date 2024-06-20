@@ -63,6 +63,12 @@ const AdminTable = () => {
 							key !== 'platformAccounts' &&
 							key !== 'sold' &&
 							key !== 'salesHistory' &&
+							key !== 'languages' &&
+							key !== 'earlyAccess' &&
+							key !== 'releaseDate' &&
+							key !== 'trailer' &&
+							key !== 'trailerThumbnails' &&
+							key !== '__v' &&
 							key !== 'description'
 						)
 						.map((key) => (
@@ -93,6 +99,12 @@ const AdminTable = () => {
 									key !== 'platformAccounts' &&
 									key !== 'sold' &&
 									key !== 'salesHistory' &&
+									key !== 'languages' &&
+									key !== 'earlyAccess' &&
+									key !== 'releaseDate' &&
+									key !== 'trailer' &&
+									key !== 'trailerThumbnails' &&
+									key !== '__v' &&
 									key !== 'description'
 								)
 								.map(([key, value]) => {

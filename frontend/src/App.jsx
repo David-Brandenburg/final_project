@@ -16,6 +16,8 @@ import { LogginContext } from "./contexts/LogginContext.js";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
 import AdminEditModal from "./components/AdminModals/AdminEditModal.jsx";
 import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
+import GamePageImageModal from "./components/GamePageModals/GamePageImageModal.jsx";
+import GamePageTrailerModal from "./components/GamePageModals/GamePageTrailerModal.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -34,6 +36,10 @@ function App() {
 		setAdminEditModal,
 		adminDeleteModal,
 		setAdminDeleteModal,
+		openImageModal,
+		setOpenImageModal,
+		openTrailerModal,
+		setOpenTrailerModal
   } = useContext(ModalContext);
 
 	const { isLoggedIn } = useContext(LogginContext);
@@ -62,6 +68,12 @@ function App() {
 		}
 		if (adminDeleteModal) {
 			setAdminDeleteModal('');
+		}
+		if (openImageModal) {
+			setOpenImageModal('');
+		}
+		if (openTrailerModal) {
+			setOpenTrailerModal('');
 		}
   };
 
@@ -105,6 +117,8 @@ function App() {
         <div className="modal-blocker" onClick={handleModalClose}>
 					{adminEditModal && <AdminEditModal />}
 					{adminDeleteModal && <AdminDeleteModal />}
+					{openImageModal && <GamePageImageModal />}
+					{openTrailerModal && <GamePageTrailerModal />}
 				</div>
       )}
     </>

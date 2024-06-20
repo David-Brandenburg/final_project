@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo } from "../controller/userController.js";
+import { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo, deleteAccount } from "../controller/userController.js";
 import checkToken from "./../middleware/checkToken.js";
 import upload from '../middleware/cloudinary.js';
 
@@ -26,5 +26,7 @@ router.patch("/updateAccountProfilePic/:accountId", upload.single("profilepic"),
 router.patch("/updateAccountPassword/:accountId", updateAccountPassword);
 
 router.patch("/updateAccountInfo/:accountId", updateAccountInfo);
+
+router.delete("/deleteAccount/:accountId", deleteAccount);
 
 export default router;

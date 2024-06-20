@@ -220,4 +220,8 @@ async function updateAccountInfo(req, res) {
 	}
 };
 
-export { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo };
+async function deleteAccount(req, res) {
+
+};
+
+export { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo, deleteAccount };

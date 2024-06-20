@@ -18,6 +18,7 @@
 	--main: #ffffff80;
 	--mainBorder: #fff;
 	--mainColor: #000;
+	--mainColorLight: #838383;
 }
 
 
@@ -100,7 +101,7 @@ body{
 		.modal-blocker{
 			position: absolute;
 			min-height: calc(100dvh - $navbarHeight - 4px);
-			background: #00000036;
+			background: #000000be;
 			backdrop-filter: blur(1px);
 			-webkit-backdrop-filter: blur(1px);
 			z-index: 9996;

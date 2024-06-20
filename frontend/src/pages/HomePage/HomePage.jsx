@@ -3,8 +3,15 @@ import GamesListe from "../../components/HomePage/middle-section/BeliebteGamesLi
 import "./homepage.scss";
 import NeueErschinenGamesListe from "../../components/HomePage/middle-section/NeueErschinenGamesListe";
 import GerneSwiperAngebote from "../../components/HomePage/middle-sub-section/GerneSwiperAngebote";
+import { useEffect } from "react";
 
 const HomePage = () => {
+
+
+	useEffect(() => {
+		document.title = 'Pixel Plaza'
+	}, [])	
+
   return (
     <div className="main-wrapper">
       <HeroSection />
