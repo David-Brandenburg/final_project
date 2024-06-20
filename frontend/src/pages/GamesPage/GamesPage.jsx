@@ -182,7 +182,7 @@ const GamesPage = () => {
   const filterGames = (games) => {
     return games.filter((game) => {
       if (filterCondition === "DISCOUNTED") {
-        return game.price < 10;
+        return game.price - (game.price * game.discount) / 100 < game.price;
       } else if (filterCondition === "DLC") {
         return game.DLC;
       } else if (filterCondition === "PRICE_RANGE") {
@@ -191,7 +191,7 @@ const GamesPage = () => {
       if (filterCondition === "NEW_ARRIVALS") {
         const today = new Date();
         const fourWeeksAgo = new Date();
-        fourWeeksAgo.setDate(today.getDate() - 28);
+        fourWeeksAgo.setDate(today.getDate() - 31);
         return (
           game.releaseDate > fourWeeksAgo.toISOString().split("T")[0] &&
           game.releaseDate <= today.toISOString().split("T")[0]
@@ -493,7 +493,7 @@ const GamesPage = () => {
                   className="bi bi-grid-3x3-gap-fill"
                   onClick={() => setShowListGrid(true)}></i>
                 <i
-                  class="list bi bi-list-task"
+                  className="list bi bi-list-task"
                   onClick={() => setShowListGrid(false)}></i>
               </div>
               {isOpen && (
