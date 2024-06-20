@@ -108,4 +108,4 @@ async function getGamesByGenres(req, res) {
   }
 }
 
-export { getGame, getGames, getGamesByGenres, postGameSold };
+export { getGame, getGames, getGamesByGenres, postGameSold, postGame };

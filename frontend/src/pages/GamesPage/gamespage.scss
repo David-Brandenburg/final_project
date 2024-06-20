@@ -148,6 +148,9 @@
           display: flex;
           gap: 0.5rem;
           font-size: 1rem;
+          i {
+            cursor: pointer;
+          }
           .list {
             font-size: 1.3rem;
           }

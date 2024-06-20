@@ -18,6 +18,7 @@ import AdminEditModal from "./components/AdminModals/AdminEditModal.jsx";
 import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
 import GamePageImageModal from "./components/GamePageModals/GamePageImageModal.jsx";
 import GamePageTrailerModal from "./components/GamePageModals/GamePageTrailerModal.jsx";
+import AddGamePage from "./pages/addGamePage/addGamePage.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -32,17 +33,17 @@ function App() {
     setOpenLoginModal,
     openGameModal,
     setOpenGameModal,
-		adminEditModal,
-		setAdminEditModal,
-		adminDeleteModal,
-		setAdminDeleteModal,
-		openImageModal,
-		setOpenImageModal,
-		openTrailerModal,
-		setOpenTrailerModal
+    adminEditModal,
+    setAdminEditModal,
+    adminDeleteModal,
+    setAdminDeleteModal,
+    openImageModal,
+    setOpenImageModal,
+    openTrailerModal,
+    setOpenTrailerModal,
   } = useContext(ModalContext);
 
-	const { isLoggedIn } = useContext(LogginContext);
+  const { isLoggedIn } = useContext(LogginContext);
 
   const { screenMode } = useContext(ScreenModeContext);
 
@@ -63,18 +64,18 @@ function App() {
     if (openGameModal) {
       setOpenGameModal(false);
     }
-		if (adminEditModal) {
-			setAdminEditModal('');
-		}
-		if (adminDeleteModal) {
-			setAdminDeleteModal('');
-		}
-		if (openImageModal) {
-			setOpenImageModal('');
-		}
-		if (openTrailerModal) {
-			setOpenTrailerModal('');
-		}
+    if (adminEditModal) {
+      setAdminEditModal("");
+    }
+    if (adminDeleteModal) {
+      setAdminDeleteModal("");
+    }
+    if (openImageModal) {
+      setOpenImageModal("");
+    }
+    if (openTrailerModal) {
+      setOpenTrailerModal("");
+    }
   };
 
   return (
@@ -110,16 +111,17 @@ function App() {
             path="/checkout"
             element={isLoggedIn ? <CheckoutPage /> : <ErrorPage />}
           />
+          <Route path="/addGamePage" element={<AddGamePage />} />
         </Routes>
       </main>
       <Footer />
       {openModalBlocker && (
         <div className="modal-blocker" onClick={handleModalClose}>
-					{adminEditModal && <AdminEditModal />}
-					{adminDeleteModal && <AdminDeleteModal />}
-					{openImageModal && <GamePageImageModal />}
-					{openTrailerModal && <GamePageTrailerModal />}
-				</div>
+          {adminEditModal && <AdminEditModal />}
+          {adminDeleteModal && <AdminDeleteModal />}
+          {openImageModal && <GamePageImageModal />}
+          {openTrailerModal && <GamePageTrailerModal />}
+        </div>
       )}
     </>
   );
