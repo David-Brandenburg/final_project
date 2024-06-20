@@ -37,7 +37,7 @@
       flex-direction: column;
       align-items: center;
       width: 25%;
-      height: 600px; /* set a fixed height for the div */
+      height: 800px; /* set a fixed height for the div */
       overflow-y: scroll;
       .gamespage-main-filter-li {
         padding: 0.5rem;
@@ -98,6 +98,12 @@
             background: orange;
           }
           #gamespage-main-filter-silder .range-slider__range {
+            background: #ffbf00;
+          }
+          #gamespage-main-filter-silder2 .range-slider__thumb {
+            background: orange;
+          }
+          #gamespage-main-filter-silder2 .range-slider__range {
             background: #ffbf00;
           }
         }
