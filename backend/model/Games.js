@@ -24,7 +24,7 @@ const GamesSchema = new mongoose.Schema({
   releaseDate: { type: String, default: "" },
   earlyAccess: { type: Boolean, default: false },
   languages: { type: Array, default: [] },
-});
+}, {versionKey: false});
 
 const Game = mongoose.model("games", GamesSchema);
 
