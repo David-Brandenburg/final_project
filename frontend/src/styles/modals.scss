@@ -206,3 +206,71 @@
 		}
 	}
 }
+
+.gamepage-image-wrapper{
+	position: sticky;
+	top: 180px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.gamepage-image-modal{
+		width: 1000px;
+		aspect-ratio: 16 / 9;
+		display: flex;
+		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+		position: relative;
+		img{
+			width: 100%;
+			aspect-ratio: 16 / 9;
+		}
+		.exit-btn{
+			position: absolute;
+			top: -5px;
+			right: -30px;
+			width: 30px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			.bi{
+				color: #fff;
+				font-size: 20px;
+			}
+		}
+	}
+}
+
+.gamepage-trailer-wrapper{
+	position: sticky;
+	top: 180px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.gamepage-trailer-modal{
+		width: 1000px;
+		aspect-ratio: 16 / 9;
+		display: flex;
+		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+		position: relative;
+		iframe{
+			width: 100%;
+			aspect-ratio: 16 / 9;
+		}
+		.exit-btn{
+			position: absolute;
+			top: -5px;
+			right: -30px;
+			width: 30px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			.bi{
+				color: #fff;
+				font-size: 20px;
+			}
+		}
+	}
+}

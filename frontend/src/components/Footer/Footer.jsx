@@ -35,16 +35,16 @@ const Footer = () => {
               <p
                 onClick={toggleLanguage}
                 style={{
-                  color: `${language === "en" ? "#f85525" : "var(--mainColor"}`,
-                  fontWeight: `${language === "en" ? "bold" : "normal"}`,
+                  color: language === "en" ? "#f85525" : "white",
+                  fontWeight: language === "en" ? "bold" : "normal",
                 }}>
                 English
               </p>
               <p
                 onClick={toggleLanguage}
                 style={{
-                  color: `${language === "de" ? "#f85525" : "var(--mainColor"}`,
-                  fontWeight: `${language === "de" ? "bold" : "normal"}`,
+                  color: language === "de" ? "#f85525" : "white",
+                  fontWeight: language === "de" ? "bold" : "normal",
                 }}>
                 Deutsch
               </p>

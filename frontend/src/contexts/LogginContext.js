@@ -16,7 +16,6 @@ export const LogginContextProvider = ({ children }) => {
 	const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-		console.log("loggedInUser updated:", loggedInUser)
     localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
 		if (loggedInUser.token && loggedInUser.benutzername && loggedInUser.email && loggedInUser.id) {
 			setIsLoggedIn(true)
@@ -47,7 +46,7 @@ export const LogginContextProvider = ({ children }) => {
 
 
   return (
-    <LogginContext.Provider value={{ loggedInUser, setLoggedInUser, isLoggedIn, setIsLoggedIn, isAdmin }}>
+    <LogginContext.Provider value={{ loggedInUser, setLoggedInUser, isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }}>
       {children}
     </LogginContext.Provider>
   );

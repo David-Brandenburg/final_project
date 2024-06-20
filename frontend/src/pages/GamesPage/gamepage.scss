@@ -17,10 +17,54 @@
 		width: 42%;
 	}
 
+	.gamepage-hero-info{
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		justify-content: center;
+		margin: 30px 0 70px 0;
+		.gamepage-title{
+			font-size: 30px;
+		}
+		.gamepage-sub-info{
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #797979;
+			font-size: 16px;
+			hr{
+				border-right: 1px solid #797979;
+				height: 20px;
+			}
+			p:not(.language-tag){
+				display: flex;
+				align-items: center;
+				gap: 5px;
+			}
+			.gamepage-platform-wrapper{
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				margin: 0 10px;
+			}
+			.gamepage-language-wrapper{
+				display: flex;
+				gap: 5px;
+				.language-tag{
+					&:nth-child(1){
+						&::after{
+							content: ',';
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.gamepage-info-container{
 		position: absolute;
-		background-color: var(--mainColor);
-		color: #000;
+		background-color: transparent;
+		color: var(--mainColor);
 		border: 1px solid var(--mainBorder);
 		border-radius: 3px;
 		height: 250px;
@@ -29,4 +73,67 @@
 		top: 10%;
 		transform: translate(25%);
 	}
+
+	.gamepage-swiper{
+		width: 100%;
+		margin-bottom: 75px;
+		padding: 0 50px;
+		.gamepage-swiper-trailer-wrapper{
+			position: relative;
+			// height: 160px;
+			aspect-ratio: 16 / 9;
+			width: 300px;
+			.gamepage-play-button{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				translate: -50% -50%;
+				font-size: 40px;
+				color: #fff;
+			}
+		}
+	}
+
+	.gamepage-swiper-img{
+		// height: 160px;
+		aspect-ratio: 16 / 9;
+		width: 300px;
+		object-fit: cover;
+	}
+
+	.gamepage-description-info-wrapper{
+		display: flex;
+
+		.gamepage-description-left{
+			width: 50%;
+			.header-container{
+				margin: 20px 0;
+				position: relative;
+				.header-left{
+					width: fit-content;
+					padding-bottom: 10px;
+					border-bottom: 2px solid var(--mainColor);
+				}
+			}
+			.description-content{
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+			}
+		}
+
+		hr{
+			border-top: 2px solid var(--mainColorLight);
+			// margin-bottom: 20px;
+			width: 100%;
+			position: absolute;
+			bottom: 0;
+			z-index: -1;
+		}
+
+		.gamepage-info-right{
+			width: 50%;
+		}
+	}
+
 }

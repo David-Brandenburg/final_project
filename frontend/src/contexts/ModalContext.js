@@ -12,6 +12,8 @@ export const ModalContextProvider = ({ children }) => {
 	const [adminEditModal, setAdminEditModal] = useState('');
 	const [adminDeleteModal, setAdminDeleteModal] = useState('');
 	const [adminTab, setAdminTab] = useState('accounts');
+	const [openImageModal, setOpenImageModal] = useState('');
+	const [openTrailerModal, setOpenTrailerModal] = useState('');
 
   return (
     <ModalContext.Provider
@@ -33,7 +35,11 @@ export const ModalContextProvider = ({ children }) => {
 				adminDeleteModal,
 				setAdminDeleteModal,
 				adminTab,
-				setAdminTab
+				setAdminTab,
+				openImageModal,
+				setOpenImageModal,
+				openTrailerModal,
+				setOpenTrailerModal
       }}>
       {children}
     </ModalContext.Provider>

@@ -7,7 +7,7 @@ const GamesSchema = new mongoose.Schema({
   discount: { type: Number, default: 0 },
   title: { type: String, default: '' },
 	platforms: { type: Array, default: [] },
-	description: { type: String, default: '' },
+	description: { type: Array, default: [] },
 	publisher: { type: String, default: '' },
 	rating: { type: String, default: '' },
 	genres: { type: Array, default: [] },
