@@ -1,4 +1,3 @@
-import { ar } from "date-fns/locale";
 import mongoose from "mongoose";
 
 // MongoDB Schema
