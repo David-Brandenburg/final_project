@@ -191,7 +191,7 @@ const GamesPage = () => {
       if (filterCondition === "NEW_ARRIVALS") {
         const today = new Date();
         const fourWeeksAgo = new Date();
-        fourWeeksAgo.setDate(today.getDate() - 28);
+        fourWeeksAgo.setDate(today.getDate() - 31);
         return (
           game.releaseDate > fourWeeksAgo.toISOString().split("T")[0] &&
           game.releaseDate <= today.toISOString().split("T")[0]
