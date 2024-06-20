@@ -7,7 +7,8 @@ import "../HomePage/GamesModal.scss";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import AddToCartBtn from "../AddToCartBtn";
 import { NavLink } from "react-router-dom";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
+import slugify from "slugify";
 
 const GamesModal = ({ game }) => {
   const { language } = useLanguage();
@@ -536,7 +537,7 @@ const GamesModal = ({ game }) => {
           </div>
         </Swiper>
       </div>
-      <NavLink to={`/game/${game._id}`} className="game-modal-info-wrapper">
+      <NavLink to={`/games/${slugify(game.title, "_")}`} className="game-modal-info-wrapper">
         <div className="game-modal-header-wrapper">
           <div className="game-modal-header-left">
             <h2 className="game-modal-title">{game.title}</h2>

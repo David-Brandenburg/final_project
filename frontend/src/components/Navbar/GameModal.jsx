@@ -74,8 +74,6 @@ const GameModal = () => {
         setGenre(slugify(currentGenre.innerText.toLowerCase()));
       }
 
-      console.log(currentGenre);
-
       gamesGenre.forEach((genre) => {
         if (genre !== currentGenre) {
           genre.classList.remove("active");

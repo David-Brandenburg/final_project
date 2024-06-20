@@ -18,11 +18,13 @@ export const ScreenModeContextProvider = ({children}) => {
 			root.style.setProperty("--main", "#ffffff80")
 			root.style.setProperty("--mainBorder", "#fff")
 			root.style.setProperty("--mainColor", "#000")
+			root.style.setProperty("--mainColorLight", "#c0c0c0")
 		} else {
 			root.style.setProperty("--background", "#262626")
 			root.style.setProperty("--main", "#00000080")
 			root.style.setProperty("--mainBorder", "#000")
 			root.style.setProperty("--mainColor", "#fff")
+			root.style.setProperty("--mainColorLight", "#424242")
 		}
 	}, [screenMode])
 
