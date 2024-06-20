@@ -5,16 +5,92 @@
 	position: relative;
 	.gamepage-hero{
 		position: relative;
+		.hero-thumbnail{
+			width: 100%;
+		}
 		.hero-logo{
 			position: absolute;
 			left: 0; bottom: 0;
+			width: 42%;
 		}
-	}
-	.hero-thumbnail{
-		width: 100%;
-	}
-	.hero-logo{
-		width: 42%;
+		.hero-play-button{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			font-size: 100px;
+			translate: -50% -50%;
+			cursor: pointer;
+			color: #fff;
+		}
+		.gamepage-info-container{
+			position: absolute;
+			background-color: var(--main);
+			color: var(--mainColor);
+			border: 1px solid var(--mainBorder);
+			border-radius: 5px;
+			width: 400px;
+			height: fit-content;
+			right: 200px;
+			bottom: -137px;
+			padding: 20px;
+			transform: translate(25%);
+			box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+			.gamepage-info-inner-wrapper{
+				height: 100%;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				position: relative;
+				.discount-tag-wrapper{
+					position: absolute;
+					left: -20px;
+					top: 0px;
+					background-color: $accentColorDarkOrange;
+					width: 100px;
+					height: 50px;
+					border-radius: 0 5px 5px 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					.discount-tag{
+						font-size: 28px;
+						font-weight: bold;
+						color: var(--mainColor);
+					}
+				}
+				.price-tag-wrapper{
+					display: flex;
+					flex-direction: column;
+					align-items: flex-end;
+					.price-tag-discount{
+						font-size: 30px;
+					}
+				}
+				hr{
+					border-bottom: 1px solid var(--mainColor);
+				}
+			}
+			.btn {
+				display: flex;
+				background-color: $accentColorLightBlue;
+				color: var(--mainColor);
+				padding: 0.5rem 1rem;
+				border-radius: 0.5rem;
+				font-size: 1.5rem;
+				font-weight: 700;
+				cursor: pointer;
+				// width: max-content;
+				justify-content: center;
+				p {
+					margin-left: 0.5rem;
+				}
+				&:hover {
+					background-color: $accentColorDarkOrange;
+					color: var(--mainBorder);
+				}
+			}
+		}
 	}
 
 	.gamepage-hero-info{
@@ -22,7 +98,7 @@
 		flex-direction: column;
 		gap: 10px;
 		justify-content: center;
-		margin: 30px 0 70px 0;
+		margin: 30px 0 40px 0;
 		.gamepage-title{
 			font-size: 30px;
 		}
@@ -61,22 +137,9 @@
 		}
 	}
 
-	.gamepage-info-container{
-		position: absolute;
-		background-color: transparent;
-		color: var(--mainColor);
-		border: 1px solid var(--mainBorder);
-		border-radius: 3px;
-		height: 250px;
-		width: 300px;
-		right: 0;
-		top: 10%;
-		transform: translate(25%);
-	}
-
 	.gamepage-swiper{
 		width: 100%;
-		margin-bottom: 75px;
+		margin-bottom: 20px;
 		padding: 0 50px;
 		.gamepage-swiper-trailer-wrapper{
 			position: relative;
@@ -105,26 +168,51 @@
 		display: flex;
 
 		.gamepage-description-left{
-			width: 50%;
+			width: 55%;
 			.header-container{
-				margin: 20px 0;
+				margin: 20px 0 30px 0;
 				position: relative;
 				.header-left{
 					width: fit-content;
-					padding-bottom: 10px;
+					padding-bottom: 15px;
 					border-bottom: 2px solid var(--mainColor);
+					font-size: 20px;
 				}
 			}
 			.description-content{
 				display: flex;
 				flex-direction: column;
-				gap: 20px;
+				> *:not(.subHeader) {
+					margin: 20px 0;
+				}
+				.gamepage-list{
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+					margin-left: 15px;
+					li{
+						list-style: disc!important;
+					}
+				}
+				.devQuote{
+					font-style: italic;
+					&::before, &::after{
+						content: '"';
+					}
+				}
+				.subHeader{
+					font-weight: bold;
+					font-size: 20px;
+					margin: 5px 0;
+				}
+				.paragraph{
+					margin: 5px 0;
+				}
 			}
 		}
 
 		hr{
 			border-top: 2px solid var(--mainColorLight);
-			// margin-bottom: 20px;
 			width: 100%;
 			position: absolute;
 			bottom: 0;
@@ -132,7 +220,7 @@
 		}
 
 		.gamepage-info-right{
-			width: 50%;
+			width: 45%;
 		}
 	}
 

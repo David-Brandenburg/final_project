@@ -8,7 +8,7 @@ const GamePageTrailerModal = () => {
 	return (
 		<div className='gamepage-trailer-wrapper'>
 			<div className='gamepage-trailer-modal'>
-				<iframe src={`https://www.youtube.com/embed/${openTrailerModal}`} title={""} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen></iframe>
+				<iframe src={`https://www.youtube.com/embed/${openTrailerModal}?autoplay=1`} title={"GameTrailer"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen></iframe>
 				<div className='exit-btn'><i className="bi bi-x-square"></i></div>
 			</div>
 		</div>

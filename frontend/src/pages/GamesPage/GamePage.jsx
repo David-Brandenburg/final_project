@@ -44,8 +44,8 @@ const GamePage = () => {
 	}, [title])
 
 	useEffect(() => {
-		document.title = (title.split('_').join(' ')) + (language === 'en' ? ' on ' : ' auf ') + 'PixelPlaza'
-	}, [language])
+		document.title = (gameData && gameData.discount > 0 ? `-${gameData.discount}% ` : '') + (title.split('_').join(' ')) + (language === 'en' ? ' on ' : ' auf ') + 'PixelPlaza'
+	}, [language, title, gameData])
 
 	const handleImageModal = (e, pic) => {
 		e.preventDefault();
@@ -66,6 +66,56 @@ const GamePage = () => {
 					<div className='gamepage-hero'>
 						<img src={gameData.pageThumbnail} className='hero-thumbnail' alt="" />
 						<img src={gameData.logo} className='hero-logo' alt="" />
+						{gameData.trailer.length > 0 && <i className="bi bi-play-circle hero-play-button" onClick={((e) => handleTrailerModal(e, gameData.trailer[0]))}></i>}
+						<div className='gamepage-info-container'>
+							<div className='gamepage-info-inner-wrapper'>
+								{gameData.discount > 0 && 
+									<div className='discount-tag-wrapper'>
+										<p className='discount-tag'>-{gameData.discount}%</p>
+									</div>
+								}
+								<div className='price-tag-wrapper'>
+									<p className='price-tag' style={{color: gameData.discount > 0 ? 'gray': 'unset', fontSize: gameData.discount > 0 ? '16px' : '30px', textDecoration: gameData.discount > 0 ? "line-through" : 'unset'}}>€ {gameData.price}</p>
+									{gameData.discount > 0 &&
+										<p className='price-tag-discount'>€ {
+											Math.floor(
+												(gameData.price - (gameData.price * gameData.discount) / 100) *
+													100
+											) / 100
+										}</p>
+									}
+								</div>
+								<hr />
+								<AddToCartBtn
+									className={"btn"}
+									game={gameData}
+									text={
+										<>
+											<i className="bi bi-cart-plus"></i>
+											<p>
+												{language === "en"
+													? "Add to Cart"
+													: "In den Warenkorb"}
+											</p>
+										</>
+									}
+								/>
+								<AddToCartBtn
+									className={"btn"}
+									game={gameData}
+									text={
+										<>
+											<i className="bi bi-cart-plus"></i>
+											<p>
+												{language === "en"
+													? "Add to Cart"
+													: "In den Warenkorb"}
+											</p>
+										</>
+									}
+								/>
+							</div>
+						</div>
 					</div>
 					<div className='gamepage-hero-info'>
 						<h2 className='gamepage-title'>{gameData.title}</h2>
@@ -84,7 +134,6 @@ const GamePage = () => {
 						grabCursor={true}
 						centeredSlides={false}
 						slidesPerView={4}
-						// spaceBetween={100}
 						loop={false}
 						pagination={{ el: ".swiper-pagination", clickable: true }}
 						navigation={{
@@ -94,7 +143,7 @@ const GamePage = () => {
 						}}
 						modules={[Pagination, Navigation]}
 						className="gamepage-swiper">
-						{gameData.trailer.length > 0 && gameData.trailer.slice(0, 2).map((trailer, index) => (
+						{gameData.trailer.length > 0 && gameData.trailer.map((trailer, index) => (
 							<SwiperSlide key={index}>
 								<div className='gamepage-swiper-trailer-wrapper' onClick={((e) => handleTrailerModal(e, trailer))}>
 									<img className='gamepage-swiper-img' src={`https://img.youtube.com/vi/${trailer}/hqdefault.jpg`} alt="" />
@@ -126,32 +175,57 @@ const GamePage = () => {
 							</div>
 							<div className='description-content'>
 								{Array.isArray(gameData.description) && gameData.description.map((item, index) => {
-									if (Object.keys(item)[0] === 'bannerGif') {
+									const key = Object.keys(item)[0];
+
+									if (key === 'bannerGif') {
 										return (
 											<video key={'bannerGif'+index} muted preload='auto' loop autoPlay='autoplay'>
 												<source src={Object.values(item)[0]} type='video/mp4' />
 											</video>
 										);
 									}
-									if (Object.keys(item)[0] === 'paragraphDE' || Object.keys(item)[0] === 'paragraphEN') {
+									if (key === 'subHeaderDE' || key === 'subHeaderEN') {
 										return (
-											<p key={'paragraph'+index}>{language === 'en' ? Object.values(item)[1] : Object.values(item)[0]}</p>
+											<p className='subHeader' key={'subHeader'+index}>{language === 'en' ? Object.values(item)[1] : Object.values(item)[0]}</p>
 										);
 									}
-									if (Object.keys(item)[0] === 'bannerDE' || Object.keys(item)[0] === 'bannerEN') {
+									if (key === 'paragraphDE' || key === 'paragraphEN') {
+										return (
+											<p className='paragraph' key={'paragraph'+index}>{language === 'en' ? Object.values(item)[1] : Object.values(item)[0]}</p>
+										);
+									}
+									if (key === 'bannerDE' || key === 'bannerEN') {
 										return (
 											<img key={'banner'+index} src={language === 'en' ? Object.values(item)[1] : Object.values(item)[0]} alt=''/>
+										);
+									}
+									if (key === 'listDE' || key === 'listEN') {
+										const languageList = (language === 'en' && item.listEN) ? item.listEN : item.listDE;
+										return (
+											<ul key={'list' + index} className='gamepage-list'>
+												{Array.isArray(languageList) && languageList.map((listItem, listIndex) => (
+													<li key={'listItem' + listIndex}>{listItem.listItem}</li>
+												))}
+											</ul>
+										);
+									}
+									if (key === 'devQuoteDE' || key === 'devQuoteEN') {
+										return (
+											<p className='devQuote' dangerouslySetInnerHTML={{__html: language === 'en' ? Object.values(item)[1] : Object.values(item)[0]}} />
 										)
 									}
 									return null;
 								})}
+							</div>
+							<div className='header-container'>
+								<p className='header-left'>{language === 'en' ? 'Popular achievements' : 'Häufige Erfolge'}</p>
+								<hr />
 							</div>
 						</div>
 						<div className='gamepage-info-right'></div>
 					</div>
 				</>
 			}
-			<div className='gamepage-info-container'>Info Container, Price, ...</div>
 		</div>
 	)
 }
