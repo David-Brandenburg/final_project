@@ -7,6 +7,8 @@ import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
 
 const GamesPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gamesPerPage] = useState(12);
   // Get the current language from the LanguageContext
   const { language } = useLanguage();
   // Get the logged-in status from the LogginContext
@@ -19,6 +21,7 @@ const GamesPage = () => {
   const [showGenres, setShowGenres] = useState(false); // Toggle for showing genres filter
   const [showTags, setShowTags] = useState(false); // Toggle for showing tags filter
   const [inputTags, setInputTags] = useState(""); // Stores the input for tag search
+  const [inputSearch, setInputSearch] = useState(""); // Stores the input for search
   const [showPlatform, setShowPlatform] = useState(false); // Toggle for showing platform filter
   const [showFunctions, setShowFunctions] = useState(false); // Toggle for showing functions filter
   const [showReleaseRange, setShowReleaseRange] = useState(false); // Toggle for showing release date range filter
@@ -37,12 +40,29 @@ const GamesPage = () => {
   const [hoveredGame, setHoveredGame] = useState(null); // Stores the game that is currently hovered over
   const [filterCondition, setFilterCondition] = useState("ALL"); // Stores the current filter condition
   const [isOpen, setIsOpen] = useState(false); // Manages the dropdown state
-  const [selectedItemsSort, setSelectedItemsSort] = useState([]); // Stores the selected items for sorting
+  const [selectedItemsSort, setSelectedItemsSort] = useState([,]); // Stores the selected items for sorting
   const [sortCondition, setSortCondition] = useState("ALL"); // Stores the current sort condition
   const [salesHistory] = useState([]); // Stores the sales history
   const [showListGrid, setShowListGrid] = useState(true); // Toggle for showing list/grid view
+  const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
   // Toggles the dropdown menu
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Defines the sort options based on the current language
   const items =
@@ -85,7 +105,13 @@ const GamesPage = () => {
   // Fetch games when the component is mounted
   useEffect(() => {
     fetchGames();
-  }, []);
+    setSortCondition("Meistverkauft (kürzlich)");
+    setSelectedItemsSort([
+      language === "en"
+        ? "Best selling (recently)"
+        : "Meistverkauft (kürzlich)",
+    ]);
+  }, [language]);
   // Check sales history date whenever the games state changes
   useEffect(() => {
     checkSalesHistoryDate();
@@ -411,6 +437,11 @@ const GamesPage = () => {
     );
   };
 
+  const handleSearch = (e) => {
+    setInputSearch(e.target.value);
+    setFilterCondition("SEARCH");
+  };
+
   const handleModal = (method) => {
     // Toggles the state of the modal based on the provided method
     if (method === "DLC") {
@@ -694,6 +725,20 @@ const GamesPage = () => {
         return game.languages.includes("Nederlands");
       } else if (filterCondition === "dänisch") {
         return game.languages.includes("dansk");
+      } else if (filterCondition === "SEARCH") {
+        if (!inputSearch || inputSearch.trim() === "") {
+          return true;
+        }
+
+        const searchLower = inputSearch.toLowerCase();
+
+        return (
+          (game.title && game.title.toLowerCase().includes(searchLower)) ||
+          (game.publisher &&
+            game.publisher.toLowerCase().includes(searchLower)) ||
+          (game.tags &&
+            game.tags.some((tag) => tag.toLowerCase().includes(searchLower)))
+        );
       } else {
         return true;
       }
@@ -745,6 +790,30 @@ const GamesPage = () => {
         return new Date(a.releaseDate) - new Date(b.releaseDate);
       } else if (sortCondition === "Bewertungen (absteigend)") {
         return b.rating - a.rating;
+      } else if (sortCondition === "Best selling (recently)") {
+        const aPurchasedInJune = wasPurchasedInJune(a.salesHistory);
+        const bPurchasedInJune = wasPurchasedInJune(b.salesHistory);
+        if (aPurchasedInJune && !bPurchasedInJune) return -1;
+        if (!aPurchasedInJune && bPurchasedInJune) return 1;
+        return b.sold - a.sold;
+      } else if (sortCondition === "Best selling (all time)") {
+        return b.sold - a.sold;
+      } else if (sortCondition === "Price (ascending)") {
+        return a.price - b.price;
+      } else if (sortCondition === "Price (descending)") {
+        return b.price - a.price;
+      } else if (sortCondition === "Discounted (descending)") {
+        return b.discount - a.discount;
+      } else if (sortCondition === "Title A-Z") {
+        return a.title.localeCompare(b.title);
+      } else if (sortCondition === "Title Z-A") {
+        return b.title.localeCompare(a.title);
+      } else if (sortCondition === "Release date (newest)") {
+        return new Date(b.releaseDate) - new Date(a.releaseDate);
+      } else if (sortCondition === "Release date (oldest)") {
+        return new Date(a.releaseDate) - new Date(b.releaseDate);
+      } else if (sortCondition === "Ratings (descending)") {
+        return b.rating - a.rating;
       } else {
         return 0;
       }
@@ -753,6 +822,24 @@ const GamesPage = () => {
 
   const filteredGames = filterGames(games);
   const sortedGames = sortGames(filteredGames);
+
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = sortedGames.slice(indexOfFirstGame, indexOfLastGame);
+
+  const totalPages = Math.ceil(sortedGames.length / gamesPerPage);
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleDirectPageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="main-wrapper gamespage-wrapper">
@@ -770,6 +857,8 @@ const GamesPage = () => {
                 ? "Search store by title, publisher or tag"
                 : "Suche im Store nach Titeln, Publishern oder Tags"
             }
+            value={inputSearch}
+            onChange={handleSearch}
           />
         </div>
       </div>
@@ -1490,10 +1579,22 @@ const GamesPage = () => {
           </ul>
         </div>
         <div className="gamespage-main-games-wrapper">
-          <div className="gamespage-main-games-header">
+          <div
+            className={`gamespage-main-games-header ${
+              isScrolled ? "scrolled" : ""
+            }`}>
             <div className="gamespage-main-games-header-left-pagination">
-              <i className="bi bi-caret-left"></i>
-              <i className="bi bi-caret-right"></i>
+              <i
+                className="bi bi-caret-left"
+                onClick={() => handlePageChange("prev")}></i>
+              <span
+                className={`pagination-page-number ${
+                  currentPage ? "active" : ""
+                }`}>{`${currentPage}`}</span>{" "}
+              von <span>{`${totalPages}`}</span>
+              <i
+                className="bi bi-caret-right"
+                onClick={() => handlePageChange("next")}></i>
             </div>
             <div className="gamespage-main-games-header-middle">
               <div
@@ -1543,8 +1644,8 @@ const GamesPage = () => {
                 ? "gamespage-main-games-middle-grid"
                 : "gamespage-main-games-middle-list"
             }`}>
-            {sortedGames.length > 0 ? (
-              sortedGames.map((game, index) => (
+            {currentGames.length > 0 ? (
+              currentGames.map((game, index) => (
                 <div
                   className="gamespage-main-games-middle-gamescard-wrapper"
                   key={game.title + index}>
@@ -1596,6 +1697,24 @@ const GamesPage = () => {
                 </div>
               </div>
             )}
+          </div>
+          <div className="gamespage-main-pagination-pages">
+            <i
+              className="bi bi-caret-left"
+              onClick={() => handlePageChange("prev")}></i>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <span
+                key={index + 1}
+                className={`pagination-page-number ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+                onClick={() => handleDirectPageChange(index + 1)}>
+                {index + 1}
+              </span>
+            ))}
+            <i
+              className="bi bi-caret-right"
+              onClick={() => handlePageChange("next")}></i>
           </div>
         </div>
       </div>

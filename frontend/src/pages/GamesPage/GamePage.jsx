@@ -7,7 +7,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-
+import AddToCartBtn from "../../components/AddToCartBtn.jsx";
 import { useLanguage } from "../../contexts/LanguageContext.js";
 import "./gamepage.scss";
 import { ModalContext } from "../../contexts/ModalContext.js";
