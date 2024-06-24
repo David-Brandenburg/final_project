@@ -103,7 +103,7 @@ const HeroSection = () => {
                     )}
                   </div>
                   <div className="overlay">
-                    <NavLink className="text-wrapper" to={`/games/${game._id}`}>
+                    <NavLink className="text-wrapper" to={`/games/${slugify(game.title, "_")}`}>
                       <div className="text-icon-p">
                         {game.platforms?.map(getPlatformIcon)}
                         <p>

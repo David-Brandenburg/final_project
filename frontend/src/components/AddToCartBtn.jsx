@@ -9,7 +9,7 @@ const AddToCartBtn = ({ game, className, text }) => {
   };
 
   return (
-    <div className={className} onClick={() => handleAddToCart(game)}>
+    <div className={className} onClick={((e) => {handleAddToCart(game); e.preventDefault()})}>
       {text}
     </div>
   );

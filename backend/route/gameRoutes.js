@@ -4,7 +4,7 @@ import {
   getGames,
   getGamesByGenres,
   postGameSold,
-  postGame,
+  postGame
 } from "../controller/gameController.js";
 
 const router = express.Router();

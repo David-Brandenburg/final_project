@@ -5,7 +5,6 @@
 	flex-direction: row!important;
 	gap: 10px;
 	max-height: calc(100dvh - $navbarHeight - 86px);
-	// overflow-y: scroll;
 	.profile-sidebar{
 		background: var(--background);
 		width: 300px;

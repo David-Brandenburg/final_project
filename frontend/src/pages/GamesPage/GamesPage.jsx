@@ -1561,7 +1561,10 @@ const GamesPage = () => {
                       />
                     </div>
                     <div className="game-card-content">
-                      <h3>{game.title}</h3>
+                      <div className="game-card-header">
+												{game.dlc && <span className="dlc-tag">DLC</span>}
+												<h4>{game.title}</h4>
+											</div>
                       <div className="game-card-price">
                         {game.discount >= 1 && (
                           <div className="game-card-rabatt">

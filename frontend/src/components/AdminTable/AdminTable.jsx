@@ -55,6 +55,7 @@ const AdminTable = () => {
 							key !== 'logo' &&
 							key !== 'pics' &&
 							key !== 'tags' &&
+							key !== 'developer' &&
 							key !== 'functions' &&
 							key !== 'price' &&
 							key !== 'discount' &&
@@ -62,6 +63,8 @@ const AdminTable = () => {
 							key !== 'rating' &&
 							key !== 'platformAccounts' &&
 							key !== 'sold' &&
+							key !== 'dlcs' &&
+							key !== 'mainGame' &&
 							key !== 'salesHistory' &&
 							key !== 'languages' &&
 							key !== 'earlyAccess' &&
@@ -91,6 +94,7 @@ const AdminTable = () => {
 									key !== 'logo' &&
 									key !== 'pics' &&
 									key !== 'tags' &&
+									key !== 'developer' &&
 									key !== 'functions' &&
 									key !== 'price' &&
 									key !== 'discount' &&
@@ -98,6 +102,8 @@ const AdminTable = () => {
 									key !== 'rating' &&
 									key !== 'platformAccounts' &&
 									key !== 'sold' &&
+									key !== 'dlcs' &&
+									key !== 'mainGame' &&
 									key !== 'salesHistory' &&
 									key !== 'languages' &&
 									key !== 'earlyAccess' &&
