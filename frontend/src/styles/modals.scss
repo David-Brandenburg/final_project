@@ -92,8 +92,13 @@
           align-items: center;
           padding: 5px;
           justify-content: space-between;
+					.game-card-platforms-wrapper{
+						display: inline-flex;
+						height: 30px;
+						gap: 3px;
+						align-items: flex-end;
+					}
           .bi {
-            // color: #a6a6a6;
             color: color-mix(in lab, var(--mainColor), var(--background));
           }
           .price-tags-wrapper {
@@ -203,6 +208,16 @@
 			background: red;
 			transition: background 200ms ease-in-out;
 			color: var(--mainBorder);
+		}
+	}
+	.modal-content-bottom{
+		display: flex;
+		height: calc(100% - 34px);
+		padding: 6px;
+		gap: 6px;
+		.modal-content{
+			flex: 1;
+			background: var(--main);
 		}
 	}
 }

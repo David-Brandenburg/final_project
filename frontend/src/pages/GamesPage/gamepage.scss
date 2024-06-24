@@ -24,7 +24,7 @@
 		}
 		.gamepage-info-container{
 			position: absolute;
-			background-color: var(--main);
+			background-color: var(--background);
 			color: var(--mainColor);
 			border: 1px solid var(--mainBorder);
 			border-radius: 5px;
@@ -141,9 +141,9 @@
 		width: 100%;
 		margin-bottom: 20px;
 		padding: 0 50px;
+		user-select: none;
 		.gamepage-swiper-trailer-wrapper{
 			position: relative;
-			// height: 160px;
 			aspect-ratio: 16 / 9;
 			width: 300px;
 			.gamepage-play-button{
@@ -166,19 +166,21 @@
 
 	.gamepage-description-info-wrapper{
 		display: flex;
+		gap: 50px;
+
+		.header-container{
+			margin: 20px 0 30px 0;
+			position: relative;
+			.header-left{
+				width: fit-content;
+				padding-bottom: 15px;
+				border-bottom: 1px solid var(--mainColor);
+				font-size: 18px;
+			}
+		}
 
 		.gamepage-description-left{
 			width: 55%;
-			.header-container{
-				margin: 20px 0 30px 0;
-				position: relative;
-				.header-left{
-					width: fit-content;
-					padding-bottom: 15px;
-					border-bottom: 2px solid var(--mainColor);
-					font-size: 20px;
-				}
-			}
 			.description-content{
 				display: flex;
 				flex-direction: column;
@@ -189,16 +191,24 @@
 					display: flex;
 					flex-direction: column;
 					gap: 5px;
-					margin-left: 15px;
+					margin-left: 20px;
 					li{
 						list-style: disc!important;
 					}
+				}
+				.quote{
+					font-style: italic;
+					font-size: 14px;
 				}
 				.devQuote{
 					font-style: italic;
 					&::before, &::after{
 						content: '"';
 					}
+				}
+				.midQuote{
+					width: 100%;
+					text-align: center;
 				}
 				.subHeader{
 					font-weight: bold;
@@ -211,16 +221,202 @@
 			}
 		}
 
-		hr{
-			border-top: 2px solid var(--mainColorLight);
+		.header-hr{
+			border-top: 1px solid var(--mainColorLight);
 			width: 100%;
 			position: absolute;
 			bottom: 0;
 			z-index: -1;
 		}
 
+		hr:not(.header-hr){
+			border-top: 1px solid var(--mainColorLight);
+			width: 100%;
+			margin: 20px 0;
+		}
+
+		.game-details-link{
+			color: var(--mainColor);
+			text-transform: capitalize;
+			text-decoration: underline;
+		}
+
+		.space-holder, .space-holder2{
+			&::after{
+				content: '\00a0';
+			}
+		}
+
+		.space-holder2{
+			&::before{
+				content: '\00a0';
+			}
+		}
+		
 		.gamepage-info-right{
 			width: 45%;
+			.game-details-row{
+				display: flex;
+				user-select: none;
+				padding: 12px 12px;
+				position: relative;
+				.game-details-tag, .game-details-tag-link{
+					color: gray;
+					width: 200px;
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+				}
+				.game-functions-tag{
+					width: 100%;
+				}
+				.game-details-content{
+					display: flex;
+					align-items: center;
+					width: 100%;
+					flex-wrap: wrap;
+					gap: 5px 0;
+					text-transform: capitalize;
+				}
+				.game-functions-content{
+					display: flex;
+					flex-direction: column;
+				}
+				&:hover{
+					background: var(--mainBorder);
+					box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+					&::before{
+						content: '';
+						position: absolute;
+						height: 100%;
+						width: 2px;
+						top: 0;
+						left: 0;
+						background: $accentColorDarkOrange;
+					}
+				}
+				
+			}
+			.game-maingame-container{
+				.game-maingame{
+					display: flex;
+					background: var(--main);
+					color: color-mix(in lab, var(--mainColor), var(--mainBorder) 10%);
+					box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+					.maingame-thumbnail-wrapper{
+						display: flex;
+						img{
+							width: 120px;
+							aspect-ratio: 16 / 9;
+						}
+					}
+					.maingame-info-wrapper{
+						width: 100%;
+						height: 100%;
+						padding: 5px;
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						.maingame-info-pricetags{
+							display: flex;
+							height: 43px;
+							width: 100%;
+							align-items: flex-end;
+							justify-content: flex-end;
+							gap: 5px;
+						}
+						.discount-tag{
+							padding: 7px 12px;
+							border-radius: 3px;
+							background: $accentColorDarkOrange;
+						}
+						.dlc-pricetags{
+							display: flex;
+							flex-direction: column;
+							align-items: flex-end;
+						}
+						.btn{
+							display: none;
+							padding: 7px 12px;
+							border-radius: 3px;
+							background: $accentColorLightBlue;
+							cursor: pointer;
+							&:hover{
+								background: $accentColorDarkOrange;
+							}
+						}
+					}
+					&:hover{
+						background: var(--mainBorder);
+						color: var(--mainColor);
+						.btn{
+							display: block;
+						}
+					}
+				}
+			}
+		}
+
+		.game-dlc-container{
+			display: flex;
+			flex-direction: column;
+			gap: 1px;
+			.game-dlc{
+				display: flex;
+				background: var(--main);
+				color: color-mix(in lab, var(--mainColor), var(--mainBorder) 10%);
+				box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+				.dlc-thumbnail-wrapper{
+					display: flex;
+					img{
+						width: 120px;
+						aspect-ratio: 16 / 9;
+					}
+				}
+				.dlc-info-wrapper{
+					width: 100%;
+					height: 100%;
+					padding: 5px;
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+					.dlc-info-pricetags{
+						display: flex;
+						height: 43px;
+						width: 100%;
+						align-items: flex-end;
+						justify-content: flex-end;
+						gap: 5px;
+					}
+					.discount-tag{
+						padding: 7px 12px;
+						border-radius: 3px;
+						background: $accentColorDarkOrange;
+					}
+					.dlc-pricetags{
+						display: flex;
+						flex-direction: column;
+						align-items: flex-end;
+					}
+					.btn{
+						display: none;
+						padding: 7px 12px;
+						border-radius: 3px;
+						background: $accentColorLightBlue;
+						cursor: pointer;
+						&:hover{
+							background: $accentColorDarkOrange;
+						}
+					}
+				}
+				&:hover{
+					background: var(--mainBorder);
+					color: var(--mainColor);
+					.btn{
+						display: block;
+					}
+				}
+			}
 		}
 	}
 

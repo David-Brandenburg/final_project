@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
@@ -34,7 +34,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
   const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn, setIsAdmin } =
     useContext(LogginContext);
   const { language, toggleLanguage } = useLanguage();
-
+	const gamesLinkRef = useRef(null)
   const cIL = cart.length;
 
   const handleOpenSearch = (e) => {
@@ -139,28 +139,66 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const gamesLink = document.getElementById("gamesLink");
-    gamesLink.addEventListener("mouseover", (e) => {
+  // useEffect(() => {
+  //   const gamesLink = document.getElementById("gamesLink");
+  //   if (!openSearch) {
+	// 		gamesLink.addEventListener("mouseover", (e) => {
+	// 			e.stopPropagation();
+	// 			e.preventDefault();
+	// 			setOpenGameModal(true);
+	// 			setAdminEditModal('');
+	// 			setOpenModalBlocker(true);
+	// 			setOpenSearch(false);
+	// 			setOpenCart(false);
+	// 			setOpenLoginModal(false);
+	// 		});
+	// 	}
+
+  //   return () => {
+  //     gamesLink.addEventListener("mouseout", (e) => {
+  //       e.stopPropagation();
+  //       e.preventDefault();
+  //       setOpenGameModal(false);
+  //       setOpenModalBlocker(false);
+  //     });
+  //   };
+  // }, [openSearch]);
+
+	useEffect(() => {
+    const gamesLink = gamesLinkRef.current;
+
+    const handleMouseOver = (e) => {
       e.stopPropagation();
       e.preventDefault();
       setOpenGameModal(true);
-			setAdminEditModal('');
+      setAdminEditModal('');
       setOpenModalBlocker(true);
       setOpenSearch(false);
       setOpenCart(false);
       setOpenLoginModal(false);
-    });
+    };
+
+    const handleMouseOut = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setOpenGameModal(false);
+      setOpenModalBlocker(false);
+    };
+
+    if (gamesLink) {
+      if (!openSearch) {
+        gamesLink.addEventListener("mouseover", handleMouseOver);
+        gamesLink.addEventListener("mouseout", handleMouseOut);
+      }
+    }
 
     return () => {
-      gamesLink.addEventListener("mouseout", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setOpenGameModal(false);
-        setOpenModalBlocker(false);
-      });
+      if (gamesLink) {
+        gamesLink.removeEventListener("mouseover", handleMouseOver);
+        gamesLink.removeEventListener("mouseout", handleMouseOut);
+      }
     };
-  }, []);
+  }, [openSearch]);
 
 	useEffect(() => {
 		setNavAvatar(localStorage.getItem("profilePic"))
@@ -184,10 +222,10 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
                   setOpenModalBlocker(false);
                   e.stopPropagation();
                 }}>
-                <NavLink to="/games" className="nav-link" title="navlink">
+                <NavLink to="/games" className="nav-link" title="navlink" ref={gamesLinkRef}>
                   {language === "en" ? "Games" : "Spiele"}
+									{openGameModal && <GameModal ref={gamesLinkRef}/>}
                 </NavLink>
-                {openGameModal && <GameModal />}
               </div>
               <NavLink to="/infos" className="nav-link" title="navlink">
                 {language === "en" ? "Infos" : "Infos"}
