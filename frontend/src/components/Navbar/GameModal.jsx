@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
-import "../../styles/modals.scss";
 import { useContext, useEffect, useState } from "react";
-import { ModalContext } from "../../contexts/ModalContext";
+import { ModalContext } from "../../contexts/ModalContext.js";
 import GameModalCardContainer from "./GameModalCardContainer";
 import slugify from "slugify";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
+import "../../styles/modals.scss";
 
-const GameModal = () => {
+const GameModal = ({ref}) => {
   const [genre, setGenre] = useState("");
   const { language } = useLanguage();
   const messages = {
@@ -16,7 +16,7 @@ const GameModal = () => {
     },
     "neu-erschienen": {
       en: "Browse all new releases",
-      de: "Zu allen neu erschienenen",
+      de: "Zu allen Neuerscheinungen",
     },
     angebote: {
       en: "Browse all on sale now",
@@ -99,7 +99,7 @@ const GameModal = () => {
   };
 
   return (
-    <div className="games-modal" onClick={(e) => e.stopPropagation()}>
+    <div className="games-modal" onClick={(e) => {e.stopPropagation(); e.preventDefault()}} ref={ref}>
       <div className="games-genre-list">
         <p className="games-modal-link">
           {language === "en" ? "New releases" : "Neu erschienen"}
@@ -130,7 +130,7 @@ const GameModal = () => {
           <GameModalCardContainer genre={genre} />
           <div className="">
             <NavLink
-              to={`/games/genres/${genre.toLowerCase()}`}
+              to={`/games?=genres=${genre.toLowerCase()}`}
               className="genre-link"
               onClick={(e) => {
                 setOpenGameModal(false);

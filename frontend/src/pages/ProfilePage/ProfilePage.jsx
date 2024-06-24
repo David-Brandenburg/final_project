@@ -266,7 +266,7 @@ const ProfilePage = ({setProfilePicChange}) => {
 								<form className='profile-form-row' encType='multipart/form-data' onSubmit={sumbitProfilePicUpload}>
 									<div className='profile-inside-row'>
 										<label htmlFor="profilepic">{language === 'en' ? 'Change Profilepicture' : 'Profilbild ändern'}:</label>
-										<input type="file" name="profilepic" id="profilepic" onChange={handleFileChange} />
+										<input className='profile-input' type="file" name="profilepic" id="profilepic" onChange={handleFileChange} />
 									</div>
 									<button className='profile-btn' disabled={!hasFile}>{language === 'en' ? 'Upload Image' : 'Bild hochladen'}</button>
 								</form>
@@ -274,19 +274,19 @@ const ProfilePage = ({setProfilePicChange}) => {
 								<form className='profile-form-row' onSubmit={submitAccountInfo}>
 									<div className='profile-inside-row'>
 										<label htmlFor="">{language === 'en' ? 'Change Username': 'Benutzername ändern'}:</label>
-										<input type="text" name="benutzername" id="benutzername" onChange={handleInputChange} />
+										<input className='profile-input' type="text" name="benutzername" id="benutzername" onChange={handleInputChange} />
 									</div>
 									<div className='profile-inside-row'>
 										<label htmlFor="">{language === 'en' ? 'Change E-Mail' : 'E-Mail ändern'}:</label>
-										<input type="email" name="email" id="email" onChange={handleInputChange} />
+										<input className='profile-input' type="email" name="email" id="email" onChange={handleInputChange} />
 									</div>
 									<div className='profile-inside-row'>
 										<label htmlFor="">{language === 'en' ? 'Change Firstname' : 'Vorname ändern'}:</label>
-										<input type="text" name="vorname" id="vorname" onChange={handleInputChange} />
+										<input className='profile-input' type="text" name="vorname" id="vorname" onChange={handleInputChange} />
 									</div>
 									<div className='profile-inside-row'>
 										<label htmlFor="">{language === 'en' ? 'Change Lastname' : 'Nachname ändern'}:</label>
-										<input type="text" name="nachname" id="nachname" onChange={handleInputChange} />
+										<input className='profile-input' type="text" name="nachname" id="nachname" onChange={handleInputChange} />
 									</div>
 									<button className='profile-btn' disabled={Object.keys(objectToUpdate).length < 1 ? true : false }>{language === 'en' ? 'Change Account Info' : 'Account Informationen ändern'}</button>
 								</form>
@@ -294,11 +294,11 @@ const ProfilePage = ({setProfilePicChange}) => {
 								<form className='profile-form-row' onSubmit={submitPassword}>
 									<div className='profile-inside-row'>
 										<label htmlFor="password">{language === 'en' ? 'Current Password' : 'Aktuelles Passwort'}:</label>
-										<input type="password" name="password" id="password" onChange={handlePasswordChange}/>
+										<input className='profile-input' type="password" name="password" id="password" onChange={handlePasswordChange}/>
 									</div>
 									<div className='profile-inside-row'>
 										<label htmlFor="newpassword">{language === 'en' ? 'Enter new password' : 'Neues Passwort eingeben'}:</label>
-										<input type="password" name="newpassword" id="newpassword" onChange={handlePasswordChange}/>
+										<input className='profile-input' type="password" name="newpassword" id="newpassword" onChange={handlePasswordChange}/>
 									</div>
 									<button className='profile-btn' disabled={Object.keys(passwordToUpdate).length < 2 ? true : false }>{language === 'en' ? 'Change Password' : 'Passwort ändern'}</button>
 								</form>

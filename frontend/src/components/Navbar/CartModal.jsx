@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { ModalContext } from "../../contexts/ModalContext";
-import { AddtoCardContext } from "../../contexts/AddtoCardContext";
-import { LogginContext } from "../../contexts/LogginContext";
+import { ModalContext } from "../../contexts/ModalContext.js";
+import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
+import { LogginContext } from "../../contexts/LogginContext.js";
 import { useContext, useState, useEffect } from "react";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
 const CartModal = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);

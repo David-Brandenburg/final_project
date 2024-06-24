@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import slugify from "slugify";
 import { NavLink } from "react-router-dom";
 import AddToCartBtn from "../AddToCartBtn";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
 const GameModalCardContainer = ({ genre }) => {
   const [games, setGames] = useState(null);
@@ -64,13 +64,13 @@ const GameModalCardContainer = ({ genre }) => {
               className="game-card"
               key={game.title + index}>
               <div className="game-card-thumbnail-wrapper">
-                <img src={game.thumbnail} alt="" />
+                <img src={game.thumbnail} alt="" style={{width: '196px', aspectRatio: '16 / 9'}}/>
               </div>
               <div className="game-card-info-wrapper">
                 <div className="game-card-platforms-wrapper">
                   {game.platforms.map((platform) => (
                     <small key={platform} className="game-card-platform">
-                      <i className={`bi bi-${platform}`}></i>
+                      <i className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'}`}></i>
                     </small>
                   ))}
                 </div>

@@ -251,6 +251,20 @@
         .game-card {
           background-color: var(--background);
           border-radius: 15px;
+					.game-card-header{
+						display: flex;
+						width: 100%;
+						height: max-content;
+						gap: 5px;
+					}
+					.dlc-tag{
+						height: fit-content;
+						width: fit-content;
+						font-weight: normal;
+						padding: 3px 6px;
+						border-radius: 3px;
+						background: color-mix(in lab, $accentColorLightBlue , #fff 40%);
+					}
           .game-card-thumbnail {
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;

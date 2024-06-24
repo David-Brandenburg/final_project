@@ -73,7 +73,14 @@ async function getGame(req, res) {
     console.log(orginalTitle);
     const foundGame = await Game.findOne({ title: orginalTitle });
     if (!foundGame) {
-      return res.status(404).send({ message: "Game not found!", ok: false });
+			const foundGameById = await Game.findById(gameTitle);
+			if (!foundGameById) {
+				return res.status(404).send({ message: "Game not found!", ok: false });
+			} else if (foundGameById) {
+				return res.status(200).json(foundGameById)
+			} else {
+				return res.status(404).send({ message: "Game not found!", ok: false });
+			}
     }
 
     return res.status(200).json(foundGame);

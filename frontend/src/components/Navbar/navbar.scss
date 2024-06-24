@@ -195,7 +195,7 @@ nav {
           border: 1px solid var(--mainBorder);
           box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
           padding: 10px;
-          top: calc($navbarHeight - 14px);
+          top: calc($navbarHeight - 16px);
           right: 200px;
           transform: translate(250px);
           cursor: default;
@@ -231,7 +231,8 @@ nav {
             width: 100%;
             padding: 10px;
             img {
-              width: 40%;
+              width: 150px;
+							aspect-ratio: 16 / 9;
               border-radius: 5px;
               margin: 10px;
             }
@@ -318,7 +319,7 @@ nav {
           border: 1px solid var(--mainBorder);
           box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
           padding: 10px;
-          top: calc($navbarHeight - 14px);
+          top: calc($navbarHeight - 16px);
           right: 200px;
           transform: translate(250px);
           cursor: default;

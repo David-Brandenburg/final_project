@@ -58,6 +58,7 @@ const NeueErschinenGamesListe = () => {
                       src={game.thumbnail}
                       alt={game.title}
                       className="game-card-thumbnail"
+											style={{width: '196px', aspectRatio: '16 / 9'}}
                     />
                   </div>
                   <div className="game-card-content">
