@@ -5,6 +5,8 @@ import RangeSlider from "react-range-slider-input";
 import GamesModal from "../../components/HomePage/GamesModal";
 import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
+import { set } from "date-fns";
+import { se } from "date-fns/locale";
 
 const GamesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,6 +49,7 @@ const GamesPage = () => {
   const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
   // Toggles the dropdown menu
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const [path, setPath] = useState(window.location.href);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +66,13 @@ const GamesPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  const handNavLink = () => {
+    if (path.includes("tags" && "Fantasy")) {
+      setFilterCondition("FANTASY_TAG");
+    } else {
+      console.log("no");
+    }
+  };
   // Defines the sort options based on the current language
   const items =
     language === "en"
@@ -105,6 +114,7 @@ const GamesPage = () => {
   // Fetch games when the component is mounted
   useEffect(() => {
     fetchGames();
+    handNavLink();
     setSortCondition("Meistverkauft (kürzlich)");
     setSelectedItemsSort([
       language === "en"
@@ -1201,7 +1211,11 @@ const GamesPage = () => {
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleFantasyTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "FANTASY_TAG"}
+                      onChange={handleFantasyTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Fantasy" : " Fantasie"}
                   </label>
@@ -1663,9 +1677,9 @@ const GamesPage = () => {
                     </div>
                     <div className="game-card-content">
                       <div className="game-card-header">
-												{game.dlc && <span className="dlc-tag">DLC</span>}
-												<h4>{game.title}</h4>
-											</div>
+                        {game.dlc && <span className="dlc-tag">DLC</span>}
+                        <h4>{game.title}</h4>
+                      </div>
                       <div className="game-card-price">
                         {game.discount >= 1 && (
                           <div className="game-card-rabatt">

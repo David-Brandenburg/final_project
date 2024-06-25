@@ -374,9 +374,7 @@ function AddGamePage() {
               value={newBannerDE}
               onChange={newHandleBannerDE}
             />
-            <button type="button" onClick={() => addInputFieldDescription()}>
-              Add Platform
-            </button>
+            <button type="button">Add Platform</button>
           </div>
           <div>
             <label>BannerEN: </label>
