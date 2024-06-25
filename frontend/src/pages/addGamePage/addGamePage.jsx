@@ -7,7 +7,7 @@ const initialData = {
   discount: 0,
   title: "",
   platforms: [],
-  description: {},
+  description: [],
   rating: "",
   publisher: "",
   genres: [],
@@ -126,6 +126,49 @@ function AddGamePage() {
   const [newFunction, setNewFunction] = useState("");
   const [newGenre, setNewGenre] = useState("");
   const [newLanguage, setNewLanguage] = useState("");
+  const [newBannerEN, setNewBannerEN] = useState("");
+  const [newBannerDE, setNewBannerDE] = useState("");
+  const [newParagraphDE, setNewParagraphDE] = useState([]);
+  const [newParagraphEN, setNewParagraphEN] = useState([]);
+  const [newSubHeaderDE, setNewSubHeaderDE] = useState([]);
+  const [newSubHeaderEN, setNewSubHeaderEN] = useState([]);
+  const [newfootNote, setNewFootNote] = useState("");
+  const [newListItemDE, setNewListItemDE] = useState("");
+  const [newListItemEN, setNewListItemEN] = useState("");
+
+  const banner = {
+    bannerDE: newBannerDE,
+    bannerEN: newBannerEN,
+  };
+
+  const paragraph = {
+    paragraphDE: newParagraphDE,
+    paragraphEN: newParagraphEN,
+  };
+
+  const subHeader = {
+    subHeaderDE: newSubHeaderDE,
+    subHeaderEN: newSubHeaderEN,
+  };
+
+  const lists = {
+    listDE: [
+      {
+        listItem: newListItemDE,
+      },
+    ],
+
+    listEN: [
+      {
+        listItem: newListItemEN,
+      },
+    ],
+  };
+
+  const handleDescription = () => {
+    data.description.push(banner, paragraph, subHeader, lists);
+    console.log(data.description);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -133,6 +176,42 @@ function AddGamePage() {
       ...data,
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  const newHandleBannerDE = (e) => {
+    setNewBannerDE(e.target.value);
+  };
+
+  const newHandleBannerEN = (e) => {
+    setNewBannerEN(e.target.value);
+  };
+
+  const newHandleParagraphDE = (e) => {
+    setNewParagraphDE(e.target.value);
+  };
+
+  const newHandleParagraphEN = (e) => {
+    setNewParagraphEN(e.target.value);
+  };
+
+  const newHandleSubHeaderDE = (e) => {
+    setNewSubHeaderDE(e.target.value);
+  };
+
+  const newHandleSubHeaderEN = (e) => {
+    setNewSubHeaderEN(e.target.value);
+  };
+
+  const newHandleListDE = (e) => {
+    setNewListItemDE(e.target.value);
+  };
+
+  const newHandleListEN = (e) => {
+    setNewListItemEN(e.target.value);
+  };
+
+  const newHandleFootNote = (e) => {
+    setNewFootNote(e.target.value);
   };
 
   const handleArrayChange = (e, key, index) => {
@@ -287,12 +366,77 @@ function AddGamePage() {
           </button>
         </div>
         <div>
-          <label>Description: </label>
-          <textarea
-            name="description"
-            value={data.description}
-            onChange={handleChange}
-          />
+          <h3>Descripation:</h3>
+          <div>
+            <label>BannerDE: </label>
+            <input
+              name="bannerDE"
+              value={newBannerDE}
+              onChange={newHandleBannerDE}
+            />
+            <button type="button" onClick={() => addInputFieldDescription()}>
+              Add Platform
+            </button>
+          </div>
+          <div>
+            <label>BannerEN: </label>
+            <input
+              name="bannerEN"
+              value={newBannerEN}
+              onChange={newHandleBannerEN}
+            />
+          </div>
+          <div>
+            <label>paragraphEN: </label>
+            <input
+              name="paragraphEN"
+              value={newParagraphEN}
+              onChange={newHandleParagraphEN}
+            />
+          </div>
+          <div>
+            <label>paragraphDE: </label>
+            <input
+              name="paragraphDE"
+              value={newParagraphDE}
+              onChange={newHandleParagraphDE}
+            />
+          </div>
+          <div>
+            <label>subHeaderDE: </label>
+            <input
+              name="subHeaderDE"
+              value={newSubHeaderDE}
+              onChange={newHandleSubHeaderDE}
+            />
+          </div>
+          <div>
+            <label>subHeaderEN: </label>
+            <input
+              name="subHeaderEN"
+              value={newSubHeaderEN}
+              onChange={newHandleSubHeaderEN}
+            />
+          </div>
+          <div>
+            <label>listItemDE</label>
+            <input
+              name="listItemDE"
+              value={newListItemDE}
+              onChange={newHandleListDE}
+            />
+          </div>
+          <div>
+            <label>listItemEN</label>
+            <input
+              name="listItemEN"
+              value={newListItemEN}
+              onChange={newHandleListEN}
+            />
+          </div>
+          <button type="button" onClick={handleDescription}>
+            Add
+          </button>
         </div>
         <div>
           <label>Rating: </label>

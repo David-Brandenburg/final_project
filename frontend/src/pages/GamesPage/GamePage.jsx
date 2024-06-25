@@ -12,10 +12,9 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation } from "swiper/modules";
-import AddToCartBtn from "../../components/AddToCartBtn.jsx";
-import { useLanguage } from "../../contexts/LanguageContext.js";
 import "./gamepage.scss";
+import LanguagesListTag from "../../components/LanguagesListTag.jsx";
+import LanguagesListGenres from "../../components/LanguagesListgGenres.jsx";
 
 const GamePage = () => {
   const [gameData, setGameData] = useState(null);
@@ -24,6 +23,8 @@ const GamePage = () => {
   const [openTags, setOpenTags] = useState(false);
   const { title } = useParams();
   const { language } = useLanguage();
+  const [languageTag, setLanguageTag] = useState("en"); // Standardmäßig Englisch
+  const [languageGenre, setLanguageGenre] = useState("en"); // Standardmäßig Englisch
 
   const { setOpenModalBlocker, setOpenImageModal, setOpenTrailerModal } =
     useContext(ModalContext);
@@ -605,66 +606,21 @@ const GamePage = () => {
                 <div className="game-details-row">
                   <p className="game-details-tag">Genre:</p>
                   <div className="game-details-content">
-                    {gameData.genres.slice(0, 3).map((genre, index) => (
-                      <React.Fragment key={"genre" + index}>
-                        <NavLink
-                          className="game-details-link"
-                          to={`/games?=genres=${slugify(genre, "_")}`}
-                          style={{ textUnderlineOffset: "4px" }}>
-                          {genre}
-                        </NavLink>
-                        {index < gameData.genres.slice(0, 3).length - 1 && (
-                          <span className="space-holder2">-</span>
-                        )}
-                      </React.Fragment>
-                    ))}
+                    <LanguagesListGenres
+                      genres={gameData.genres}
+                      language={languageGenre}
+                    />
                   </div>
                 </div>
                 <div className="game-details-row">
                   <p className="game-details-tag">Tags:</p>
                   <div className="game-details-content">
-                    {!openTags &&
-                      gameData.tags.slice(0, 5).map((tag, index) => (
-                        <React.Fragment key={"tag" + index}>
-                          <NavLink
-                            className="game-details-link"
-                            to={`/games?=tags=${slugify(tag, "_")}`}
-                            style={{ textUnderlineOffset: "4px" }}>
-                            {tag}
-                          </NavLink>
-                          {index < gameData.tags.slice(0, 5).length - 0 && (
-                            <span className="space-holder">,</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                    {openTags &&
-                      gameData.tags.map((tag, index) => (
-                        <React.Fragment key={"tag" + index}>
-                          <NavLink
-                            className="game-details-link"
-                            to={`/games?=tags=${slugify(tag, "_")}`}
-                            style={{ textUnderlineOffset: "4px" }}>
-                            {tag}
-                          </NavLink>
-                          {index < gameData.tags.length - 1 && (
-                            <span className="space-holder">,</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                    {!openTags && gameData.tags.length > 5 && (
-                      <span
-                        style={{
-                          textTransform: "none",
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                          textUnderlineOffset: "4px",
-                        }}
-                        onClick={() => setOpenTags((prev) => !prev)}>
-                        {language === "en"
-                          ? ` show ${gameData.tags.length - 5} more..`
-                          : ` zeige ${gameData.tags.length - 5} weitere..`}
-                      </span>
-                    )}
+                    <LanguagesListTag
+                      tags={gameData.tags}
+                      language={languageTag}
+                      openTags={openTags}
+                      setOpenTags={setOpenTags}
+                    />
                   </div>
                 </div>
                 <div className="game-details-row">

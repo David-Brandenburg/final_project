@@ -1,0 +1,362 @@
+{
+  "Indie": {
+    "en": "Indie",
+    "de": "Indie"
+  },
+  "Strategie": {
+    "en": "Strategy",
+    "de": "Strategie"
+  },
+  "Action": {
+    "en": "Action",
+    "de": "Action"
+  },
+  "Abenteuer": {
+    "en": "Adventure",
+    "de": "Abenteuer"
+  },
+  "Rollenspiel": {
+    "en": "RPG",
+    "de": "Rollenspiel"
+  },
+  "Fantasy": {
+    "en": "Fantasy",
+    "de": "Fantasy"
+  },
+  "Science-Fiction": {
+    "en": "Science-Fiction",
+    "de": "Science-Fiction"
+  },
+  "Shooter": {
+    "en": "Shooter",
+    "de": "Shooter"
+  },
+  "Atmosphärisch": {
+    "en": "Atmospheric",
+    "de": "Atmosphärisch"
+  },
+  "Überleben": {
+    "en": "Survival",
+    "de": "Überleben"
+  },
+  "Horror": {
+    "en": "Horror",
+    "de": "Horror"
+  },
+  "Spannende Geschichte": {
+    "en": "Exciting Story",
+    "de": "Spannende Geschichte"
+  },
+  "Erkundung": {
+    "en": "Exploration",
+    "de": "Erkundung"
+  },
+  "Toller Soundtrack": {
+    "en": "Great Soundtrack",
+    "de": "Toller Soundtrack"
+  },
+  "First-Person": {
+    "en": "First-Person",
+    "de": "First-Person"
+  },
+  "Third Person": {
+    "en": "Third-Person",
+    "de": "Third-Person"
+  },
+  "Offene Spielwelt": {
+    "en": "Open World",
+    "de": "Offene Spielwelt"
+  },
+  "Sandbox": {
+    "en": "Sandbox",
+    "de": "Sandbox"
+  },
+  "FPS": {
+    "en": "FPS",
+    "de": "FPS"
+  },
+  "Postapokalyptisch": {
+    "en": "Postapocalyptic",
+    "de": "Postapokalyptisch"
+  },
+  "Historisch": {
+    "en": "Historical",
+    "de": "Historisch"
+  },
+  "Ressourcenverwaltung": {
+    "en": "Resource Management",
+    "de": "Ressourcenverwaltung"
+  },
+  "Crafting": {
+    "en": "Crafting",
+    "de": "Crafting"
+  },
+  "Mittelalterlich": {
+    "en": "Medieval",
+    "de": "Mittelalterlich"
+  },
+  "Bauen": {
+    "en": "Building",
+    "de": "Bauen"
+  },
+  "Basenbau": {
+    "en": "Base Building",
+    "de": "Basenbau"
+  },
+  "Städtebauer": {
+    "en": "City Builder",
+    "de": "Städtebauer"
+  },
+  "Kämpfen": {
+    "en": "Combat",
+    "de": "Kämpfen"
+  },
+  "Wissenschaft": {
+    "en": "Science",
+    "de": "Wissenschaft"
+  },
+  "Rundenbasiert": {
+    "en": "Turn-based",
+    "de": "Rundenbasiert"
+  },
+  "Klassisch": {
+    "en": "Classic",
+    "de": "Klassisch"
+  },
+  "Taktisch": {
+    "en": "Tactical",
+    "de": "Taktisch"
+  },
+  "Isometrisch": {
+    "en": "Isometric",
+    "de": "Isometrisch"
+  },
+  "Good Old Game": {
+    "en": "Good Old Game",
+    "de": "Good Old Game"
+  },
+  "Taktik-RPG": {
+    "en": "Tactical RPG",
+    "de": "Taktik-RPG"
+  },
+  "cRPG": {
+    "en": "cRPG",
+    "de": "cRPG"
+  },
+  "Rätsel": {
+    "en": "Puzzle",
+    "de": "Rätsel"
+  },
+  "Detektivgeschichten": {
+    "en": "Detective Stories",
+    "de": "Detektivgeschichten"
+  },
+  "Leicht": {
+    "en": "Easy",
+    "de": "Leicht"
+  },
+  "Lustig": {
+    "en": "Funny",
+    "de": "Lustig"
+  },
+  "Point&Click": {
+    "en": "Point&Click",
+    "de": "Point&Click"
+  },
+  "Mystery": {
+    "en": "Mystery",
+    "de": "Mystery"
+  },
+  "Ermittlung": {
+    "en": "Investigation",
+    "de": "Ermittlung"
+  },
+  "kurz": {
+    "en": "Short",
+    "de": "kurz"
+  },
+  "Erzählung": {
+    "en": "Narrative",
+    "de": "Erzählung"
+  },
+  "Noir": {
+    "en": "Noir",
+    "de": "Noir"
+  },
+  "Gemütlich": {
+    "en": "Cozy",
+    "de": "Gemütlich"
+  },
+  "Keine Gewalt": {
+    "en": "No Violence",
+    "de": "Keine Gewalt"
+  },
+  "2D": {
+    "en": "2D",
+    "de": "2D"
+  },
+  "Weltraum": {
+    "en": "Space",
+    "de": "Weltraum"
+  },
+  "Von-Oben-Ansicht": {
+    "en": "Top-Down",
+    "de": "Von-Oben-Ansicht"
+  },
+  "Prozedural Generiert": {
+    "en": "Procedurally Generated",
+    "de": "Prozedural Generiert"
+  },
+  "Bullet Hell": {
+    "en": "Bullet Hell",
+    "de": "Bullet Hell"
+  },
+  "Fliegen": {
+    "en": "Flying",
+    "de": "Fliegen"
+  },
+  "Looter Shooter": {
+    "en": "Looter Shooter",
+    "de": "Looter Shooter"
+  },
+  "Verwaltung": {
+    "en": "Management",
+    "de": "Verwaltung"
+  },
+  "Schwarzer Humor": {
+    "en": "Black Humor",
+    "de": "Schwarzer Humor"
+  },
+  "Psychologischer Horror": {
+    "en": "Psychological Horror",
+    "de": "Psychologischer Horror"
+  },
+  "Überlebenshorror": {
+    "en": "Survival Horror",
+    "de": "überlebenshorror"
+  },
+  "Lovecraft": {
+    "en": "Lovecraft",
+    "de": "Lovecraft"
+  },
+  "Fischen": {
+    "en": "Fishing",
+    "de": "Fischen"
+  },
+  "Mehrere Enden": {
+    "en": "Multiple Endings",
+    "de": "Mehrere Enden"
+  },
+  "Weibliche Protagonistin": {
+    "en": "Female Protagonist",
+    "de": "Weibliche Protagonistin"
+  },
+  "Entscheidungen Zählen": {
+    "en": "Choices Matter",
+    "de": "Entscheidungen Zählen"
+  },
+  "Nicht jugendfrei": {
+    "en": "Not for Children",
+    "de": "Nicht Jugendfrei"
+  },
+  "LGBTQ+": {
+    "en": "LGBTQ+",
+    "de": "LGBTQ+"
+  },
+  "Hunde Streicheln": {
+    "en": "Petting Dogs",
+    "de": "Hunde Streicheln"
+  },
+  "Echtzeit": {
+    "en": "Real-time",
+    "de": "Echtzeit"
+  },
+  "Magie": {
+    "en": "Magic",
+    "de": "Magie"
+  },
+  "Brettspiel": {
+    "en": "Board Game",
+    "de": "Brettspiel"
+  },
+  "Lokaler Coop": {
+    "en": "Local Coop",
+    "de": "lokaler Koop"
+  },
+  "Entscheidungen zählen": {
+    "en": "Choices Matter",
+    "de": "Entscheidungen Zählen"
+  },
+  "Gewalttätig": {
+    "en": "Violence",
+    "de": "Gewaltätig"
+  },
+  "Nacktheit": {
+    "en": "Nudity",
+    "de": "Nacktheit"
+  },
+  "Nur Auf GOG": {
+    "en": "Only on PIXELPLAZA",
+    "de": "Nur auf PIXELPLAZA"
+  },
+  "Lokaler Multiplayer": {
+    "en": "Local Multiplayer",
+    "de": "Lokaler Multiplayer"
+  },
+  "Düster": {
+    "en": "Gloomy",
+    "de": "Düster"
+  },
+  "Untergrund": {
+    "en": "Underground",
+    "de": "Untergrund"
+  },
+  "Schwierig": {
+    "en": "Difficult",
+    "de": "Schwierig"
+  },
+  "Pixelgrafik": {
+    "en": "Pixel Graphics",
+    "de": "Pixelgrafik"
+  },
+  "Sexuelle Inhalte": {
+    "en": "Sexual Content",
+    "de": "Sexuelle Inhalte"
+  },
+  "Wähle Dein Eigenes Abenteuer": {
+    "en": "Choose your own Adventure",
+    "de": "Wähle dein eigenes Abenteuer"
+  },
+  "Verbrechen": {
+    "en": "Crime",
+    "de": "Verbrechen"
+  },
+  "Kampfkunst": {
+    "en": "Martial Arts",
+    "de": "Kampfkunst"
+  },
+  "Schleichen": {
+    "en": "Stealth",
+    "de": "Schleichen"
+  },
+  "Geteilter Bildschirm": {
+    "en": "Split Screen",
+    "de": "Geteilter Bildschirm"
+  },
+  "Werwölfe": {
+    "en": "Werewolves",
+    "de": "Werwölfe"
+  },
+  "Entspannend": {
+    "en": "Relaxing",
+    "de": "Entspannend"
+  },
+  "1.Weltkrieg": {
+    "en": "WW1",
+    "de": "1.Weltkrieg"
+  },
+  "Textbasiert": {
+    "en": "Text-based",
+    "de": "Textbasiert"
+  }
+}
