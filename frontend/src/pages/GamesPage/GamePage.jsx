@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import { useLanguage } from "../../contexts/LanguageContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 import AddToCartBtn from "../../components/AddToCartBtn.jsx";
 import slugify from "slugify";
 import "swiper/css";
@@ -13,6 +13,8 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./gamepage.scss";
+import LanguagesListTag from "../../components/LanguagesListTag.jsx";
+import LanguagesListGenres from "../../components/LanguagesListgGenres.jsx";
 
 const GamePage = () => {
   const [gameData, setGameData] = useState(null);
@@ -23,6 +25,8 @@ const GamePage = () => {
 	const [recommendations2, setRecommendations2] = useState(null);
   const { title } = useParams();
   const { language } = useLanguage();
+  const [languageTag, setLanguageTag] = useState("en"); // Standardmäßig Englisch
+  const [languageGenre, setLanguageGenre] = useState("en"); // Standardmäßig Englisch
 
   const { setOpenModalBlocker, setOpenImageModal, setOpenTrailerModal } = useContext(ModalContext);
 
@@ -47,7 +51,7 @@ const GamePage = () => {
 
     return () => {
       setGameData(null);
-			setOpenTags(false)
+      setOpenTags(false);
     };
   }, [title]);
 
@@ -57,8 +61,8 @@ const GamePage = () => {
       title.split("_").join(" ") +
       (language === "en" ? " on " : " auf ") +
       "PixelPlaza";
-		
-		window.scrollTo(0, 0);
+
+    window.scrollTo(0, 0);
   }, [language, title, gameData]);
 
   const handleImageModal = (e, pic) => {
@@ -73,11 +77,14 @@ const GamePage = () => {
     setOpenTrailerModal(trailer);
   };
 
-	useEffect(() => {
+  useEffect(() => {
     const fetchDLCS = async (title, abortSignal) => {
       try {
-        const url = `http://localhost:3001/games/${slugify(title, '_')}`;
-        const response = await fetch(url, { method: 'GET', signal: abortSignal });
+        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
+        const response = await fetch(url, {
+          method: "GET",
+          signal: abortSignal,
+        });
         if (!response.ok) {
           const data = await response.json();
           throw new Error(data.message);
@@ -85,7 +92,7 @@ const GamePage = () => {
         const data = await response.json();
         return data;
       } catch (error) {
-        if (error.name !== 'AbortError') {
+        if (error.name !== "AbortError") {
           console.error(error);
         }
         return null;
@@ -97,13 +104,15 @@ const GamePage = () => {
       const signal = controller.signal;
 
       const fetchAllDLCS = async () => {
-        const dlcsData = await Promise.all(gameData.dlcs.map(title => fetchDLCS(title, signal)));
-        setGameDLCS(dlcsData.filter(dlc => dlc !== null));
+        const dlcsData = await Promise.all(
+          gameData.dlcs.map((title) => fetchDLCS(title, signal))
+        );
+        setGameDLCS(dlcsData.filter((dlc) => dlc !== null));
       };
 
-			if (gameData.dlcs.length > 0){
-				fetchAllDLCS();
-			}
+      if (gameData.dlcs.length > 0) {
+        fetchAllDLCS();
+      }
 
       return () => {
         controller.abort();
@@ -111,11 +120,14 @@ const GamePage = () => {
     }
   }, [gameData]);
 
-	useEffect(() => {
+  useEffect(() => {
     const fetchMainGame = async (title, abortSignal) => {
       try {
-        const url = `http://localhost:3001/games/${slugify(title, '_')}`;
-        const response = await fetch(url, { method: 'GET', signal: abortSignal });
+        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
+        const response = await fetch(url, {
+          method: "GET",
+          signal: abortSignal,
+        });
         if (!response.ok) {
           const data = await response.json();
           throw new Error(data.message);
@@ -123,7 +135,7 @@ const GamePage = () => {
         const data = await response.json();
         return data;
       } catch (error) {
-        if (error.name !== 'AbortError') {
+        if (error.name !== "AbortError") {
           console.error(error);
         }
         return null;
@@ -178,7 +190,92 @@ const GamePage = () => {
 
       return () => {
         controller.abort();
-				setMainGame(null)
+        setMainGame(null);
+      };
+    }
+  }, [gameData, title]);
+
+  useEffect(() => {
+    const fetchDLCS = async (title, abortSignal) => {
+      try {
+        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
+        const response = await fetch(url, {
+          method: "GET",
+          signal: abortSignal,
+        });
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message);
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+        return null;
+      }
+    };
+
+    if (gameData) {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const fetchAllDLCS = async () => {
+        const dlcsData = await Promise.all(
+          gameData.dlcs.map((title) => fetchDLCS(title, signal))
+        );
+        setGameDLCS(dlcsData.filter((dlc) => dlc !== null));
+      };
+
+      if (gameData.dlcs.length > 0) {
+        fetchAllDLCS();
+      }
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [gameData]);
+
+  useEffect(() => {
+    const fetchMainGame = async (title, abortSignal) => {
+      try {
+        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
+        const response = await fetch(url, {
+          method: "GET",
+          signal: abortSignal,
+        });
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message);
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+        return null;
+      }
+    };
+
+    if (gameData && gameData.mainGame) {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const fetchMainGameData = async () => {
+        const mainGameData = await fetchMainGame(gameData.mainGame, signal);
+        if (mainGameData) {
+          setMainGame(mainGameData);
+        }
+      };
+
+      fetchMainGameData();
+
+      return () => {
+        controller.abort();
+        setMainGame(null);
       };
     }
   }, [gameData, title]);
@@ -192,7 +289,7 @@ const GamePage = () => {
               src={gameData.pageThumbnail}
               className="hero-thumbnail"
               alt=""
-							loading="eager"
+              loading="eager"
             />
             <img src={gameData.logo} className="hero-logo" alt="" />
             {gameData.trailer.length > 0 && (
@@ -341,7 +438,7 @@ const GamePage = () => {
                 <p className="header-left">
                   {language === "en" ? "Description" : "Beschreibung"}
                 </p>
-                <hr className="header-hr"/>
+                <hr className="header-hr" />
               </div>
               <div className="description-content">
                 {Array.isArray(gameData.description) &&
@@ -390,7 +487,7 @@ const GamePage = () => {
                               : Object.values(item)[0]
                           }
                           alt=""
-													loading="lazy"
+                          loading="lazy"
                         />
                       );
                     }
@@ -410,14 +507,27 @@ const GamePage = () => {
                         </ul>
                       );
                     }
-										if (key === "quoteDE" || key === "quoteEN") {
-											return (
-												<p key={'quote'+index} className="quote">{language === "en" ? Object.values(item)[1] : Object.values(item)[0]}</p>
-											)
-										}
+                    if (key === "quoteDE" || key === "quoteEN") {
+                      return (
+                        <p key={"quote" + index} className="quote">
+                          {language === "en"
+                            ? Object.values(item)[1]
+                            : Object.values(item)[0]}
+                        </p>
+                      );
+                    }
                     if (key === "devQuoteDE" || key === "devQuoteEN") {
                       return (
-                        <p key={'devQuote'+index}  className="devQuote" dangerouslySetInnerHTML={{ __html: language === "en" ? Object.values(item)[1] : Object.values(item)[0] }}/>
+                        <p
+                          key={"devQuote" + index}
+                          className="devQuote"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              language === "en"
+                                ? Object.values(item)[1]
+                                : Object.values(item)[0],
+                          }}
+                        />
                       );
                     }
 										if (key === "midQuoteDE" || key === "midQuoteEN") {
@@ -443,45 +553,73 @@ const GamePage = () => {
               </div> */}
             </div>
             <div className="gamepage-info-right">
-							{mainGame &&
-								<>
-									<div className="header-container">
-										<p className="header-left">
-											{language === "en" ? "To play this game you also need" : "Zum Spielen benötigst du außerdem"}
-										</p>
-										<hr className="header-hr" />
-									</div>
-									<div className="game-maingame-container">
-										<NavLink to={`/games/${slugify(mainGame.title, '_')}`} className="game-maingame">
-											<div className="maingame-thumbnail-wrapper">
-												<img src={mainGame.thumbnail} alt=""/>
-											</div>
-											<div className="maingame-info-wrapper">
-												<small>{mainGame.title}</small>
-												<div className="maingame-info-pricetags">
-													{mainGame.discount > 0 && <p className="discount-tag" style={{color: 'var(--mainColor)', fontWeight: 'bold'}}>-{mainGame.discount}%</p>}
-													<div className="maingame-pricetags">
-														{mainGame.discount === 0 && <p>€ {mainGame.price}</p>}
-														{mainGame.discount > 0 &&
-															<>
-																<small style={{color: 'gray', textDecoration: 'line-through'}}>€ {mainGame.price}</small>
-																<p>€ {Math.floor((mainGame.price - (mainGame.price * mainGame.discount) / 100) * 100) / 100}
-																</p>
-															</>
-														}
-													</div>
-														<AddToCartBtn
-															className={"btn"}
-															game={mainGame}
-															text={<i className="bi bi-cart-plus"></i>}
-														/>
-												</div>
-											</div>
-										</NavLink>
-									</div>
-								</>
-							}
-							<div className="header-container">
+              {mainGame && (
+                <>
+                  <div className="header-container">
+                    <p className="header-left">
+                      {language === "en"
+                        ? "To play this game you also need"
+                        : "Zum Spielen benötigst du außerdem"}
+                    </p>
+                    <hr className="header-hr" />
+                  </div>
+                  <div className="game-maingame-container">
+                    <NavLink
+                      to={`/games/${slugify(mainGame.title, "_")}`}
+                      className="game-maingame">
+                      <div className="maingame-thumbnail-wrapper">
+                        <img src={mainGame.thumbnail} alt="" />
+                      </div>
+                      <div className="maingame-info-wrapper">
+                        <small>{mainGame.title}</small>
+                        <div className="maingame-info-pricetags">
+                          {mainGame.discount > 0 && (
+                            <p
+                              className="discount-tag"
+                              style={{
+                                color: "var(--mainColor)",
+                                fontWeight: "bold",
+                              }}>
+                              -{mainGame.discount}%
+                            </p>
+                          )}
+                          <div className="maingame-pricetags">
+                            {mainGame.discount === 0 && (
+                              <p>€ {mainGame.price}</p>
+                            )}
+                            {mainGame.discount > 0 && (
+                              <>
+                                <small
+                                  style={{
+                                    color: "gray",
+                                    textDecoration: "line-through",
+                                  }}>
+                                  € {mainGame.price}
+                                </small>
+                                <p>
+                                  €{" "}
+                                  {Math.floor(
+                                    (mainGame.price -
+                                      (mainGame.price * mainGame.discount) /
+                                        100) *
+                                      100
+                                  ) / 100}
+                                </p>
+                              </>
+                            )}
+                          </div>
+                          <AddToCartBtn
+                            className={"btn"}
+                            game={mainGame}
+                            text={<i className="bi bi-cart-plus"></i>}
+                          />
+                        </div>
+                      </div>
+                    </NavLink>
+                  </div>
+                </>
+              )}
+              <div className="header-container">
                 <p className="header-left">
                   {language === "en" ? "Game details" : "Spieldetails"}
                 </p>

@@ -30,14 +30,17 @@ const GamesModal = ({ game }) => {
     switch (functions) {
       case "Mehrspieler":
         return (
-          <i key="multiplayer" className="bi bi-people" title="Mehrspieler"></i>
+          <i
+            key="multiplayer"
+            className="bi bi-people"
+            title={language === "en" ? "Multiplayer" : "Mehrspieler"}></i>
         );
       case "Einzelspieler":
         return (
           <i
             key="singleplayer"
             className="bi bi-person"
-            title="Einzelspieler"></i>
+            title={language === "en" ? "Singleplayer" : "Einzelspieler"}></i>
         );
       case "crossplatform":
         return (
@@ -51,28 +54,49 @@ const GamesModal = ({ game }) => {
           <i
             key="achievements"
             className="bi bi-trophy"
-            title="Achievements"></i>
+            title={language === "en" ? "Achievements" : "Erfolge"}></i>
         );
       case "Cloud-Speicherstände":
         return (
           <i
             key="cloud"
             className="bi bi-cloud-upload"
-            title="Cloud-Speicherstände"></i>
+            title={
+              language === "en" ? "Cloud saves" : "Cloud-Speicherstände"
+            }></i>
         );
       case "Controller-Unterstützung":
         return (
           <i
             key="controller"
             className="bi bi-controller"
-            title="Controller-Unterstützung"></i>
+            title={
+              language === "en"
+                ? "Controller-Support"
+                : "Controller-Unterstützung"
+            }></i>
         );
       case "Einblendungen":
         return (
-          <i key="ads" className="bi bi-megaphone" title="Einblendungen"></i>
+          <i
+            key="ads"
+            className="bi bi-megaphone"
+            title={language === "en" ? "Overlay" : "Einblendungen"}></i>
+        );
+      case "Ranglisten":
+        return (
+          <i
+            key="leaderboard"
+            className="bi bi-clipboard2-data"
+            title={language === "en" ? "Leaderboards" : "Ranglisten"}></i>
         );
       case "Koop":
-        return <i key="coop" className="bi bi-people-fill" title="Koop"></i>;
+        return (
+          <i
+            key="coop"
+            className="bi bi-people-fill"
+            title={language === "en" ? "Coop" : "Koop"}></i>
+        );
       default:
         return null;
     }
@@ -489,6 +513,86 @@ const GamesModal = ({ game }) => {
       en: "Board Game",
       de: "Brettspiel",
     },
+    "Lokaler Coop": {
+      en: "Local Coop",
+      de: "lokaler Koop",
+    },
+    "Entscheidungen zählen": {
+      en: "Choices Matter",
+      de: "Entscheidungen Zählen",
+    },
+    Gewalttätig: {
+      en: "Violence",
+      de: "Gewaltätig",
+    },
+    Nacktheit: {
+      en: "Nudity",
+      de: "Nacktheit",
+    },
+    "Nur Auf GOG": {
+      en: "Only on PIXELPLAZA",
+      de: "Nur auf PIXELPLAZA",
+    },
+    "Lokaler Multiplayer": {
+      en: "Local Multiplayer",
+      de: "Lokaler Multiplayer",
+    },
+    Düster: {
+      en: "Gloomy",
+      de: "Düster",
+    },
+    Untergrund: {
+      en: "Underground",
+      de: "Untergrund",
+    },
+    Schwierig: {
+      en: "Difficult",
+      de: "Schwierig",
+    },
+    Pixelgrafik: {
+      en: "Pixel Graphics",
+      de: "Pixelgrafik",
+    },
+    "Sexuelle Inhalte": {
+      en: "Sexual Content",
+      de: "Sexuelle Inhalte",
+    },
+    "Wähle Dein Eigenes Abenteuer": {
+      en: "Choose your own Adventure",
+      de: "Wähle dein eigenes Abenteuer",
+    },
+    Verbrechen: {
+      en: "Crime",
+      de: "Verbrechen",
+    },
+    Kampfkunst: {
+      en: "Martial Arts",
+      de: "Kampfkunst",
+    },
+    Schleichen: {
+      en: "Stealth",
+      de: "Schleichen",
+    },
+    "Geteilter Bildschirm": {
+      en: "Split Screen",
+      de: "Geteilter Bildschirm",
+    },
+    Werwölfe: {
+      en: "Werewolves",
+      de: "Werwölfe",
+    },
+    Entspannend: {
+      en: "Relaxing",
+      de: "Entspannend",
+    },
+    "1.Weltkrieg": {
+      en: "WW1",
+      de: "1.Weltkrieg",
+    },
+    Textbasiert: {
+      en: "Text-based",
+      de: "Textbasiert",
+    },
   };
 
   const getMessages = (tags, language) => {
@@ -537,7 +641,9 @@ const GamesModal = ({ game }) => {
           </div>
         </Swiper>
       </div>
-      <NavLink to={`/games/${slugify(game.title, "_")}`} className="game-modal-info-wrapper">
+      <NavLink
+        to={`/games/${slugify(game.title, "_")}`}
+        className="game-modal-info-wrapper">
         <div className="game-modal-header-wrapper">
           <div className="game-modal-header-left">
             <h2 className="game-modal-title">{game.title}</h2>
