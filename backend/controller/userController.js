@@ -179,7 +179,11 @@ async function updateAccountPassword(req, res) {
 async function updateAccountInfo(req, res) {
 	try {
 		const accountId = req.params.accountId;
-		const { benutzername, vorname, nachname, email } = req.body;
+		const { benutzername, vorname, nachname, email, isAdmin } = req.body;
+
+		if (!benutzername && !vorname && !nachname && !email) {
+			return res.status(400).send({ message: "Missing required fields!", ok: false })
+		};
 		
 		const account = await User.findById(accountId);
 		if (!account) {
@@ -205,6 +209,7 @@ async function updateAccountInfo(req, res) {
 			vorname,
 			nachname,
 			email,
+			isAdmin
 		}});
 		if (!updatedAccountInfo) {
 			return res.status(400).send({ message: "Account not found!", ok: false })
@@ -224,4 +229,31 @@ async function deleteAccount(req, res) {
 
 };
 
-export { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo, deleteAccount };
+async function resetAccountProfilePic(req, res) {
+	try {
+		const accountId = req.params.accountId;
+
+		const account = await User.findById(accountId);
+		if (!account) {
+			return res.status(404).send({ message: "Account not found!", ok: false })
+		}
+
+		if (account.profilePic === '') {
+			return res.status(409).send({ message: 'Account has no profile picture!', ok: false})
+		}
+
+		const updatedAccountPic = await User.updateOne({ _id: account._id}, { $set: {
+			profilePic: ''
+		}});
+
+		res.status(200).send({ message: `Successfully resetted Profile Picture of ${account.benutzername}`, ok: true })
+	} catch (error) {
+		res.status(500).send({
+      message: "Internal Server Error!",
+      error: error.message,
+      ok: false,
+    });
+	}
+};
+
+export { createUser, loginUser, getUsers, getUser, updateAccountProfilePic, updateAccountPassword, updateAccountInfo, deleteAccount, resetAccountProfilePic };

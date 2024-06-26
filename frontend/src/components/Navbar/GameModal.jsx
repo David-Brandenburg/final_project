@@ -6,7 +6,7 @@ import slugify from "slugify";
 import { useLanguage } from "../../contexts/LanguageContext.js";
 import "../../styles/modals.scss";
 
-const GameModal = ({ref}) => {
+const GameModal = () => {
   const [genre, setGenre] = useState("");
   const { language } = useLanguage();
   const messages = {
@@ -99,7 +99,7 @@ const GameModal = ({ref}) => {
   };
 
   return (
-    <div className="games-modal" onClick={(e) => {e.stopPropagation(); e.preventDefault()}} ref={ref}>
+    <div className="games-modal" onClick={(e) => {e.stopPropagation(); e.preventDefault()}}>
       <div className="games-genre-list">
         <p className="games-modal-link">
           {language === "en" ? "New releases" : "Neu erschienen"}

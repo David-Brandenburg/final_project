@@ -5,6 +5,10 @@
   flex-direction: column;
   color: var(--mainColor);
 
+	input[type="checkbox"]{
+		display: none;
+	}
+
   .gamespage-header-wrapper {
     display: flex;
     justify-content: space-between;

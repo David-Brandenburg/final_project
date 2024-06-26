@@ -168,17 +168,6 @@
 		display: flex;
 		gap: 50px;
 
-		.header-container{
-			margin: 20px 0 30px 0;
-			position: relative;
-			.header-left{
-				width: fit-content;
-				padding-bottom: 15px;
-				border-bottom: 1px solid var(--mainColor);
-				font-size: 18px;
-			}
-		}
-
 		.gamepage-description-left{
 			width: 55%;
 			.description-content{
@@ -218,15 +207,10 @@
 				.paragraph{
 					margin: 5px 0;
 				}
+				.footNote{
+					color: #797979;
+				}
 			}
-		}
-
-		.header-hr{
-			border-top: 1px solid var(--mainColorLight);
-			width: 100%;
-			position: absolute;
-			bottom: 0;
-			z-index: -1;
 		}
 
 		hr:not(.header-hr){
@@ -420,4 +404,100 @@
 		}
 	}
 
+	.header-hr{
+		border-top: 1px solid var(--mainColorLight);
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		z-index: -1;
+	}
+
+	.header-container{
+		margin: 20px 0 30px 0;
+		position: relative;
+		.header-left{
+			width: fit-content;
+			padding-bottom: 15px;
+			border-bottom: 1px solid var(--mainColor);
+			font-size: 18px;
+		}
+	}
+
+	.recommendations-wrapper{
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		align-items: center;
+		gap: 20px;
+		.recommendations1-container, .recommendations2-container{
+			display: flex;
+			gap: 20px;
+			.game-card{
+				display: flex;
+				width: 280px;
+				flex-direction: column;
+				box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+				.game-card-thumbnail-wrapper{
+					display: inline-flex;
+					img{
+						width: 100%;
+						aspect-ratio: 16 / 7;
+						object-fit: fill;
+					}
+				}
+				.game-card-info-wrapper{
+					height: 100px;
+					background: var(--main);
+					color: var(--mainColor);
+					padding: 10px;
+					display: flex;
+					flex-direction: column;
+					.game-card-title-wrapper{
+						height: 50%;
+						width: 100%;
+					}
+					.game-card-pricetags-wrapper{
+						display: flex;
+						gap: 10px;
+						height: 50%;
+						width: 100%;
+						align-items: flex-end;
+						justify-content: flex-end;
+						.price-discount-wrapper{
+							display: flex;
+							flex-direction: column;
+							align-items: flex-end;
+							justify-content: center;
+						}
+					}
+					.discount-tag{
+						padding: 6px;
+						font-weight: bold;
+						border-radius: 3px;
+						box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+						background: $accentColorDarkOrange;
+					}
+					.btn{
+						display: none;
+						padding: 7px 12px;
+						width: max-content;
+						border-radius: 3px;
+						background: $accentColorLightBlue;
+						cursor: pointer;
+						&:hover{
+							background: $accentColorDarkOrange;
+						}
+					}
+				}
+				&:hover{
+					.game-card-info-wrapper{
+						background: var(--mainBorder);
+					}
+					.btn{
+						display: block;
+					}
+				}
+			}
+		}
+	}
 }
