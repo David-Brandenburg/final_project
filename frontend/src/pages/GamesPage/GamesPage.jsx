@@ -5,8 +5,6 @@ import RangeSlider from "react-range-slider-input";
 import GamesModal from "../../components/HomePage/GamesModal";
 import "react-range-slider-input/dist/style.css";
 import "./gamespage.scss";
-import { set } from "date-fns";
-import { se } from "date-fns/locale";
 
 const GamesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,13 +64,738 @@ const GamesPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   const handNavLink = () => {
     if (path.includes("tags" && "Fantasy")) {
       setFilterCondition("FANTASY_TAG");
-    } else {
-      console.log("no");
+    } else if (path.includes("tags" && "Action")) {
+      setFilterCondition("ACTION_TAG");
+    } else if (
+      path.includes("tags" && "Adventure") ||
+      path.includes("tags" && "Abenteuer")
+    ) {
+      setFilterCondition("ADVENTURE_TAG");
+    } else if (path.includes("tags" && "Indie")) {
+      setFilterCondition("INDIE_TAG");
+    } else if (
+      path.includes("tags" && "Spannende_Geschichte") ||
+      path.includes("tags" && "Exciting_Story")
+    ) {
+      setFilterCondition("SPANN_GESCHICHTE_TAG");
+    } else if (
+      path.includes("tags" && "Atmospharisch") ||
+      path.includes("tags" && "Atmospheric")
+    ) {
+      setFilterCondition("ATMOSPHÄRISCH_TAG");
+    } else if (
+      path.includes("tags" && "Strategie") ||
+      path.includes("tags" && "Strategy")
+    ) {
+      setFilterCondition("STRATEGIE_TAG");
+    } else if (
+      path.includes("tags" && "Rollenspiel") ||
+      path.includes("tags" && "RPG")
+    ) {
+      setFilterCondition("ROLLENSPIEL_TAG");
+    } else if (path.includes("tags" && "2D")) {
+      setFilterCondition("2D_TAG");
+    } else if (
+      path.includes("tags" && "Historisch") ||
+      path.includes("tags" && "Historical")
+    ) {
+      setFilterCondition("HISTORISCH_TAG");
+    } else if (path.includes("tags" && "Horror")) {
+      setFilterCondition("HORROR_TAG");
+    } else if (
+      path.includes("tags" && "Lokaler_Koop") ||
+      path.includes("tags" && "lokaler_Koop") ||
+      path.includes("tags" && "Local_Coop")
+    ) {
+      setFilterCondition("KOOP_TAG");
+    } else if (
+      path.includes("tags" && "Rollenspiel") ||
+      path.includes("tags" && "RPG")
+    ) {
+      setFilterCondition("ROLLENSPIEL_TAG");
+    } else if (path.includes("tags" && "Simulation")) {
+      setFilterCondition("SIMULATION_TAG");
+    } else if (path.includes("tags" && "Sport")) {
+      setFilterCondition("SPORT_TAG");
+    } else if (
+      path.includes("tags" && "Taktisch") ||
+      path.includes("tags" && "Tactical")
+    ) {
+      setFilterCondition("TAKTISCH_TAG");
+    } else if (path.includes("tags" && "Science-Fiction")) {
+      setFilterCondition("SCI_FI_TAG");
+    } else if (path.includes("tags" && "Shooter")) {
+      setFilterCondition("SHOOTER_TAG");
+    } else if (
+      path.includes("tags" && "Uberleben") ||
+      path.includes("tags" && "Survival")
+    ) {
+      setFilterCondition("ÜBERLEBEN_TAG");
+    } else if (
+      path.includes("tags" && "Erkundung") ||
+      path.includes("tags" && "Exploration")
+    ) {
+      setFilterCondition("ERKUNDUNG_TAG");
+    } else if (path.includes("tags" && "First-Person")) {
+      setFilterCondition("FIRST_PERSON_TAG");
+    } else if (path.includes("tags" && "Third Person")) {
+      setFilterCondition("THIRD_PERSON_TAG");
+    } else if (
+      path.includes("tags" && "Offene_Spielwelt") ||
+      path.includes("tags" && "Open_World")
+    ) {
+      setFilterCondition("OFFENE_SPIELWELT_TAG");
+    } else if (path.includes("tags" && "Sandbox")) {
+      setFilterCondition("SANDBOX_TAG");
+    } else if (path.includes("tags" && "FPS")) {
+      setFilterCondition("FPS_TAG");
+    } else if (
+      path.includes("tags" && "Postapokalytisch") ||
+      path.includes("tags" && "Postapocalyptic")
+    ) {
+      setFilterCondition("POSTAPOKALYPTISCH_TAG");
+    } else if (
+      path.includes("tags" && "Ressourcenverwaltung") ||
+      path.includes("tags" && "Resource_Management")
+    ) {
+      setFilterCondition("RESSOURCENVERWALTUNG_TAG");
+    } else if (path.includes("tags" && "Crafting")) {
+      setFilterCondition("CRAFTING_TAG");
+    } else if (
+      path.includes("tags" && "Mittelalterlich") ||
+      path.includes("tags" && "Medieval")
+    ) {
+      setFilterCondition("MITTELALTERLICH_TAG");
+    } else if (
+      path.includes("tags" && "Bauen") ||
+      path.includes("tags" && "Building")
+    ) {
+      setFilterCondition("BAUEN_TAG");
+    } else if (
+      path.includes("tags" && "Basenbau") ||
+      path.includes("tags" && "Base_Building")
+    ) {
+      setFilterCondition("BASENBAU_TAG");
+    } else if (
+      path.includes("tags" && "Städtebauer") ||
+      path.includes("tags" && "City_Builder")
+    ) {
+      setFilterCondition("STÄDTEBAUER_TAG");
+    } else if (
+      path.includes("tags" && "Kämpfen") ||
+      path.includes("tags" && "Fighting")
+    ) {
+      setFilterCondition("KÄMPFEN_TAG");
+    } else if (
+      path.includes("tags" && "Wissenschaft") ||
+      path.includes("tags" && "Science")
+    ) {
+      setFilterCondition("WISSENSCHAFT_TAG");
+    } else if (
+      path.includes("tags" && "Rundenbasiert") ||
+      path.includes("tags" && "Turn_Based")
+    ) {
+      setFilterCondition("RUNDENBASIERT_TAG");
+    } else if (
+      path.includes("tags" && "Klassisch") ||
+      path.includes("tags" && "Classic")
+    ) {
+      setFilterCondition("KLASSISCH_TAG");
+    } else if (
+      path.includes("tags" && "Taktisch") ||
+      path.includes("tags" && "Tactical")
+    ) {
+      setFilterCondition("TAKTISCH_TAG");
+    } else if (
+      path.includes("tags" && "Isometrisch") ||
+      path.includes("tags" && "Isometric")
+    ) {
+      setFilterCondition("ISOMETRISCH_TAG");
+    } else if (
+      path.includes("tags" && "Good Old Games") ||
+      path.includes("tags" && "Good_Old_Games")
+    ) {
+      setFilterCondition("GOOD_OLD_GAMES_TAG");
+    } else if (
+      path.includes("tags" && "Taktik-RPG") ||
+      path.includes("tags" && "Taktik_RPG")
+    ) {
+      setFilterCondition("TAKTIK_RPG_TAG");
+    } else if (
+      path.includes("tags" && "cRPG") ||
+      path.includes("tags" && "cRPG")
+    ) {
+      setFilterCondition("CRPG_TAG");
+    } else if (
+      path.includes("tags" && "Rätsel") ||
+      path.includes("tags" && "Puzzle")
+    ) {
+      setFilterCondition("RÄTSEL_TAG");
+    } else if (
+      path.includes("tags" && "Detektivgeschichten") ||
+      path.includes("tags" && "Detective_Stories")
+    ) {
+      setFilterCondition("DETEKTIVGESCHICHTEN_TAG");
+    } else if (
+      path.includes("tags" && "Leicht") ||
+      path.includes("tags" && "Easy")
+    ) {
+      setFilterCondition("LEICHT_TAG");
+    } else if (
+      path.includes("tags" && "Lustig") ||
+      path.includes("tags" && "Funny")
+    ) {
+      setFilterCondition("LUSTIG_TAG");
+    } else if (
+      path.includes("tags" && "Point&Click") ||
+      path.includes("tags" && "Point_Click")
+    ) {
+      setFilterCondition("POINT_CLICK_TAG");
+    } else if (
+      path.includes("tags" && "Mystery") ||
+      path.includes("tags" && "Mystery")
+    ) {
+      setFilterCondition("MYSTERY_TAG");
+    } else if (
+      path.includes("tags" && "Ermittlung") ||
+      path.includes("tags" && "Investigation")
+    ) {
+      setFilterCondition("ERMITTUNG_TAG");
+    } else if (
+      path.includes("tags" && "Kurz") ||
+      path.includes("tags" && "Short")
+    ) {
+      setFilterCondition("KURZ_TAG");
+    } else if (
+      path.includes("tags" && "Erzählung") ||
+      path.includes("tags" && "Narrative")
+    ) {
+      setFilterCondition("ERZÄHLUNG_TAG");
+    } else if (
+      path.includes("tags" && "Noir") ||
+      path.includes("tags" && "Noir")
+    ) {
+      setFilterCondition("NOIR_TAG");
+    } else if (
+      path.includes("tags" && "Gemütlich") ||
+      path.includes("tags" && "Cozy")
+    ) {
+      setFilterCondition("GEMÜTLICH_TAG");
+    } else if (
+      path.includes("tags" && "Keine Gewalt") ||
+      path.includes("tags" && "No Violence")
+    ) {
+      setFilterCondition("KEINE_GEWALT_TAG");
+    } else if (path.includes("tags" && "2D") || path.includes("tags" && "2D")) {
+      setFilterCondition("2D_TAG");
+    } else if (
+      path.includes("tags" && "Weltraum") ||
+      path.includes("tags" && "Space")
+    ) {
+      setFilterCondition("WELTRAUM_TAG");
+    } else if (
+      path.includes("tags" && "Von-Oben-Ansicht") ||
+      path.includes("tags" && "Top_Down")
+    ) {
+      setFilterCondition("VON_OBEN_ANSICHT_TAG");
+    } else if (
+      path.includes("tags" && "Prozedural_Generiert") ||
+      path.includes("tags" && "Procedural_Generation")
+    ) {
+      setFilterCondition("PROZEDURAL_GENERIERT_TAG");
+    } else if (
+      path.includes("tags" && "Bullet_Hell") ||
+      path.includes("tags" && "Bullet_Hell")
+    ) {
+      setFilterCondition("BULLET_HELL_TAG");
+    } else if (
+      path.includes("tags" && "Fliegen") ||
+      path.includes("tags" && "Flying")
+    ) {
+      setFilterCondition("FLIEGEN_TAG");
+    } else if (
+      path.includes("tags" && "Looter_Shooter") ||
+      path.includes("tags" && "Looter_Shooter")
+    ) {
+      setFilterCondition("LOOTER_SHOOTER_TAG");
+    } else if (
+      path.includes("tags" && "Verwaltung") ||
+      path.includes("tags" && "Management")
+    ) {
+      setFilterCondition("VERWALTUNG_TAG");
+    } else if (
+      path.includes("tags" && "Schwarzer_Humor") ||
+      path.includes("tags" && "Dark_Humor")
+    ) {
+      setFilterCondition("SCHWARZER_HUMOR_TAG");
+    } else if (
+      path.includes("tags" && "Psychologischer_Horror") ||
+      path.includes("tags" && "Psychological_Horror")
+    ) {
+      setFilterCondition("PSYCHOLOGISCHER_HORROR_TAG");
+    } else if (
+      path.includes("tags" && "Uberlebenshorror") ||
+      path.includes("tags" && "Survival_Horror")
+    ) {
+      setFilterCondition("ÜBERLEBENSHORROR_TAG");
+    } else if (
+      path.includes("tags" && "Lovecraft") ||
+      path.includes("tags" && "Lovecraft")
+    ) {
+      setFilterCondition("LOVECRAFT_TAG");
+    } else if (
+      path.includes("tags" && "Fischen") ||
+      path.includes("tags" && "Fishing")
+    ) {
+      setFilterCondition("FISCHEN_TAG");
+    } else if (
+      path.includes("tags" && "Mehrere_Enden") ||
+      path.includes("tags" && "Multiple_Endings")
+    ) {
+      setFilterCondition("MEHRERE_ENDEN_TAG");
+    } else if (
+      path.includes("tags" && "Weibliche_Protagonistin") ||
+      path.includes("tags" && "Female_Protagonist")
+    ) {
+      setFilterCondition("WEIBLICHE_PROTAGONISTIN_TAG");
+    } else if (
+      path.includes("tags" && "Entscheidungen_Zählen") ||
+      path.includes("tags" && "Choices_Matter")
+    ) {
+      setFilterCondition("ENTSCHEIDUNGEN_ZÄHLEN_TAG");
+    } else if (
+      path.includes("tags" && "Nicht_jugendfrei") ||
+      path.includes("tags" && "Adult")
+    ) {
+      setFilterCondition("NICHT_JUGENDFREI_TAG");
+    } else if (
+      path.includes("tags" && "LGBTQ+") ||
+      path.includes("tags" && "LGBTQ+")
+    ) {
+      setFilterCondition("LGBTQ+_TAG");
+    } else if (
+      path.includes("tags" && "Hunde_Streicheln") ||
+      path.includes("tags" && "Petting_Dogs")
+    ) {
+      setFilterCondition("HUNDE_STREICHELN_TAG");
+    } else if (
+      path.includes("tags" && "Echtzeit") ||
+      path.includes("tags" && "Real_Time")
+    ) {
+      setFilterCondition("ECHTZEIT_TAG");
+    } else if (
+      path.includes("tags" && "Magie") ||
+      path.includes("tags" && "Magic")
+    ) {
+      setFilterCondition("MAGIE_TAG");
+    } else if (
+      path.includes("tags" && "Brettspiel") ||
+      path.includes("tags" && "Board_Game")
+    ) {
+      setFilterCondition("BRETTSPIEL_TAG");
+    } else if (
+      path.includes("tags" && "Lokaler_Coop") ||
+      path.includes("tags" && "Local_Coop")
+    ) {
+      setFilterCondition("LOKALER_COOP_TAG");
+    } else if (
+      path.includes("tags" && "Gewaltätig") ||
+      path.includes("tags" && "Violent")
+    ) {
+      setFilterCondition("GEWALTÄTIG_TAG");
+    } else if (
+      path.includes("tags" && "Nacktheit") ||
+      path.includes("tags" && "Nudity")
+    ) {
+      setFilterCondition("NACKTHEIT_TAG");
+    } else if (
+      path.includes("tags" && "Nur_Auf_GOG") ||
+      path.includes("tags" && "GOG_Only")
+    ) {
+      setFilterCondition("NUR_AUF_GOG_TAG");
+    } else if (
+      path.includes("tags" && "Lokaler_Multiplayer") ||
+      path.includes("tags" && "Local_Multiplayer")
+    ) {
+      setFilterCondition("LOKALER_MULTIPLAYER_TAG");
+    } else if (
+      path.includes("tags" && "Düster") ||
+      path.includes("tags" && "Dark")
+    ) {
+      setFilterCondition("DÜSTER_TAG");
+    } else if (
+      path.includes("tags" && "Untergrund") ||
+      path.includes("tags" && "Underground")
+    ) {
+      setFilterCondition("UNTERGRUND_TAG");
+    } else if (
+      path.includes("tags" && "Schwierig") ||
+      path.includes("tags" && "Difficult")
+    ) {
+      setFilterCondition("SCHWIERIG_TAG");
+    } else if (
+      path.includes("tags" && "Pixelgrafik") ||
+      path.includes("tags" && "Pixel_Graphics")
+    ) {
+      setFilterCondition("PIXELGRAFIK_TAG");
+    } else if (
+      path.includes("tags" && "Sexuelle_Inhalte") ||
+      path.includes("tags" && "Sexual_Content")
+    ) {
+      setFilterCondition("SEXUELLE_INHALTE_TAG");
+    } else if (
+      path.includes("tags" && "Wähle_Dein_Eigenes_Abenteuer") ||
+      path.includes("tags" && "Choose_Your_Own_Adventure")
+    ) {
+      setFilterCondition("WÄHLE_DEIN_EIGENES_ABENTEUER_TAG");
+    } else if (
+      path.includes("tags" && "Verbrechen") ||
+      path.includes("tags" && "Crime")
+    ) {
+      setFilterCondition("VERBRECHEN_TAG");
+    } else if (
+      path.includes("tags" && "Kampfkunst") ||
+      path.includes("tags" && "Martial_Arts")
+    ) {
+      setFilterCondition("KAMPFKUNST_TAG");
+    } else if (
+      path.includes("tags" && "Schleichen") ||
+      path.includes("tags" && "Stealth")
+    ) {
+      setFilterCondition("SCHLEICHEN_TAG");
+    } else if (
+      path.includes("tags" && "Geteilter Bildschrim") ||
+      path.includes("tags" && "Split_Screen")
+    ) {
+      setFilterCondition("GETEILTER_BILDSCHIRM_TAG");
+    } else if (
+      path.includes("tags" && "Werwölfe") ||
+      path.includes("tags" && "Werewolves")
+    ) {
+      setFilterCondition("WERWÖLFE_TAG");
+    } else if (
+      path.includes("tags" && "Vampire") ||
+      path.includes("tags" && "Vampires")
+    ) {
+      setFilterCondition("VAMPIRE_TAG");
+    } else if (
+      path.includes("tags" && "Entspannend") ||
+      path.includes("tags" && "Relaxing")
+    ) {
+      setFilterCondition("ENTSPANNEND_TAG");
+    } else if (
+      path.includes("tags" && "1.Weltkrieg") ||
+      path.includes("tags" && "WW1")
+    ) {
+      setFilterCondition("1_WELTKRIEG_TAG");
+    } else if (
+      path.includes("tags" && "textbasiert") ||
+      path.includes("tags" && "Text_Based")
+    ) {
+      setFilterCondition("TEXTBASIERT_TAG");
+    } else if (
+      path.includes("tags" && "Toller_Soundtrack") ||
+      path.includes("tags" && "Great_Soundtrack")
+    ) {
+      setFilterCondition("GREAT_SOUNDTRACK_TAG");
+    } else if (path.includes("tags" && "Crafting")) {
+      setFilterCondition("CRAFTING_TAG");
+    } else if (
+      path.includes("tags" && "Mehrspieler") ||
+      path.includes("tags" && "Multiplayer")
+    ) {
+      setFilterCondition("MEHRSPIELER_TAG");
+    } else if (
+      path.includes("tags" && "Crossplay") ||
+      path.includes("tags" && "Crossplay")
+    ) {
+      setFilterCondition("CROSSPLAY_TAG");
+    } else if (path.includes("tags" && "Steampunk")) {
+      setFilterCondition("STEAMPUNK_TAG");
+    } else if (path.includes("tags" && "Gore")) {
+      setFilterCondition("GORE_TAG");
+    } else if (path.includes("tags" && "Modern")) {
+      setFilterCondition("MODERN_TAG");
+    } else if (path.includes("tags" && "Western")) {
+      setFilterCondition("WESTERN_TAG");
+    } else if (path.includes("tags" && "Cyberpunk")) {
+      setFilterCondition("CYBERPUNK_TAG");
+    } else if (path.includes("tags" && "JRPG")) {
+      setFilterCondition("JRPG_TAG");
+    } else if (path.includes("tags" && "NSFW")) {
+      setFilterCondition("NSFW_TAG");
+    } else if (path.includes("tags" && "Hentai")) {
+      setFilterCondition("HENTAI_TAG");
+    } else if (path.includes("tags" && "Emotional")) {
+      setFilterCondition("EMOTIONAL_TAG");
+    } else if (path.includes("tags" && "Datingsimulation")) {
+      setFilterCondition("DATING_SIMULATION_TAG");
+    } else if (path.includes("tags" && "Beat 'em up")) {
+      setFilterCondition("BEAT_EM_UP_TAG");
+    } else if (path.includes("tags" && "Roguelike")) {
+      setFilterCondition("ROGUELIKE_TAG");
+    } else if (path.includes("tags" && "Roguelite")) {
+      setFilterCondition("ROGUELITE_TAG");
+    } else if (path.includes("tags" && "Dungeon_Crawler")) {
+      setFilterCondition("DUNGEON_CRAWLER_TAG");
+    } else if (path.includes("tags" && "Twin_Stick_Shooter")) {
+      setFilterCondition("TWIN_STICK_SHOOTER_TAG");
+    } else if (
+      path.includes("tags" && "Krieg") ||
+      path.includes("tags" && "War")
+    ) {
+      setFilterCondition("KRIEG_TAG");
+    } else if (
+      path.includes("tags" && "Echtzeitstrategie") ||
+      path.includes("tags" && "RTS")
+    ) {
+      setFilterCondition("ECHTZEITSTRATEGIE_TAG");
+    } else if (
+      path.includes("tags" && "Realistisch") ||
+      path.includes("tags" && "Realistic")
+    ) {
+      setFilterCondition("REALISTISCH_TAG");
+    } else if (
+      path.includes("tags" && "Gesamtstrategie") ||
+      path.includes("tags" && "Grand_Strategy")
+    ) {
+      setFilterCondition("GESAMTSTRATEGIE_TAG");
+    } else if (
+      path.includes("tags" && "Lebenssimulation") ||
+      path.includes("tags" && "Life_Simulation")
+    ) {
+      setFilterCondition("LEBENSSIMULATION_TAG");
+    } else if (
+      path.includes("tags" && "Natur") ||
+      path.includes("tags" && "Nature")
+    ) {
+      setFilterCondition("NATUR_TAG");
+    } else if (path.includes("tags" && "Amazon_Luna")) {
+      setFilterCondition("AMAZON_LUNA_TAG");
+    } else if (path.includes("tags" && "Remake")) {
+      setFilterCondition("REMAKE_TAG");
+    } else if (
+      path.includes("tags" && "Cartoongrafik") ||
+      path.includes("tags" && "Cartoon_Graphics")
+    ) {
+      setFilterCondition("CARTOONGRAFIK_TAG");
+    } else if (path.includes("tags" && "Demo")) {
+      setFilterCondition("DEMO_TAG");
+    } else if (path.includes("tags" && "Retro")) {
+      setFilterCondition("RETRO_TAG");
+    } else if (
+      path.includes("tags" && "Dystopisch") ||
+      path.includes("tags" && "Dystopian")
+    ) {
+      setFilterCondition("DYSTOPISCH_TAG");
+    } else if (
+      path.includes("tags" && "Mythologie") ||
+      path.includes("tags" && "Mythology")
+    ) {
+      setFilterCondition("MYTHOLOGIE_TAG");
+    } else if (path.includes("tags" && "OST")) {
+      setFilterCondition("OST_TAG");
+    } else if (path.includes("genres" && "Indie")) {
+      setFilterCondition("INDIE");
+    } else if (path.includes("genres" && "action")) {
+      setFilterCondition("ACTION");
+    } else if (path.includes("genres" && "abenteuer")) {
+      setFilterCondition("ADVENTURE");
+    } else if (path.includes("genres" && "rollenspiel")) {
+      setFilterCondition("RPG");
+    } else if (path.includes("genres" && "Racing")) {
+      setFilterCondition("RACING");
+    } else if (path.includes("genres" && "strategie")) {
+      setFilterCondition("STRATEGY");
+    } else if (path.includes("genres" && "Sport")) {
+      setFilterCondition("SPORT");
+    } else if (path.includes("genres" && "Bauen")) {
+      setFilterCondition("BUILD");
+    } else if (path.includes("genres" && "Egoperspektive")) {
+      setFilterCondition("EGO");
+    } else if (path.includes("genres" && "fantasy")) {
+      setFilterCondition("FANTASY");
+    } else if (path.includes("genres" && "science-fiction")) {
+      setFilterCondition("SCI_FI");
+    } else if (path.includes("genres" && "shooter")) {
+      setFilterCondition("SHOOTER");
+    } else if (path.includes("genres" && "Simulation")) {
+      setFilterCondition("SIMULATION");
+    } else if (path.includes("genres" && "Atmospärisch")) {
+      setFilterCondition("ATMOSPHERIC");
+    } else if (path.includes("genres" && "Horror")) {
+      setFilterCondition("HORROR");
+    } else if (path.includes("genres" && "Spannende Geschichte")) {
+      setFilterCondition("THRILLER");
+    } else if (path.includes("genres" && "Erkundung")) {
+      setFilterCondition("ERKUNDUNG");
+    } else if (path.includes("genres" && "Toller Soundtrack")) {
+      setFilterCondition("GREAT_SOUNDTRACK");
+    } else if (path.includes("genres" && "First-Person")) {
+      setFilterCondition("FIRST_PERSON");
+    } else if (path.includes("genres" && "Third Person")) {
+      setFilterCondition("THIRD_PERSON");
+    } else if (path.includes("genres" && "open-world")) {
+      setFilterCondition("OPEN_WORLD");
+    } else if (path.includes("genres" && "Sandbox")) {
+      setFilterCondition("SANDBOX");
+    } else if (path.includes("genres" && "FPS")) {
+      setFilterCondition("FPS");
+    } else if (path.includes("genres" && "Postapokalyptisch")) {
+      setFilterCondition("POSTAPOCALYPTIC");
+    } else if (path.includes("genres" && "historisch")) {
+      setFilterCondition("HISTORICAL");
+    } else if (path.includes("genres" && "Ressourcenverwaltung")) {
+      setFilterCondition("RESOURCE_MANAGEMENT");
+    } else if (path.includes("genres" && "Crafting")) {
+      setFilterCondition("CRAFTING");
+    } else if (path.includes("genres" && "Mittelalterlich")) {
+      setFilterCondition("MEDIEVAL");
+    } else if (path.includes("genres" && "Basenbau")) {
+      setFilterCondition("BASE_BUILDING");
+    } else if (path.includes("genres" && "Städtebauer")) {
+      setFilterCondition("CITY_BUILDER");
+    } else if (path.includes("genres" && "Bauen")) {
+      setFilterCondition("BUILDING");
+    } else if (path.includes("genres" && "Kämpfen")) {
+      setFilterCondition("FIGHTING");
+    } else if (path.includes("genres" && "Wissenschaft")) {
+      setFilterCondition("SCIENCE");
+    } else if (path.includes("genres" && "Rundenbasiert")) {
+      setFilterCondition("TURN_BASED");
+    } else if (path.includes("genres" && "Klassisch")) {
+      setFilterCondition("CLASSIC");
+    } else if (path.includes("genres" && "Taktisch")) {
+      setFilterCondition("TACTICAL");
+    } else if (path.includes("genres" && "Isometrisch")) {
+      setFilterCondition("ISOMETRIC");
+    } else if (path.includes("genres" && "Good Old Games")) {
+      setFilterCondition("GOOD_OLD_GAMES");
+    } else if (path.includes("genres" && "Taktik-RPG")) {
+      setFilterCondition("TACTICAL_RPG");
+    } else if (path.includes("genres" && "cRPG")) {
+      setFilterCondition("CRPG");
+    } else if (path.includes("genres" && "Rätsel")) {
+      setFilterCondition("RÄTSEL");
+    } else if (path.includes("genres" && "puzzle")) {
+      setFilterCondition("PUZZLE");
+    } else if (path.includes("genres" && "Detektivgeschichten")) {
+      setFilterCondition("DETECTIVE");
+    } else if (path.includes("genres" && "Leicht")) {
+      setFilterCondition("EASY");
+    } else if (path.includes("genres" && "Lustig")) {
+      setFilterCondition("FUNNY");
+    } else if (path.includes("genres" && "Point&Click")) {
+      setFilterCondition("POINT_CLICK");
+    } else if (path.includes("genres" && "Mystery")) {
+      setFilterCondition("MYSTERY");
+    } else if (path.includes("genres" && "Ermittlung")) {
+      setFilterCondition("INVESTIGATION");
+    } else if (path.includes("genres" && "Kurz")) {
+      setFilterCondition("SHORT");
+    } else if (path.includes("genres" && "Erzählung")) {
+      setFilterCondition("STORY_RICH");
+    } else if (path.includes("genres" && "Noir")) {
+      setFilterCondition("NOIR");
+    } else if (path.includes("genres" && "Gemütlich")) {
+      setFilterCondition("RELAXING");
+    } else if (path.includes("genres" && "Keine Gewalt")) {
+      setFilterCondition("NO_VIOLENCE");
+    } else if (path.includes("genres" && "2D")) {
+      setFilterCondition("2D");
+    } else if (path.includes("genres" && "Weltraum")) {
+      setFilterCondition("SPACE");
+    } else if (path.includes("genres" && "Von-Oben-Ansicht")) {
+      setFilterCondition("TOP_DOWN");
+    } else if (path.includes("genres" && "Prozedural Generiert")) {
+      setFilterCondition("PROCEDURAL_GENERATION");
+    } else if (path.includes("genres" && "Bullet Hell")) {
+      setFilterCondition("BULLET_HELL");
+    } else if (path.includes("genres" && "Fliegen")) {
+      setFilterCondition("FLYING");
+    } else if (path.includes("genres" && "Looter Shooter")) {
+      setFilterCondition("LOOTER_SHOOTER");
+    } else if (path.includes("genres" && "Verwaltung")) {
+      setFilterCondition("MANAGEMENT");
+    } else if (path.includes("genres" && "Schwarzer Humor")) {
+      setFilterCondition("DARK_HUMOR");
+    } else if (path.includes("genres" && "Psychologischer Horror")) {
+      setFilterCondition("PSYCHOLOGICAL_HORROR");
+    } else if (path.includes("genres" && "Uberlebenshorror")) {
+      setFilterCondition("SURVIVAL_HORROR");
+    } else if (path.includes("genres" && "Lovecraft")) {
+      setFilterCondition("LOVECRAFTIAN");
+    } else if (path.includes("genres" && "Fischen")) {
+      setFilterCondition("FISHING");
+    } else if (path.includes("genres" && "Mehrere Enden")) {
+      setFilterCondition("MULTIPLE_ENDINGS");
+    } else if (path.includes("genres" && "Weibliche Protagonistin")) {
+      setFilterCondition("FEMALE_PROTAGONIST");
+    } else if (path.includes("genres" && "Entscheidungen Zählen")) {
+      setFilterCondition("CHOICES_MATTER");
+    } else if (path.includes("genres" && "Nicht jugendfrei")) {
+      setFilterCondition("ADULT");
+    } else if (path.includes("genres" && "JRPG")) {
+      setFilterCondition("JRPG");
+    } else if (path.includes("genres" && "LGBTQ+")) {
+      setFilterCondition("LGBTQ+");
+    } else if (path.includes("genres" && "Hunde Streicheln")) {
+      setFilterCondition("DOG");
+    } else if (path.includes("genres" && "Echtzeit")) {
+      setFilterCondition("REAL_TIME");
+    } else if (path.includes("genres" && "Magie")) {
+      setFilterCondition("MAGIC");
+    } else if (path.includes("genres" && "Brettspiel")) {
+      setFilterCondition("BOARD_GAME");
+    } else if (path.includes("genres" && "Lokaler Coop")) {
+      setFilterCondition("LOCAL_COOP");
+    } else if (path.includes("genres" && "Entscheidungen zählen")) {
+      setFilterCondition("CHOICES_MATTER2");
+    } else if (path.includes("genres" && "Gewalttätig")) {
+      setFilterCondition("VIOLENT");
+    } else if (path.includes("genres" && "Nacktheit")) {
+      setFilterCondition("NUDITY");
+    } else if (path.includes("genres" && "Nur Auf GOG")) {
+      setFilterCondition("GOG_ONLY");
+    } else if (path.includes("genres" && "Lokaler Multiplayer")) {
+      setFilterCondition("LOCAL_MULTIPLAYER");
+    } else if (path.includes("genres" && "Düster")) {
+      setFilterCondition("DARK");
+    } else if (path.includes("genres" && "Untergrund")) {
+      setFilterCondition("UNDERGROUND");
+    } else if (path.includes("genres" && "Schwierig")) {
+      setFilterCondition("DIFFICULT");
+    } else if (path.includes("genres" && "Pixelgrafik")) {
+      setFilterCondition("PIXEL_GRAPHICS");
+    } else if (path.includes("genres" && "Sexuelle Inhalte")) {
+      setFilterCondition("SEXUAL_CONTENT");
+    } else if (path.includes("genres" && "Wähle Dein Eigenes Abenteuer")) {
+      setFilterCondition("CHOOSE_YOUR_OWN_ADVENTURE");
+    } else if (path.includes("genres" && "Verbrechen")) {
+      setFilterCondition("CRIME");
+    } else if (path.includes("genres" && "Kampfkunst")) {
+      setFilterCondition("MARTIAL_ARTS");
+    } else if (path.includes("genres" && "Schleichen")) {
+      setFilterCondition("STEALTH");
+    } else if (path.includes("genres" && "Geteilter Bildschrim")) {
+      setFilterCondition("SPLIT_SCREEN");
+    } else if (path.includes("genres" && "Werwölfe")) {
+      setFilterCondition("WEREWOLVES");
+    } else if (path.includes("genres" && "Vampire")) {
+      setFilterCondition("VAMPIRES");
+    } else if (path.includes("genres" && "Entspannend")) {
+      setFilterCondition("RELAXING");
+    } else if (path.includes("genres" && "1.Weltkrieg")) {
+      setFilterCondition("WW1");
+    } else if (path.includes("genres" && "textbasiert")) {
+      setFilterCondition("TEXT_BASED");
     }
   };
+
   // Defines the sort options based on the current language
   const items =
     language === "en"
@@ -111,6 +834,7 @@ const GamesPage = () => {
       console.error("Failed to fetch games:", error);
     }
   };
+
   // Fetch games when the component is mounted
   useEffect(() => {
     fetchGames();
@@ -122,6 +846,7 @@ const GamesPage = () => {
         : "Meistverkauft (kürzlich)",
     ]);
   }, [language]);
+
   // Check sales history date whenever the games state changes
   useEffect(() => {
     checkSalesHistoryDate();
@@ -214,9 +939,7 @@ const GamesPage = () => {
 
   const handleTagSearch = (e) => {
     setInputTags(e.target.value);
-    setFilterCondition((prevCondition) =>
-      prevCondition === "TAG_SEARCH" ? "ALL" : "TAG_SEARCH"
-    );
+    setFilterCondition("TAG_SEARCH");
   };
 
   const handleAdventureTag = () => {
@@ -647,13 +1370,198 @@ const GamesPage = () => {
       } else if (filterCondition === "RPG") {
         return game.genres.includes("rollenspiel");
       } else if (filterCondition === "SIMULATION") {
-        return game.genres.includes("simulation");
+        return game.genres.includes("Simulation");
       } else if (filterCondition === "SPORT") {
         return game.genres.includes("sport");
       } else if (filterCondition === "STRATEGY") {
         return game.genres.includes("strategie");
+      } else if (filterCondition === "BUILD") {
+        return game.genres.includes("Bauen");
+      } else if (filterCondition === "EGO") {
+        return game.genres.includes("Egoperspektive");
+      } else if (filterCondition === "FANTASY") {
+        return game.genres.includes("fantasy");
+      } else if (filterCondition === "SCI_FI") {
+        return game.genres.includes("science-fiction");
+      } else if (filterCondition === "SHOOTER") {
+        return game.genres.includes("Shooter");
+      } else if (filterCondition === "ATMOSPHERIC") {
+        return game.genres.includes("Atmosphärisch");
+      } else if (filterCondition === "HORROR") {
+        return game.genres.includes("Horror");
+      } else if (filterCondition === "THRILLER") {
+        return game.genres.includes("Spannende Geschichte");
+      } else if (filterCondition === "ERKUNDUNG") {
+        return game.genres.includes("Erkundung");
+      } else if (filterCondition === "GREAT_SOUNDTRACK") {
+        return game.genres.includes("Toller Soundtrack");
+      } else if (filterCondition === "FIRST_PERSON") {
+        return game.genres.includes("First-Person");
+      } else if (filterCondition === "THIRD_PERSON") {
+        return game.genres.includes("Third Person");
+      } else if (filterCondition === "OPEN_WORLD") {
+        return game.genres.includes("open-world");
+      } else if (filterCondition === "SANDBOX") {
+        return game.genres.includes("Sandbox");
+      } else if (filterCondition === "FPS") {
+        return game.genres.includes("FPS");
+      } else if (filterCondition === "POSTAPOCALYPTIC") {
+        return game.genres.includes("Postapokalyptisch");
+      } else if (filterCondition === "HISTORICAL") {
+        return game.genres.includes("historisch");
+      } else if (filterCondition === "RESOURCE_MANAGEMENT") {
+        return game.genres.includes("Ressourcenverwaltung");
+      } else if (filterCondition === "CRAFTING") {
+        return game.genres.includes("Crafting");
+      } else if (filterCondition === "MEDIEVAL") {
+        return game.genres.includes("Mittelalterlich");
+      } else if (filterCondition === "BASE_BUILDING") {
+        return game.genres.includes("Basenbau");
+      } else if (filterCondition === "CITY_BUILDER") {
+        return game.genres.includes("Städtebauer");
+      } else if (filterCondition === "BUILDING") {
+        return game.genres.includes("bauen");
+      } else if (filterCondition === "FIGHTING") {
+        return game.genres.includes("Kämpfen");
+      } else if (filterCondition === "SCIENCE") {
+        return game.genres.includes("Wissenschaft");
+      } else if (filterCondition === "TURN_BASED") {
+        return game.genres.includes("Rundenbasiert");
+      } else if (filterCondition === "CLASSIC") {
+        return game.genres.includes("Klassisch");
+      } else if (filterCondition === "ISOMETRIC") {
+        return game.genres.includes("Isometrisch");
+      } else if (filterCondition === "GOOD_OLD_GAMES") {
+        return game.genres.includes("Good Old Games");
+      } else if (filterCondition === "TACTICAL_RPG") {
+        return game.genres.includes("Taktik-RPG");
+      } else if (filterCondition === "CRPG") {
+        return game.genres.includes("CRPG");
+      } else if (filterCondition === "RÄTSEL") {
+        return game.genres.includes("Rätsel");
+      } else if (filterCondition === "PUZZLE") {
+        return game.genres.includes("Puzzle");
+      } else if (filterCondition === "DETECTIVE") {
+        return game.genres.includes("Detektivgeschichten");
+      } else if (filterCondition === "EASY") {
+        return game.genres.includes("Einfach");
+      } else if (filterCondition === "FUNNY") {
+        return game.genres.includes("Lustig");
+      } else if (filterCondition === "POINT_CLICK") {
+        return game.genres.includes("Point&Click");
+      } else if (filterCondition === "MYSTERY") {
+        return game.genres.includes("Mystery");
+      } else if (filterCondition === "INVETIGATION") {
+        return game.genres.includes("Ermittlung");
+      } else if (filterCondition === "SHORT") {
+        return game.genres.includes("Kurz");
+      } else if (filterCondition === "STORY_RICH") {
+        return game.genres.includes("Erzählung");
+      } else if (filterCondition === "NOIR") {
+        return game.genres.includes("Noir");
+      } else if (filterCondition === "RELAXING") {
+        return game.genres.includes("Gemütlich");
+      } else if (filterCondition === "NO_VIOLENCE") {
+        return game.genres.includes("Keine Gewalt");
+      } else if (filterCondition === "2D") {
+        return game.genres.includes("2D");
+      } else if (filterCondition === "SPACE") {
+        return game.genres.includes("Weltraum");
+      } else if (filterCondition === "TOP_DOWN") {
+        return game.genres.includes("Von-Oben-Ansicht");
+      } else if (filterCondition === "PROCEDURAL_GENERATION") {
+        return game.genres.includes("Prozedural Generiert");
+      } else if (filterCondition === "BULLET_HELL") {
+        return game.genres.includes("Bullet Hell");
+      } else if (filterCondition === "FLYING") {
+        return game.genres.includes("Fliegen");
+      } else if (filterCondition === "LOOTER_SHOOTER") {
+        return game.genres.includes("Looter Shooter");
+      } else if (filterCondition === "MANAGEMENT") {
+        return game.genres.includes("Verwaltung");
+      } else if (filterCondition === "DARK_HUMOR") {
+        return game.genres.includes("Schwarzer Humor");
+      } else if (filterCondition === "PSYCHOLOGICAL_HORROR") {
+        return game.genres.includes("Psychologischer Horror");
+      } else if (filterCondition === "SURVAIVAL_HORROR") {
+        return game.genres.includes("Überlebenshorror");
+      } else if (filterCondition === "LOVECRAFTIAN") {
+        return game.genres.includes("Lovecraft");
+      } else if (filterCondition === "FISHING") {
+        return game.genres.includes("Fischen");
+      } else if (filterCondition === "MULTIPLE_ENDINGS") {
+        return game.genres.includes("Mehrere Enden");
+      } else if (filterCondition === "FEMALE_PROTAGONIST") {
+        return game.genres.includes("Weibliche Protagonistin");
+      } else if (filterCondition === "CHOICES_MATTER") {
+        return game.genres.includes("Entscheidungen Zählen");
+      } else if (filterCondition === "ADULT") {
+        return game.genres.includes("Nicht jugendfrei");
+      } else if (filterCondition === "JRPG") {
+        return game.genres.includes("JRPG");
+      } else if (filterCondition === "LGBTQ+") {
+        return game.genres.includes("LGBTQ+");
+      } else if (filterCondition === "DOG") {
+        return game.genres.includes("Hunde streicheln");
+      } else if (filterCondition === "REAL_TIME") {
+        return game.genres.includes("Echtzeit");
+      } else if (filterCondition === "MAGIC") {
+        return game.genres.includes("Magie");
+      } else if (filterCondition === "BOARD_GAME") {
+        return game.genres.includes("Brettspiel");
+      } else if (filterCondition === "LOCAL_COOP") {
+        return game.genres.includes("Lokaler Coop");
+      } else if (filterCondition === "CHOICES_MATTER2") {
+        return game.genres.includes("Entscheidungen zählen");
+      } else if (filterCondition === "VIOLENT") {
+        return game.genres.includes("Gewalttätig");
+      } else if (filterCondition === "NUDITY") {
+        return game.genres.includes("Nacktheit");
+      } else if (filterCondition === "SEXUAL_CONTENT") {
+        return game.genres.includes("Sexuelle Inhalte");
+      } else if (filterCondition === "GOG_ONLY") {
+        return game.genres.includes("Nur Auf GOG");
+      } else if (filterCondition === "LOCAL_MULTIPLAYER") {
+        return game.genres.includes("Lokaler Multiplayer");
+      } else if (filterCondition === "DARK") {
+        return game.genres.includes("Düster");
+      } else if (filterCondition === "UNDERGROUND") {
+        return game.genres.includes("Untergrund");
+      } else if (filterCondition === "DIFFICULT") {
+        return game.genres.includes("Schwierig");
+      } else if (filterCondition === "PIXEL_GRAPHICS") {
+        return game.genres.includes("Pixelgrafik");
+      } else if (filterCondition === "CHOOSE_YOUR_OWN_ADVENTURE") {
+        return game.genres.includes("Wähle dein eigenes Abenteuer");
+      } else if (filterCondition === "CRIME") {
+        return game.genres.includes("Verbrechen");
+      } else if (filterCondition === "MARTIAL_ARTS") {
+        return game.genres.includes("Kampfkunst");
+      } else if (filterCondition === "STEALTH") {
+        return game.genres.includes("Schleichen");
+      } else if (filterCondition === "SPLIT_SCREEN") {
+        return game.genres.includes("Geteilter Bildschirm");
+      } else if (filterCondition === "WEREWOLVES") {
+        return game.genres.includes("Werwölfe");
+      } else if (filterCondition === "VAMPIRES") {
+        return game.genres.includes("Vampire");
+      } else if (filterCondition === "RELAXING") {
+        return game.genres.includes("Entspannend");
+      } else if (filterCondition === "WW1") {
+        return game.genres.includes("1. Weltkrieg");
+      } else if (filterCondition === "TEXT_BASED") {
+        return game.genres.includes("Textbasiert");
       } else if (filterCondition === "TAG_SEARCH") {
-        return game.tags.includes(inputTags);
+        if (!inputTags || inputTags.trim() === "") {
+          return true;
+        }
+
+        const searchLower = inputTags.toLowerCase();
+
+        return (
+          game.tags &&
+          game.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+        );
       } else if (filterCondition === "ADVENTURE_TAG") {
         return game.tags.includes("Abenteuer");
       } else if (filterCondition === "ACTION_TAG") {
@@ -673,7 +1581,233 @@ const GamesPage = () => {
       } else if (filterCondition === "2D_TAG") {
         return game.tags.includes("2D");
       } else if (filterCondition === "SCI_FI_TAG") {
-        return game.tags.includes("Sciene Fiction");
+        return game.tags.includes("Science Fiction");
+      } else if (filterCondition === "HISTORISCH_TAG") {
+        return game.tags.includes("Historisch");
+      } else if (filterCondition === "HORROR_TAG") {
+        return game.tags.includes("Horror");
+      } else if (filterCondition === "KOOP_TAG") {
+        return game.tags.includes("Lokaler Coop");
+      } else if (filterCondition === "SIMULATION_TAG") {
+        return game.tags.includes("Simulation");
+      } else if (filterCondition === "TAKTISCH_TAG") {
+        return game.tags.includes("Taktisch");
+      } else if (filterCondition === "SHOOTER_TAG") {
+        return game.tags.includes("Shooter");
+      } else if (filterCondition === "ÜBERLEBEN_TAG") {
+        return game.tags.includes("Überleben");
+      } else if (filterCondition === "ERKUNDUNG_TAG") {
+        return game.tags.includes("Erkundung");
+      } else if (filterCondition === "TOLLER_SOUNDTRACK_TAG") {
+        return game.tags.includes("Toller Soundtrack");
+      } else if (filterCondition === "FIRST_PERSON_TAG") {
+        return game.tags.includes("First-Person");
+      } else if (filterCondition === "THIRD_PERSON_TAG") {
+        return game.tags.includes("Third Person");
+      } else if (filterCondition === "OFFENE_SPIELWELT_TAG") {
+        return game.tags.includes("Offene Spielwelt");
+      } else if (filterCondition === "SANDBOX_TAG") {
+        return game.tags.includes("Sandbox");
+      } else if (filterCondition === "FPS_TAG") {
+        return game.tags.includes("FPS");
+      } else if (filterCondition === "POSTAPOKALYPTISCH_TAG") {
+        return game.tags.includes("Postapokalyptisch");
+      } else if (filterCondition === "RESSOURCENVERWALTUNG_TAG") {
+        return game.tags.includes("Ressourcenverwaltung");
+      } else if (filterCondition === "CRAFTING_TAG") {
+        return game.tags.includes("Crafting");
+      } else if (filterCondition === "MITTELALTERLICH_TAG") {
+        return game.tags.includes("Mittelalterlich");
+      } else if (filterCondition === "BAUEN_TAG") {
+        return game.tags.includes("Bauen");
+      } else if (filterCondition === "BASENBAU_TAG") {
+        return game.tags.includes("Basenbau");
+      } else if (filterCondition === "STÄDTEBAUER_TAG") {
+        return game.tags.includes("Städtebauer");
+      } else if (filterCondition === "KÄMPFEN_TAG") {
+        return game.tags.includes("Kämpfen");
+      } else if (filterCondition === "WISSENSCHAFT_TAG") {
+        return game.tags.includes("Wissenschaft");
+      } else if (filterCondition === "RUNDENBASIERT_TAG") {
+        return game.tags.includes("Rundenbasiert");
+      } else if (filterCondition === "KLASSISCH_TAG") {
+        return game.tags.includes("Klassisch");
+      } else if (filterCondition === "ISOMETRISCH_TAG") {
+        return game.tags.includes("Isometrisch");
+      } else if (filterCondition === "GOOD_OLD_GAMES_TAG") {
+        return game.tags.includes("Good Old Games");
+      } else if (filterCondition === "TAKTIK_RPG_TAG") {
+        return game.tags.includes("Taktik-RPG");
+      } else if (filterCondition === "CRPG_TAG") {
+        return game.tags.includes("CRPG");
+      } else if (filterCondition === "RÄTSEL_TAG") {
+        return game.tags.includes("Rätsel");
+      } else if (filterCondition === "DETEKTIVGESCHICHTEN_TAG") {
+        return game.tags.includes("Detektivgeschichten");
+      } else if (filterCondition === "LEICHT_TAG") {
+        return game.tags.includes("Leicht");
+      } else if (filterCondition === "LUSTIG_TAG") {
+        return game.tags.includes("Lustig");
+      } else if (filterCondition === "POINT_CLICK_TAG") {
+        return game.tags.includes("Point&Click");
+      } else if (filterCondition === "MYSTERY_TAG") {
+        return game.tags.includes("Mystery");
+      } else if (filterCondition === "ERMITTLUNG_TAG") {
+        return game.tags.includes("Ermittlung");
+      } else if (filterCondition === "KURZ_TAG") {
+        return game.tags.includes("Kurz");
+      } else if (filterCondition === "ERZÄHLUNG_TAG") {
+        return game.tags.includes("Erzählung");
+      } else if (filterCondition === "NOIR_TAG") {
+        return game.tags.includes("Noir");
+      } else if (filterCondition === "GEMÜTLICH_TAG") {
+        return game.tags.includes("Gemütlich");
+      } else if (filterCondition === "KEINE_GEWALT_TAG") {
+        return game.tags.includes("Keine Gewalt");
+      } else if (filterCondition === "WELTRAUM_TAG") {
+        return game.tags.includes("Weltraum");
+      } else if (filterCondition === "VON_OBEN_ANSICHT_TAG") {
+        return game.tags.includes("Von-Oben-Ansicht");
+      } else if (filterCondition === "PROZEDURAL_GENERIERT_TAG") {
+        return game.tags.includes("Prozedural Generiert");
+      } else if (filterCondition === "BULLET_HELL_TAG") {
+        return game.tags.includes("Bullet Hell");
+      } else if (filterCondition === "FLIEGEN_TAG") {
+        return game.tags.includes("Fliegen");
+      } else if (filterCondition === "LOOTER_SHOOTER_TAG") {
+        return game.tags.includes("Looter Shooter");
+      } else if (filterCondition === "VERWALTUNG_TAG") {
+        return game.tags.includes("Verwaltung");
+      } else if (filterCondition === "SCHWARZER_HUMOR_TAG") {
+        return game.tags.includes("Schwarzer Humor");
+      } else if (filterCondition === "PSYCHOLOGISCHER_HORROR_TAG") {
+        return game.tags.includes("Psychologischer Horror");
+      } else if (filterCondition === "ÜBERLEBENSHORROR_TAG") {
+        return game.tags.includes("Überlebenshorror");
+      } else if (filterCondition === "LOVECRAFT_TAG") {
+        return game.tags.includes("Lovecraft");
+      } else if (filterCondition === "FISCHEN_TAG") {
+        return game.tags.includes("Fischen");
+      } else if (filterCondition === "MEHRERE_ENDEN_TAG") {
+        return game.tags.includes("Mehrere Enden");
+      } else if (filterCondition === "WEIBLICHE_PROTAGONISTIN_TAG") {
+        return game.tags.includes("Weibliche Protagonistin");
+      } else if (filterCondition === "ENTSCHEIDUNGEN_ZÄHLEN_TAG") {
+        return game.tags.includes("Entscheidungen Zählen");
+      } else if (filterCondition === "NICHT_JUGENDFREI_TAG") {
+        return game.tags.includes("Nicht jugendfrei");
+      } else if (filterCondition === "LGBTQ+_TAG") {
+        return game.tags.includes("LGBTQ+");
+      } else if (filterCondition === "HUNDE_STREICHELN_TAG") {
+        return game.tags.includes("Hunde streicheln");
+      } else if (filterCondition === "ECHTZEIT_TAG") {
+        return game.tags.includes("Echtzeit");
+      } else if (filterCondition === "MAGIE_TAG") {
+        return game.tags.includes("Magie");
+      } else if (filterCondition === "BRETTSPIEL_TAG") {
+        return game.tags.includes("Brettspiel");
+      } else if (filterCondition === "GEWALTÄTIG_TAG") {
+        return game.tags.includes("Gewaltätig");
+      } else if (filterCondition === "NACKTHEIT_TAG") {
+        return game.tags.includes("Nacktheit");
+      } else if (filterCondition === "NUR_AUF_GOG_TAG") {
+        return game.tags.includes("Nur auf GOG");
+      } else if (filterCondition === "LOKALER_MULTIPLAYER_TAG") {
+        return game.tags.includes("Lokaler Multiplayer");
+      } else if (filterCondition === "DÜSTER_TAG") {
+        return game.tags.includes("Düster");
+      } else if (filterCondition === "UNTERGRUND_TAG") {
+        return game.tags.includes("Untergrund");
+      } else if (filterCondition === "SCHWIERIG_TAG") {
+        return game.tags.includes("Schwierig");
+      } else if (filterCondition === "PIXELGRAFIK_TAG") {
+        return game.tags.includes("Pixelgrafik");
+      } else if (filterCondition === "SEXUELLE_INHALTE_TAG") {
+        return game.tags.includes("Sexuelle Inhalte");
+      } else if (filterCondition === "WÄHLE_DEIN_EIGENES_ABENTEUER_TAG") {
+        return game.tags.includes("Wähle Dein Eigenes Abenteuer");
+      } else if (filterCondition === "VERBRECHEN_TAG") {
+        return game.tags.includes("Verbrechen");
+      } else if (filterCondition === "KAMPFKUNST_TAG") {
+        return game.tags.includes("Kampfkunst");
+      } else if (filterCondition === "SCHLEICHEN_TAG") {
+        return game.tags.includes("Schleichen");
+      } else if (filterCondition === "GETEILTER_BILDSCHIRM_TAG") {
+        return game.tags.includes("Geteilter Bildschirm");
+      } else if (filterCondition === "WERWÖLFE_TAG") {
+        return game.tags.includes("Werwölfe");
+      } else if (filterCondition === "VAMPIRE_TAG") {
+        return game.tags.includes("Vampire");
+      } else if (filterCondition === "ENTSPANNEND_TAG") {
+        return game.tags.includes("Entspannend");
+      } else if (filterCondition === "1_WELTKRIEG_TAG") {
+        return game.tags.includes("1. Weltkrieg");
+      } else if (filterCondition === "TEXTBASIERT_TAG") {
+        return game.tags.includes("Textbasiert");
+      } else if (filterCondition === "CRAFTING_TAG") {
+        return game.tags.includes("Crafting");
+      } else if (filterCondition === "MEHRSPIELER_TAG") {
+        return game.tags.includes("Mehrspieler");
+      } else if (filterCondition === "CROSS_PLATFORM_TAG") {
+        return game.tags.includes("Crossplay");
+      } else if (filterCondition === "STEAMPUNK_TAG") {
+        return game.tags.includes("Steampunk");
+      } else if (filterCondition === "GORE_TAG") {
+        return game.tags.includes("Gore");
+      } else if (filterCondition === "MODERN_TAG") {
+        return game.tags.includes("Modern");
+      } else if (filterCondition === "WESTERN_TAG") {
+        return game.tags.includes("Western");
+      } else if (filterCondition === "JRPG_TAG") {
+        return game.tags.includes("JRPG");
+      } else if (filterCondition === "NSFW_TAG") {
+        return game.tags.includes("NSFW");
+      } else if (filterCondition === "HENTAI_TAG") {
+        return game.tags.includes("Hentai");
+      } else if (filterCondition === "EMOTIONAL_TAG") {
+        return game.tags.includes("Emotional");
+      } else if (filterCondition === "DATING_SIMULATION_TAG") {
+        return game.tags.includes("Datingsimulation");
+      } else if (filterCondition === "BEAT_EM_UP_TAG") {
+        return game.tags.includes("Beat'em up");
+      } else if (filterCondition === "ROGUE_LIKE_TAG") {
+        return game.tags.includes("Roguelike");
+      } else if (filterCondition === "ROGUE_LITE_TAG") {
+        return game.tags.includes("Roguelite");
+      } else if (filterCondition === "DUNGEON_CRAWLER_TAG") {
+        return game.tags.includes("Dungeon Crawler");
+      } else if (filterCondition === "TWIN_STICK_SHOOTER_TAG") {
+        return game.tags.includes("Twin Stick Shooter");
+      } else if (filterCondition === "CYBERPUNK_TAG") {
+        return game.tags.includes("Cyberpunk");
+      } else if (filterCondition === "KRIEG_TAG") {
+        return game.tags.includes("Krieg");
+      } else if (filterCondition === "ECHTZEIT_STRATEGIE_TAG") {
+        return game.tags.includes("Echtzeitstrategie");
+      } else if (filterCondition === "REALISTISCH_TAG") {
+        return game.tags.includes("Realistisch");
+      } else if (filterCondition === "GESAMTSTRATEGIE_TAG") {
+        return game.tags.includes("Gesamtstrategie");
+      } else if (filterCondition === "LEBENSSIMULATION_TAG") {
+        return game.tags.includes("Lebenssimulation");
+      } else if (filterCondition === "NATUR_TAG") {
+        return game.tags.includes("Natur");
+      } else if (filterCondition === "AMAZON_LUNA_TAG") {
+        return game.tags.includes("Amazon Luna");
+      } else if (filterCondition === "REMAKE_TAG") {
+        return game.tags.includes("Remake");
+      } else if (filterCondition === "CARTOONGRAFIK_TAG") {
+        return game.tags.includes("Cartoongrafik");
+      } else if (filterCondition === "DEMO_TAG") {
+        return game.tags.includes("Demo");
+      } else if (filterCondition === "RETRO_TAG") {
+        return game.tags.includes("Retro");
+      } else if (filterCondition === "DYSTOPISCH_TAG") {
+        return game.tags.includes("Dystopisch");
+      } else if (filterCondition === "MYTHOLOGIE_TAG") {
+        return game.tags.includes("Mythologie");
+      } else if (filterCondition === "OST_TAG") {
+        return game.tags.includes("OST");
       } else if (filterCondition === "WINDOWS") {
         return game.platforms.includes("windows");
       } else if (filterCondition === "MAC") {
@@ -749,6 +1883,8 @@ const GamesPage = () => {
           (game.tags &&
             game.tags.some((tag) => tag.toLowerCase().includes(searchLower)))
         );
+      } else if (filterCondition === "SANDBOX") {
+        return game.tags.includes("Sandbox");
       } else {
         return true;
       }
@@ -1090,56 +2226,88 @@ const GamesPage = () => {
               <>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleAdventure} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ADVENTURE"}
+                      onChange={handleAdventure}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Adventure" : " Abenteuer"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleAction} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ACTION"}
+                      onChange={handleAction}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Action" : " Action"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleShooter} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "SHOOTER"}
+                      onChange={handleShooter}
+                    />
                     <span className="checkmark"></span>
-                    {language === "en" ? " Shooter" : " Kugelhagel"}
+                    {language === "en" ? " Shooter" : " Shooter"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleRacing} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "RACING"}
+                      onChange={handleRacing}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Racing" : " Rennen"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleRPG} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "RPG"}
+                      onChange={handleRPG}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Role-playing" : " Rollenspiel"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleSimulation} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "SIMULATION"}
+                      onChange={handleSimulation}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Simulation" : " Simulation"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleSport} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "SPORT"}
+                      onChange={handleSport}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Sport" : " Sport"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleStrategy} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "STRATEGY"}
+                      onChange={handleStrategy}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? "Strategy" : " Strategie"}
                   </label>
@@ -1190,21 +2358,33 @@ const GamesPage = () => {
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleAdventureTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ADVENTURE_TAG"}
+                      onChange={handleAdventureTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Adventure" : " Abenteuer"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleActionTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ACTION_TAG"}
+                      onChange={handleActionTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Action" : " Action"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleIndieTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "INDIE_TAG"}
+                      onChange={handleIndieTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Indie" : " Indie"}
                   </label>
@@ -1224,6 +2404,7 @@ const GamesPage = () => {
                   <label className="square-checkbox">
                     <input
                       type="checkbox"
+                      checked={filterCondition === "SPANN_GESCHICHTE_TAG"}
                       onChange={handleSpannGeschichteTag}
                     />
                     <span className="checkmark"></span>
@@ -1234,35 +2415,55 @@ const GamesPage = () => {
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleAtmosphärischTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ATMOSPHÄRISCH_TAG"}
+                      onChange={handleAtmosphärischTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Simulation" : " Atmosphärisch"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleStrategieTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "STRATEGIE_TAG"}
+                      onChange={handleStrategieTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Strategy" : " Strategie"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleRollenspielTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "ROLLENSPIEL_TAG"}
+                      onChange={handleRollenspielTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " Role-playing" : " Rollenspiel"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handle2DTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "2D_TAG"}
+                      onChange={handle2DTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en" ? " 2D" : " 2D"}
                   </label>
                 </li>
                 <li className="gamespage-main-filter-li">
                   <label className="square-checkbox">
-                    <input type="checkbox" onChange={handleSciFiTag} />
+                    <input
+                      type="checkbox"
+                      checked={filterCondition === "SCI_FI_TAG"}
+                      onChange={handleSciFiTag}
+                    />
                     <span className="checkmark"></span>
                     {language === "en"
                       ? " Science Fiction"
