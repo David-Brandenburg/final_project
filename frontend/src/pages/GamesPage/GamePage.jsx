@@ -19,11 +19,12 @@ const GamePage = () => {
 	const [gameDLCS, setGameDLCS] = useState([]);
 	const [mainGame, setMainGame] = useState(null);
 	const [openTags, setOpenTags] = useState(false);
+	const [recommendations1, setRecommendations1] = useState(null);
+	const [recommendations2, setRecommendations2] = useState(null);
   const { title } = useParams();
   const { language } = useLanguage();
 
-  const { setOpenModalBlocker, setOpenImageModal, setOpenTrailerModal } =
-    useContext(ModalContext);
+  const { setOpenModalBlocker, setOpenImageModal, setOpenTrailerModal } = useContext(ModalContext);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -129,6 +130,39 @@ const GamePage = () => {
       }
     };
 
+		const fetchGames = async (signal) => {
+			try {
+				const url = `http://localhost:3001/games/`
+				const response = await fetch(url, { method: 'GET' });
+				if (!response.ok) {
+					const dataFailed = await response.json()
+					throw new Error(dataFailed.message)
+				}
+		
+				const dataSuccess = await response.json();
+				const foundRecommendations1 = dataSuccess.filter((game) => game.genres.includes(gameData.genres[0]) && (!game.dlc && game.title !== gameData.title));
+				const slicedRecommendations1 = foundRecommendations1.slice(0, 4);
+				setRecommendations1(slicedRecommendations1);
+		
+				const recommendation1Titles = new Set(slicedRecommendations1.map(game => game.title));
+		
+				const foundRecommendations2 = dataSuccess.filter((game) => 
+					game.genres.includes(gameData.genres[1]) && 
+					(!game.dlc && 
+					game.title !== gameData.title &&
+					!recommendation1Titles.has(game.title)
+				));
+				const slicedRecommendations2 = foundRecommendations2.slice(0, 4);
+				setRecommendations2(slicedRecommendations2);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		if (gameData){
+			fetchGames()
+		}
+
     if (gameData && gameData.mainGame) {
       const controller = new AbortController();
       const signal = controller.signal;
@@ -185,14 +219,7 @@ const GamePage = () => {
                     € {gameData.price}
                   </p>
                   {gameData.discount > 0 && (
-                    <p className="price-tag-discount">
-                      €{" "}
-                      {Math.floor(
-                        (gameData.price -
-                          (gameData.price * gameData.discount) / 100) *
-                          100
-                      ) / 100}
-                    </p>
+                    <p className="price-tag-discount">€ {Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100}</p>
                   )}
                 </div>
                 <hr />
@@ -398,6 +425,11 @@ const GamePage = () => {
 												<p key={'midQuote'+index}  className="midQuote" dangerouslySetInnerHTML={{__html: language === "en" ? Object.values(item)[1] : Object.values(item)[0]}} />
 											)
 										}
+										if (key === 'footNote') {
+											return (
+												<small key={'footNote'+index} className="footNote">{Object.values(item)[0]}</small>
+											)
+										}
                     return null;
                   })}
               </div>
@@ -511,13 +543,13 @@ const GamePage = () => {
 										{language === 'en' ? 'Company' : 'Entwickler'}:
 									</p>
 									<div className="game-details-content">
-										{(gameData.publisher && !gameData.developer) && <NavLink className='game-details-link' style={{textUnderlineOffset: '4px'}} to={`/games?=publishers=${slugify(gameData.publisher.toLowerCase(), "-")}`}>{gameData.publisher}</NavLink>}
-										{(gameData.developer && !gameData.publisher) && <NavLink className='game-details-link' style={{textUnderlineOffset: '4px'}} to={`/games?=developers=${slugify(gameData.developer.toLowerCase(), "-")}`}>{gameData.developer}</NavLink>}
+										{(gameData.publisher && !gameData.developer) && <NavLink className='game-details-link' style={{textUnderlineOffset: '4px'}} to={`/games?=publishers=${slugify(gameData.publisher, "-")}`}>{gameData.publisher}</NavLink>}
+										{(gameData.developer && !gameData.publisher) && <NavLink className='game-details-link' style={{textUnderlineOffset: '4px'}} to={`/games?=developers=${slugify(gameData.developer, "-")}`}>{gameData.developer}</NavLink>}
 										{(gameData.developer && gameData.publisher) &&
 											<>
-												<NavLink className='game-details-link' to={`/games?=developers=${slugify(gameData.developer.toLowerCase(), "-")}`} style={{textUnderlineOffset: '4px'}} >{gameData.developer}</NavLink>
+												<NavLink className='game-details-link' to={`/games?=developers=${slugify(gameData.developer, "-")}`} style={{textUnderlineOffset: '4px'}} >{gameData.developer}</NavLink>
 												<span className="space-holder2">/</span>
-												<NavLink className='game-details-link' to={`/games?=publishers=${slugify(gameData.publisher.toLowerCase(), "-")}`} style={{textUnderlineOffset: '4px'}} >{gameData.publisher}</NavLink>
+												<NavLink className='game-details-link' to={`/games?=publishers=${slugify(gameData.publisher, "-")}`} style={{textUnderlineOffset: '4px'}} >{gameData.publisher}</NavLink>
 											</>
 										}
 									</div>
@@ -642,6 +674,64 @@ const GamePage = () => {
 							}
 						</div>
           </div>
+					<div>
+						<div className="header-container">
+							<p className="header-left">
+								{language === "en" ? "You may like these products" : "Das könnt dir auch gefallen"}
+							</p>
+							<hr className="header-hr" />
+						</div>
+						<div className="recommendations-wrapper">
+							{(recommendations1 && recommendations2) &&
+								<>
+									<div className="recommendations1-container">
+										{recommendations1.map((game) => (
+											<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-card">
+												<div className="game-card-thumbnail-wrapper">
+													<img src={game.thumbnail} alt="" />
+												</div>
+												<div className="game-card-info-wrapper">
+													<div className="game-card-title-wrapper">
+														<p>{game.title}</p>
+													</div>
+													<div className="game-card-pricetags-wrapper">
+														{game.discount > 0 && <p className="discount-tag">-{game.discount}%</p>}
+														<div className="price-discount-wrapper">
+															{game.discount > 0 && <small style={{textDecoration: 'line-through', color: 'gray'}}>{game.price} €</small>}
+															<p>{Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100} €</p>
+														</div>
+														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} />
+													</div>
+												</div>
+											</NavLink>
+										))}
+									</div>
+									<div className="recommendations2-container">
+										{recommendations2.map((game) => (
+											<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-card">
+												<div className="game-card-thumbnail-wrapper">
+													<img src={game.thumbnail} alt="" />
+												</div>
+												<div className="game-card-info-wrapper">
+													<div className="game-card-title-wrapper">
+														<p>{game.title}</p>
+													</div>
+													<div className="game-card-pricetags-wrapper">
+														{game.discount > 0 && <p className="discount-tag">-{game.discount}%</p>}
+														<div className="price-discount-wrapper">
+															{game.discount > 0 && <small style={{textDecoration: 'line-through', color: 'gray'}}>{game.price} €</small>}
+															<p>{Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100} €</p>
+														</div>
+														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} />
+													</div>
+												</div>
+											</NavLink>
+										))}
+									</div>
+								</>
+							}
+						</div>
+					</div>
         </>
       )}
     </div>

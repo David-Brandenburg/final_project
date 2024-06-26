@@ -17,6 +17,7 @@ footer {
     box-shadow: inset 0px 3px 5px rgba(0, 0, 0, 0.5);
     flex-direction: column;
     padding: 0 clamp(50px, 8vw, 200px);
+		user-select: none;
     .footer-top-row {
       display: flex;
       flex-direction: row;

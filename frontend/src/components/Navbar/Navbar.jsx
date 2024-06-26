@@ -3,39 +3,160 @@ import { NavLink } from "react-router-dom";
 import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
+import { LogginContext } from "../../contexts/LogginContext.js";
+import { toast } from "react-toastify";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
-import "./navbar.scss";
 import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
-import { LogginContext } from "../../contexts/LogginContext.js";
-import { toast } from "react-toastify";
 import defaultPic from "../../assets/defaultProfilepic.webp";
-import { useLanguage } from "../../contexts/LanguageContext.js";
+import "./navbar.scss";
+import slugify from "slugify";
+import AddToCartBtn from "../AddToCartBtn.jsx";
 
 const Navbar = ({ profilePicChange, setProfilePicChange }) => {
-	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"))
-  const {
-    openModalBlocker,
-    setOpenModalBlocker,
-    openSearch,
-    setOpenSearch,
-    openCart,
-    setOpenCart,
-    openLoginModal,
-    setOpenLoginModal,
-    openGameModal,
-    setOpenGameModal,
-		adminEditModal,
-		setAdminEditModal,
-  } = useContext(ModalContext);
+	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"));
+	const [hovered, setHovered] = useState(false)
+	const [prefetchedGames, setPrefetchedGames] = useState(null);
+	const [filteredGames, setFilteredGames] = useState(null);
+  const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal, adminEditModal, setAdminEditModal } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
-  const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn, setIsAdmin } =
-    useContext(LogginContext);
-  const { language, toggleLanguage } = useLanguage();
+  const { loggedInUser, isLoggedIn, setLoggedInUser, setIsAdmin } = useContext(LogginContext);
+  const { language } = useLanguage();
 	const gamesLinkRef = useRef(null)
   const cIL = cart.length;
+
+	const heartfill = (rating) => {
+    let hearts;
+
+    switch (true) {
+      case rating >= 4.75:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+          </div>
+        );
+        break;
+      case rating >= 4.25:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+          </div>
+        );
+        break;
+      case rating >= 3.75:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 3.25:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 2.75:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 2.25:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 1.75:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 1.25:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 0.75:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-fill"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+      case rating >= 0.25:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart-half"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+        break;
+
+      default:
+        hearts = (
+          <div className="rating-wrapper">
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+            <i className="bi bi-heart"></i>
+          </div>
+        );
+    }
+
+    return hearts;
+  };
 
   const handleOpenSearch = (e) => {
     e.preventDefault();
@@ -139,31 +260,6 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const gamesLink = document.getElementById("gamesLink");
-  //   if (!openSearch) {
-	// 		gamesLink.addEventListener("mouseover", (e) => {
-	// 			e.stopPropagation();
-	// 			e.preventDefault();
-	// 			setOpenGameModal(true);
-	// 			setAdminEditModal('');
-	// 			setOpenModalBlocker(true);
-	// 			setOpenSearch(false);
-	// 			setOpenCart(false);
-	// 			setOpenLoginModal(false);
-	// 		});
-	// 	}
-
-  //   return () => {
-  //     gamesLink.addEventListener("mouseout", (e) => {
-  //       e.stopPropagation();
-  //       e.preventDefault();
-  //       setOpenGameModal(false);
-  //       setOpenModalBlocker(false);
-  //     });
-  //   };
-  // }, [openSearch]);
-
 	useEffect(() => {
     const gamesLink = gamesLinkRef.current;
 
@@ -197,6 +293,8 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
         gamesLink.removeEventListener("mouseover", handleMouseOver);
         gamesLink.removeEventListener("mouseout", handleMouseOut);
       }
+			setFilteredGames(null)
+			setPrefetchedGames(null)
     };
   }, [openSearch]);
 
@@ -204,6 +302,46 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 		setNavAvatar(localStorage.getItem("profilePic"))
 		setProfilePicChange(false)
 	}, [loggedInUser, profilePicChange])
+
+	const handlePrefetch = async (e) => {
+		e.preventDefault();
+		try {
+			const url = `http://localhost:3001/games/`
+			const response = await fetch(url, {method: 'GET'})
+			if (!response.ok) {
+				const dataFailed = await response.json()
+				throw new Error(dataFailed.message)
+			} 
+
+			const dataSuccess = await response.json();
+			setPrefetchedGames(dataSuccess);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleFilter = (e) => {
+		const value = e.target.value.toLowerCase();
+	
+		if (value === ''){
+			setFilteredGames(null);
+			return;
+		}
+
+		const filterGames = () => {
+			const filteredGames = prefetchedGames.filter(game => 
+				game.title.toLowerCase().includes(value) ||
+				game.publisher.toLowerCase().includes(value) ||
+				game.tags.some(tag => tag.toLowerCase().includes(value))
+			);
+	
+			setFilteredGames(filteredGames);
+		};
+	
+		filterGames();
+	};
+
+	useEffect(() => {console.log(filteredGames)}, [filteredGames])
 
   return (
     <nav>
@@ -224,7 +362,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
                 }}>
                 <NavLink to="/games" className="nav-link" title="navlink" ref={gamesLinkRef}>
                   {language === "en" ? "Games" : "Spiele"}
-									{openGameModal && <GameModal ref={gamesLinkRef}/>}
+									{openGameModal && <GameModal/>}
                 </NavLink>
               </div>
               <NavLink to="/infos" className="nav-link" title="navlink">
@@ -264,11 +402,55 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
               id="search"
               autoFocus
               onClick={(e) => e.stopPropagation()}
+							onChange={handleFilter}
+							placeholder="Search for Games, Tags or Publisher"
             />
+						{filteredGames && <label className="count-games" htmlFor="search">
+							<p>{filteredGames.length}</p>
+							<p>{language === 'en' ? 'Games' : 'Spiele'}</p>
+						</label>}
+						{filteredGames && (
+							<div className="filtered-games-modal">
+								{filteredGames.map(game => (
+									<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => e.stopPropagation())}>
+										<div className="game-thumbnail-wrapper">
+											<img src={game.thumbnail} alt="" />
+										</div>
+										<div className="game-info-wrapper">
+											{game.dlc && <p className="dlc-tag">DLC</p>}
+											<div className="game-title-container">
+												<p className="game-title">{game.title}</p>
+												<small className="game-info">{game.releaseDate.split("-")[0]}, {game?.publisher}{game.developer && ','} {game?.developer}</small>
+											</div>
+										</div>
+										<div className="rating-platform-wrapper">
+											{heartfill(game.rating)}
+											<div className="platform-wrapper">
+												{game.platforms.map((platform) => (
+													<i className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'} platform`}></i>
+												))}
+											</div>
+										</div>
+										<div className="price-tag-wrapper">
+											{<p className="discount-tag" style={{
+													background: game.discount > 0 ? '#f85525' : 'unset',
+													boxShadow: game.discount > 0 ? '0px 0px 3px rgba(0, 0, 0, 0.4)' : 'unset'	
+											}}>{game.discount > 0 ? `-${game.discount}%` : ''}</p>}
+											<AddToCartBtn className={"btn"} game={game} text={
+												<>
+													<p title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'} className="price-tag"><span>€</span> {game.discount > 0 ? Math.floor((game.price - (game.price * game.discount) / 100) * 100) / 100 : game.price}</p>
+													{/* <i className="bi bi-cart-plus"></i> */}
+												</>
+											} />
+										</div>
+									</NavLink>
+								))}
+							</div>
+						)}
           </div>
         )}
         <div className="nav-right">
-          <div className="search-wrapper" onClick={handleOpenSearch}>
+          <div className="search-wrapper" onClick={((e) => {handleOpenSearch(e); handlePrefetch(e)})}>
             <i className={`bi ${!openSearch ? "bi-search" : "bi-x-lg"}`}></i>
           </div>
           <div className="cart-wrapper" onClick={handleOpenCart}>
