@@ -1,9 +1,8 @@
-import HeroSection from "../../components/HomePage/HeroSection";
-import GamesListe from "../../components/HomePage/middle-section/BeliebteGamesListe";
-import "./homepage.scss";
-import NeueErschinenGamesListe from "../../components/HomePage/middle-section/NeueErschinenGamesListe";
-import GerneSwiperAngebote from "../../components/HomePage/middle-sub-section/GerneSwiperAngebote";
 import { useEffect } from "react";
+import HeroSection from "../../components/HomePage/HeroSection.jsx";
+import GerneSwiperAngebote from "../../components/HomePage/middle-sub-section/GerneSwiperAngebote.jsx";
+import DynamicList from "../../components/HomePage/middle-section/DynamicList.jsx";
+import "./homepage.scss";
 
 const HomePage = () => {
 
@@ -17,10 +16,10 @@ const HomePage = () => {
       <HeroSection />
       <div className="middle-section">
         <div className="left">
-          <GamesListe />
+					<DynamicList genre={"Beliebte-Titel"} />
         </div>
         <div className="right">
-          <NeueErschinenGamesListe />
+					<DynamicList genre={"Neu-Erschienen"} />
         </div>
       </div>
       <div className="middle-sub-section">

@@ -1,0 +1,62 @@
+@import "../../../styles/variables";
+
+.dynamic-gameslist-wrapper{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 20px 0;
+	.game-card{
+		display: flex;
+		background: var(--main);
+		box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+		.game-card-thumbnail-wrapper{
+			display: flex;
+			img{
+				width: 196px;
+				aspect-ratio: 16 / 9;
+			}
+		}
+		.game-card-content{
+			width: 100%;
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.game-card-pricetags{
+				display: flex;
+				height: 50px;
+				align-self: flex-end;
+				align-items: flex-end;
+				gap: 20px;
+				.game-discount-tag{
+					padding: 6px;
+					background: $accentColorDarkOrange;
+					border-radius: 3px;
+					box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+					font-weight: bold;
+					color: var(--mainColor);
+				}
+				.game-pricetags{
+					display: flex;
+					flex-direction: column;
+					align-items: flex-end;
+					gap: 3px;
+					.game-pricetag-discount{
+						text-decoration: line-through;
+						color: gray;
+					}
+					.game-card-price{
+						padding: 6px;
+						background: $accentColorLightBlue;
+						border-radius: 3px;
+						box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+						color: var(--mainColor);
+					}
+				}
+			}
+		}
+		&:hover{
+			background: var(--mainBorder);
+		}
+	}
+}

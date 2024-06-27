@@ -170,6 +170,58 @@
 
 		.gamepage-description-left{
 			width: 55%;
+			.earlyAccess-wrapper{
+				width: 100%;
+				margin: 25px 0;
+				background: var(--earlyAccessBG);
+				color: #000;
+				padding: 10px 20px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.earlyAccess-title{
+					font-weight: bold;
+					font-size: 18px;
+					margin: 5px 0 10px 0;
+				}
+				ul{
+					li{
+						list-style: disc;
+						margin: 5px 20px;
+					}
+					.earlyAccess-link{
+						color: #000;
+						text-decoration: underline;
+						text-underline-offset: 2px;
+					}
+				}
+				.gear-wrapper{
+					position: relative;
+					width: 70px;
+					height: 70px;
+					.bi-gear-wide, .bi-tools{
+						fill: color-mix(in lab, var(--earlyAccessBG), #000 15%);
+					}
+					.bi-tools{
+						position: absolute;
+						top: 20px;
+						left: 50%;
+						transform: translateX(-50%);
+					}
+					.bi-gear-wide{
+						animation: rotation 15s linear infinite;
+					}
+				
+					@keyframes rotation {
+						0% {
+								transform: rotate(0deg);
+						}
+						100% {
+								transform: rotate(360deg);
+						}
+					}
+				}
+			}
 			.description-content{
 				display: flex;
 				flex-direction: column;
@@ -253,6 +305,9 @@
 				}
 				.game-functions-tag{
 					width: 100%;
+					display: flex;
+					align-items: center;
+					gap: 10px;
 				}
 				.game-details-content{
 					display: flex;
@@ -308,6 +363,11 @@
 							align-items: flex-end;
 							justify-content: flex-end;
 							gap: 5px;
+						}
+						.maingame-pricetags-discount{
+							display: flex;
+							flex-direction: column;
+							align-items: flex-end;
 						}
 						.discount-tag{
 							padding: 7px 12px;

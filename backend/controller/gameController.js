@@ -102,8 +102,10 @@ async function getGamesByGenres(req, res) {
     }
 
     const gamesByGenre = games.filter((game) =>
-      game.genres.includes(genre.toLowerCase())
+      game.genres.includes(genre)
     );
+
+		// console.log(gamesByGenre)
 
     return res.status(200).json(gamesByGenre);
   } catch (error) {

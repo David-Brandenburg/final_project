@@ -80,7 +80,7 @@ const GamesModal = ({ game }) => {
         return (
           <i
             key="ads"
-            className="bi bi-megaphone"
+            className="bi bi-aspect-ratio"
             title={language === "en" ? "Overlay" : "Einblendungen"}></i>
         );
       case "Ranglisten":

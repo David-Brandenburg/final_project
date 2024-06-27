@@ -14,7 +14,7 @@ const PageSubtitle = ({ title, icon, Nav }) => {
           <h3>{title}</h3>
         </div>
         {Nav && (
-          <NavLink to={`/games/genres/beliebte-titel`} className="genre-link">
+          <NavLink to={`/games?=genres=Beliebte-Titel`} className="genre-link">
             {language === "en" ? "See more" : "Mehr anzeigen"}
           </NavLink>
         )}
