@@ -225,7 +225,7 @@
 			.description-content{
 				display: flex;
 				flex-direction: column;
-				> *:not(.subHeader) {
+				> *:not(.subHeader, .paragraphHeader) {
 					margin: 20px 0;
 				}
 				.gamepage-list{
@@ -256,8 +256,12 @@
 					font-size: 20px;
 					margin: 5px 0;
 				}
+				.paragraphHeader{
+					font-weight: bold;
+					margin-top: 15px;
+				}
 				.paragraph{
-					margin: 5px 0;
+					margin: 10px 0;
 				}
 				.footNote{
 					color: #797979;

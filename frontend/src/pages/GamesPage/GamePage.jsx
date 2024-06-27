@@ -313,10 +313,7 @@ const GamePage = () => {
                   </p>
                 ))}
                 {gameData.languages.length > 2 && (
-                  <p>
-                    & {gameData.languages.length - 2}
-                    {language === "en" ? "more" : "weitere"}
-                  </p>
+                  <p>& {gameData.languages.length - 2}{language === "en" ? " more" : " weitere"}</p>
                 )}
               </div>
             </div>
@@ -423,6 +420,15 @@ const GamePage = () => {
                         </p>
                       );
                     }
+										if (key === "paragraphHeaderDE" || key === "paragraphHeaderEN") {
+											return (
+                        <p className="paragraphHeader" key={"paragraphHeader" + index}>
+                          {language === "en"
+                            ? Object.values(item)[1]
+                            : Object.values(item)[0]}
+                        </p>
+                      );
+										}
                     if (key === "paragraphDE" || key === "paragraphEN") {
                       return (
                         <p className="paragraph" key={"paragraph" + index}>
@@ -488,6 +494,11 @@ const GamePage = () => {
 										if (key === "midQuoteDE" || key === "midQuoteEN") {
 											return (
 												<p key={'midQuote'+index}  className="midQuote" dangerouslySetInnerHTML={{__html: language === "en" ? Object.values(item)[1] : Object.values(item)[0]}} />
+											)
+										}
+										if (key === 'sectionHR') {
+											return (
+												<hr />
 											)
 										}
 										if (key === 'footNote') {

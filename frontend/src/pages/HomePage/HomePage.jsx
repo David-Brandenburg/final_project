@@ -5,8 +5,7 @@ import DynamicList from "../../components/HomePage/middle-section/DynamicList.js
 import "./homepage.scss";
 
 const HomePage = () => {
-
-
+	
 	useEffect(() => {
 		document.title = 'Pixel Plaza'
 	}, [])	
