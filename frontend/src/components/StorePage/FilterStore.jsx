@@ -195,19 +195,19 @@ const FilterStore = ({
 
   const handleEinzelspieler = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "EINZELSPIELER" ? "ALL" : "EINZELSPIELER"
+      prevCondition === "SINGLE_PLAYER" ? "ALL" : "SINGLE_PLAYER"
     );
   };
 
   const handleErfolge = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "ERFOLGE" ? "ALL" : "ERFOLGE"
+      prevCondition === "ACHIEVEMENTS" ? "ALL" : "ACHIEVEMENTS"
     );
   };
 
   const handleCloud = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "CLOUD" ? "ALL" : "CLOUD"
+      prevCondition === "CLOUD_SAVES" ? "ALL" : "CLOUD_SAVES"
     );
   };
 
@@ -219,13 +219,13 @@ const FilterStore = ({
 
   const handleController = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "CONTROLLER" ? "ALL" : "CONTROLLER"
+      prevCondition === "CONTROLLER_SUPPORT" ? "ALL" : "CONTROLLER_SUPPORT"
     );
   };
 
   const handleEinblendung = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "EINBLENDUNG" ? "ALL" : "EINBLENDUNG"
+      prevCondition === "EINBLENDUNGEN_FUNC" ? "ALL" : "EINBLENDUNGEN_FUNC"
     );
   };
 
@@ -237,7 +237,7 @@ const FilterStore = ({
 
   const handleKoop = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "KOOP" ? "ALL" : "KOOP"
+      prevCondition === "COOP" ? "ALL" : "COOP"
     );
   };
 
@@ -249,97 +249,97 @@ const FilterStore = ({
 
   const handleEnglisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "ENGLISCH" ? "ALL" : "ENGLISCH"
+      prevCondition === "ENGLISH" ? "ALL" : "ENGLISH"
     );
   };
 
   const handleFranzösisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "FRANZÖSISCH" ? "ALL" : "FRANZÖSISCH"
+      prevCondition === "FRANÇAIS" ? "ALL" : "FRANÇAIS"
     );
   };
 
   const handleSpanisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "SPANISCH" ? "ALL" : "SPANISCH"
+      prevCondition === "ESPAÑOL" ? "ALL" : "ESPAÑOL"
     );
   };
 
   const handleItalienisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "ITALIENISCH" ? "ALL" : "ITALIENISCH"
+      prevCondition === "ITALIANO" ? "ALL" : "ITALIANO"
     );
   };
 
   const handlePortugiesisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "PORTUGIESISCH" ? "ALL" : "PORTUGIESISCH"
+      prevCondition === "PORTUGUÊS" ? "ALL" : "PORTUGUÊS"
     );
   };
 
   const handleRussisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "RUSSISCH" ? "ALL" : "RUSSISCH"
+      prevCondition === "РУССКИЙ" ? "ALL" : "РУССКИЙ"
     );
   };
 
   const handleChinesisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "CHINESISCH" ? "ALL" : "CHINESISCH"
+      prevCondition === "中文简体" ? "ALL" : "中文简体"
     );
   };
 
   const handleJapanisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "JAPANISCH" ? "ALL" : "JAPANISCH"
+      prevCondition === "日本語" ? "ALL" : "日本語"
     );
   };
 
   const handleKoreanisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "KOREANISCH" ? "ALL" : "KOREANISCH"
+      prevCondition === "한국어" ? "ALL" : "한국어"
     );
   };
 
   const handleBrasilianisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "BRASILIANISCH" ? "ALL" : "BRASILIANISCH"
+      prevCondition === "PORTUGUÊS_DO_BRASIL" ? "ALL" : "PORTUGUÊS_DO_BRASIL"
     );
   };
 
   const handleUngarisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "UNGARISCH" ? "ALL" : "UNGARISCH"
+      prevCondition === "MAGYAR" ? "ALL" : "MAGYAR"
     );
   };
 
   const handlePolnisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "POLNISCH" ? "ALL" : "POLNISCH"
+      prevCondition === "POLSKI" ? "ALL" : "POLSKI"
     );
   };
 
   const handleTürkisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "TÜRKISCH" ? "ALL" : "TÜRKISCH"
+      prevCondition === "TÜRKÇE" ? "ALL" : "TÜRKÇE"
     );
   };
 
   const handleTschechisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "TSCHECHISCH" ? "ALL" : "TSCHECHISCH"
+      prevCondition === "ČESKÝ" ? "ALL" : "ČESKÝ"
     );
   };
 
   const handleNiederländisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "NIEDERLÄNDISCH" ? "ALL" : "NIEDERLÄNDISCH"
+      prevCondition === "NEDERLANDS" ? "ALL" : "NEDERLANDS"
     );
   };
 
   const handleDänisch = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "DÄNISCH" ? "ALL" : "DÄNISCH"
+      prevCondition === "DANSK" ? "ALL" : "DANSK"
     );
   };
 
@@ -999,7 +999,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "EINZELSPIELER"}
+                  checked={filterCondition === "SINGLE_PLAYER"}
                   onChange={handleEinzelspieler}
                 />
                 <span className="checkmark"></span>
@@ -1021,7 +1021,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "KOOP"}
+                  checked={filterCondition === "COOP"}
                   onChange={handleKoop}
                 />
                 <span className="checkmark"></span>
@@ -1032,7 +1032,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "ERFOLGE"}
+                  checked={filterCondition === "ACHIEVEMENTS"}
                   onChange={handleErfolge}
                 />
                 <span className="checkmark"></span>
@@ -1054,7 +1054,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "CONTROLLER"}
+                  checked={filterCondition === "CONTROLLER_SUPPORT"}
                   onChange={handleController}
                 />
                 <span className="checkmark"></span>
@@ -1067,7 +1067,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "CLOUD"}
+                  checked={filterCondition === "CLOUD_SAVES"}
                   onChange={handleCloud}
                 />
                 <span className="checkmark"></span>
@@ -1078,7 +1078,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "EINBLENDUNG"}
+                  checked={filterCondition === "EINBLENDUNGEN_FUNC"}
                   onChange={handleEinblendung}
                 />
                 <span className="checkmark"></span>
@@ -1164,7 +1164,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "BRASILIANISCH"}
+                  checked={filterCondition === "PORTUGUÊS_DO_BRASIL"}
                   onChange={handleBrasilianisch}
                 />
                 <span className="checkmark"></span>
@@ -1177,7 +1177,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "DÄNISCH"}
+                  checked={filterCondition === "DANSK"}
                   onChange={handleDänisch}
                 />
                 <span className="checkmark"></span>
@@ -1199,7 +1199,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "ENGLISCH"}
+                  checked={filterCondition === "ENGLISH"}
                   onChange={handleEnglisch}
                 />
                 <span className="checkmark"></span>
@@ -1210,7 +1210,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "FRANZÖSISCH"}
+                  checked={filterCondition === "FRANÇAIS"}
                   onChange={handleFranzösisch}
                 />
                 <span className="checkmark"></span>
@@ -1221,7 +1221,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "POLNISCH"}
+                  checked={filterCondition === "POLSKI"}
                   onChange={handlePolnisch}
                 />
                 <span className="checkmark"></span>
@@ -1232,7 +1232,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "UNGARISCH"}
+                  checked={filterCondition === "MAGYAR"}
                   onChange={handleUngarisch}
                 />
                 <span className="checkmark"></span>
@@ -1243,7 +1243,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "TÜRKISCH"}
+                  checked={filterCondition === "TÜRKÇE"}
                   onChange={handleTürkisch}
                 />
                 <span className="checkmark"></span>
@@ -1254,7 +1254,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "PORTUGIESISCH"}
+                  checked={filterCondition === "PORTUGUÊS"}
                   onChange={handlePortugiesisch}
                 />
                 <span className="checkmark"></span>
@@ -1265,7 +1265,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "RUSSISCH"}
+                  checked={filterCondition === "РУССКИЙ"}
                   onChange={handleRussisch}
                 />
                 <span className="checkmark"></span>
@@ -1276,7 +1276,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "ITALIENISCH"}
+                  checked={filterCondition === "ITALIANO"}
                   onChange={handleItalienisch}
                 />
                 <span className="checkmark"></span>
@@ -1287,7 +1287,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "SPANISCH"}
+                  checked={filterCondition === "ESPAÑOL"}
                   onChange={handleSpanisch}
                 />
                 <span className="checkmark"></span>
@@ -1298,7 +1298,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "CHINESISCH"}
+                  checked={filterCondition === "中文简体"}
                   onChange={handleChinesisch}
                 />
                 <span className="checkmark"></span>
@@ -1309,7 +1309,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "JAPANISCH"}
+                  checked={filterCondition === "日本語"}
                   onChange={handleJapanisch}
                 />
                 <span className="checkmark"></span>
@@ -1320,7 +1320,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "KOREANISCH"}
+                  checked={filterCondition === "한국어"}
                   onChange={handleKoreanisch}
                 />
                 <span className="checkmark"></span>
@@ -1331,7 +1331,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "TSCHECHISCH"}
+                  checked={filterCondition === "ČESKÝ"}
                   onChange={handleTschechisch}
                 />
                 <span className="checkmark"></span>
@@ -1342,7 +1342,7 @@ const FilterStore = ({
               <label className="square-checkbox">
                 <input
                   type="checkbox"
-                  checked={filterCondition === "NIEDERLÄNDISCH"}
+                  checked={filterCondition === "NEDERLANDS"}
                   onChange={handleNiederländisch}
                 />
                 <span className="checkmark"></span>

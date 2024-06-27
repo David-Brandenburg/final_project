@@ -68,52 +68,58 @@ const GerneSwiperAngebote = () => {
   }, [genres, games]);
 
   function getGenreTranslation(genre, language) {
-    if (genre === "strategie") {
+    if (genre === "Strategie") {
       return language === "en" ? "Strategy" : "Strategie";
-    } else if (genre === "bauen") {
+    } else if (genre === "Bauen") {
       return language === "en" ? "Building" : "Bauen";
-    } else if (genre === "historisch") {
+    } else if (genre === "Historisch") {
       return language === "en" ? "Historical" : "Historisch";
-    } else if (genre === "neu-erschienen") {
+    } else if (genre === "Neu-Erschienen") {
       return language === "en" ? "New releases" : "Neu erschienen";
-    } else if (genre === "rollenspiel") {
+    } else if (genre === "Rollenspiel") {
       return language === "en" ? "Role-playing" : "Rollenspiel";
     } else if (genre === "action") {
       return language === "en" ? "Action" : "Action";
-    } else if (genre === "open-world") {
+    } else if (genre === "Open-World") {
       return language === "en" ? "Open World" : "Open-World";
-    } else if (genre === "beliebte-titel") {
+    } else if (genre === "Beliebte-Titel") {
       return language === "en" ? "Bestsellers" : "Beliebte Titel";
-    } else if (genre === "fantasy") {
+    } else if (genre === "Fantasy") {
       return language === "en" ? "Fantasy" : "Fantasy";
-    } else if (genre === "simulation") {
+    } else if (genre === "Simulation") {
       return language === "en" ? "Simulation" : "Simulation";
-    } else if (genre === "science-fiction") {
+    } else if (genre === "Science-Fiction") {
       return language === "en" ? "Science Fiction" : "Science-Fiction";
-    } else if (genre === "rundenbasiert") {
+    } else if (genre === "Rundenbasiert") {
       return language === "en" ? "Turn-based" : "Rundenbasiert";
-    } else if (genre === "überleben") {
+    } else if (genre === "Überleben") {
       return language === "en" ? "Survival" : "Überleben";
-    } else if (genre === "abenteuer") {
+    } else if (genre === "Abenteuer") {
       return language === "en" ? "Adventure" : "Abenteuer";
-    } else if (genre === "erzählung") {
+    } else if (genre === "Erzählung") {
       return language === "en" ? "Narrative" : "Erzählung";
-    } else if (genre === "shooter") {
+    } else if (genre === "Shooter") {
       return language === "en" ? "Shooter" : "Shooter";
-    } else if (genre === "egoperspektive") {
+    } else if (genre === "Egoperspektive") {
       return language === "en" ? "First-person" : "Egoperspektive";
-    } else if (genre === "point-and-click") {
+    } else if (genre === "Point-and-Click") {
       return language === "en" ? "Point-and-click" : "Point-and-Click";
     } else if (genre === "detektivgeschichten") {
       return language === "en" ? "Detective stories" : "Detektivgeschichten";
-    } else if (genre === "exploration") {
-      return language === "en" ? "Exploration" : "Exploration";
-    } else if (genre === "echtzeit") {
+    } else if (genre === "Erkundung") {
+      return language === "en" ? "Exploration" : "Erkundung";
+    } else if (genre === "Echtzeit") {
       return language === "en" ? "Real-time" : "Echtzeit";
-    } else if (genre === "angebote") {
+    } else if (genre === "Angebote") {
       return language === "en" ? "Offers" : "Angebote";
-    } else if (genre === "puzzle") {
-      return language === "en" ? "Puzzle" : "Puzzle";
+    } else if (genre === "Rätsel") {
+      return language === "en" ? "Puzzle" : "Rätsel";
+    } else if (genre === "Horror") {
+      return language === "en" ? "Horror" : "Horror";
+    } else if (genre === "JRPG") {
+      return language === "en" ? "JRPG" : "JRPG";
+    } else if (genre === "Management") {
+      return language === "en" ? "Management" : "Management";
     } else {
       return genre;
     }
@@ -143,9 +149,7 @@ const GerneSwiperAngebote = () => {
             genreDiscounts[genre] !== null &&
             genreDiscounts[genre] > 0 && (
               <SwiperSlide key={index}>
-                <NavLink
-                  to={`/games?=genres=${genre.toLowerCase()}`}
-                  className="genre-link">
+                <NavLink to={`/games?=genres=${genre}`} className="genre-link">
                   <div className="genre-swiper-kachel-wrapper">
                     <div
                       className="genre-swiper-kachel-bg"
