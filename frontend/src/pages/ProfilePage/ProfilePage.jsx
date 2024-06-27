@@ -14,7 +14,6 @@ const ProfilePage = ({setProfilePicChange}) => {
 	const [objectToUpdate, setObjectToUpdate] = useState({});
 	const [passwordToUpdate, setPasswordToUpdate] = useState({});
 	const [indexTab, setIndexTab] = useState('accountandsecurity');
-	// const [adminTab, setAdminTab] = useState('accounts');
 	const { adminTab, setAdminTab } = useContext(ModalContext);
 	const { loggedInUser, isAdmin } = useContext(LogginContext);
 
@@ -36,6 +35,8 @@ const ProfilePage = ({setProfilePicChange}) => {
 
 	useEffect(() => {
 		fetchUser()
+
+		document.title = `${language === 'en' ? 'Your profile' : 'Dein Profil'} | PixelPlaza`
 	}, [fetchUser])
 
 	const handleFileChange = (e) => {
