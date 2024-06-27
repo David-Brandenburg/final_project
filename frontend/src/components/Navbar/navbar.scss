@@ -30,7 +30,7 @@ nav {
     user-select: none;
 
     .nav-link {
-      text-transform: uppercase;
+      text-transform: capitalize;
       padding: 17px 28px 17px 16px;
       color: #fff;
       font-family: $defaultFont;
@@ -47,8 +47,8 @@ nav {
         font-size: 12px;
         font-family: "Bootstrap-Icons";
         position: absolute;
-        top: 19px;
-        right: 14px;
+        top: 20px;
+        right: 12px;
       }
       &:last-child {
         color: $accentColorLightBlue;
@@ -100,7 +100,7 @@ nav {
             }
           }
           .nav-link {
-            text-transform: uppercase;
+            text-transform: capitalize;
             padding: 17px 28px 17px 16px;
             color: #fff;
             font-family: $defaultFont;
@@ -114,8 +114,8 @@ nav {
               font-size: 12px;
               font-family: "Bootstrap-Icons";
               position: absolute;
-              top: 19px;
-              right: 14px;
+              top: 20px;
+              right: 12px;
             }
             &:hover {
               color: color-mix(in lab, $accentColorLightBlue 65%, #fff);

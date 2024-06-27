@@ -59,19 +59,19 @@ const GameModal = () => {
     const handleMouseEnter = (e) => {
       const currentGenre = e.target;
       if (currentGenre.innerText === "New releases") {
-        setGenre("neu-erschienen");
+        setGenre("Neu-Erschienen");
       } else if (currentGenre.innerText === "Bestsellers") {
-        setGenre("beliebte-titel");
+        setGenre("Beliebte-Titel");
       } else if (currentGenre.innerText === "On sale now") {
-        setGenre("angebote");
+        setGenre("Angebote");
       } else if (currentGenre.innerText === "Adventure") {
-        setGenre("abenteuer");
+        setGenre("Abenteuer");
       } else if (currentGenre.innerText === "RPG") {
-        setGenre("rollenspiel");
+        setGenre("Rollenspiel");
       } else if (currentGenre.innerText === "Strategy") {
-        setGenre("strategie");
+        setGenre("Strategie");
       } else {
-        setGenre(slugify(currentGenre.innerText.toLowerCase()));
+        setGenre(slugify(currentGenre.innerText));
       }
 
       gamesGenre.forEach((genre) => {

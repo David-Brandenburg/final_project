@@ -93,6 +93,7 @@ const GameModalCardContainer = ({ genre }) => {
                     }`}
                     game={game}
                     text={<p>{game.price}€</p>}
+										title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'}
                   />
                 </div>
               </div>

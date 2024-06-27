@@ -144,7 +144,7 @@ const GerneSwiperAngebote = () => {
             genreDiscounts[genre] > 0 && (
               <SwiperSlide key={index}>
                 <NavLink
-                  to={`/games/genres/${genre.toLowerCase()}`}
+                  to={`/games?=genres=${genre.toLowerCase()}`}
                   className="genre-link">
                   <div className="genre-swiper-kachel-wrapper">
                     <div

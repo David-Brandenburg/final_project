@@ -142,6 +142,28 @@ const GamePage = () => {
       }
     };
 
+    if (gameData && gameData.mainGame) {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const fetchMainGameData = async () => {
+        const mainGameData = await fetchMainGame(gameData.mainGame, signal);
+        if (mainGameData) {
+          setMainGame(mainGameData);
+					console.log(mainGameData)
+        }
+      };
+
+      fetchMainGameData();
+
+      return () => {
+        controller.abort();
+        setMainGame(null);
+      };
+    }
+  }, [gameData, title]);
+
+	useEffect(() => {
 		const fetchGames = async (signal) => {
 			try {
 				const url = `http://localhost:3001/games/`
@@ -152,133 +174,48 @@ const GamePage = () => {
 				}
 		
 				const dataSuccess = await response.json();
-				const foundRecommendations1 = dataSuccess.filter((game) => game.genres.includes(gameData.genres[0]) && (!game.dlc && game.title !== gameData.title));
-				const slicedRecommendations1 = foundRecommendations1.slice(0, 4);
-				setRecommendations1(slicedRecommendations1);
-		
-				const recommendation1Titles = new Set(slicedRecommendations1.map(game => game.title));
-		
-				const foundRecommendations2 = dataSuccess.filter((game) => 
-					game.genres.includes(gameData.genres[1]) && 
-					(!game.dlc && 
-					game.title !== gameData.title &&
-					!recommendation1Titles.has(game.title)
-				));
-				const slicedRecommendations2 = foundRecommendations2.slice(0, 4);
-				setRecommendations2(slicedRecommendations2);
+				return dataSuccess;
 			} catch (error) {
-				console.error(error);
+				if (error.name !== "AbortError") {
+          console.error(error);
+        }
+        return null;
 			}
 		};
 
 		if (gameData){
-			fetchGames()
+			const controller = new AbortController();
+			const signal = controller.signal;
+
+			const fetchGamesData = async () => {
+				const gamesData = await fetchGames(signal);
+				if (gamesData) {
+					const foundRecommendations1 = gamesData.filter((game) => game.genres.includes(gameData.genres[0]) && (!game.dlc && game.title !== gameData.title));
+					const slicedRecommendations1 = foundRecommendations1.slice(0, 4);
+					setRecommendations1(slicedRecommendations1);
+			
+					const recommendation1Titles = new Set(slicedRecommendations1.map(game => game.title));
+			
+					const foundRecommendations2 = gamesData.filter((game) => 
+						game.genres.includes(gameData.genres[1]) && 
+						(!game.dlc && 
+						game.title !== gameData.title &&
+						!recommendation1Titles.has(game.title)
+					));
+					const slicedRecommendations2 = foundRecommendations2.slice(0, 4);
+					setRecommendations2(slicedRecommendations2);
+				}
+			};
+
+			fetchGamesData()
+
+			return () => {
+				controller.abort();
+				setRecommendations1(null)
+				setRecommendations2(null)
+			}
 		}
-
-    if (gameData && gameData.mainGame) {
-      const controller = new AbortController();
-      const signal = controller.signal;
-
-      const fetchMainGameData = async () => {
-        const mainGameData = await fetchMainGame(gameData.mainGame, signal);
-        if (mainGameData) {
-          setMainGame(mainGameData);
-        }
-      };
-
-      fetchMainGameData();
-
-      return () => {
-        controller.abort();
-        setMainGame(null);
-      };
-    }
-  }, [gameData, title]);
-
-  useEffect(() => {
-    const fetchDLCS = async (title, abortSignal) => {
-      try {
-        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
-        const response = await fetch(url, {
-          method: "GET",
-          signal: abortSignal,
-        });
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.message);
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error(error);
-        }
-        return null;
-      }
-    };
-
-    if (gameData) {
-      const controller = new AbortController();
-      const signal = controller.signal;
-
-      const fetchAllDLCS = async () => {
-        const dlcsData = await Promise.all(
-          gameData.dlcs.map((title) => fetchDLCS(title, signal))
-        );
-        setGameDLCS(dlcsData.filter((dlc) => dlc !== null));
-      };
-
-      if (gameData.dlcs.length > 0) {
-        fetchAllDLCS();
-      }
-
-      return () => {
-        controller.abort();
-      };
-    }
-  }, [gameData]);
-
-  useEffect(() => {
-    const fetchMainGame = async (title, abortSignal) => {
-      try {
-        const url = `http://localhost:3001/games/${slugify(title, "_")}`;
-        const response = await fetch(url, {
-          method: "GET",
-          signal: abortSignal,
-        });
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.message);
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error(error);
-        }
-        return null;
-      }
-    };
-
-    if (gameData && gameData.mainGame) {
-      const controller = new AbortController();
-      const signal = controller.signal;
-
-      const fetchMainGameData = async () => {
-        const mainGameData = await fetchMainGame(gameData.mainGame, signal);
-        if (mainGameData) {
-          setMainGame(mainGameData);
-        }
-      };
-
-      fetchMainGameData();
-
-      return () => {
-        controller.abort();
-        setMainGame(null);
-      };
-    }
-  }, [gameData, title]);
+	}, [gameData])
 
   return (
     <div className="main-wrapper gamepage-wrapper">
@@ -337,9 +274,8 @@ const GamePage = () => {
                   game={gameData}
                   text={
                     <>
-                      <i className="bi bi-cart-plus"></i>
                       <p>
-                        {language === "en" ? "Add to Cart" : "In den Warenkorb"}
+                        {language === "en" ? "Buy now" : "Jetzt kaufen"}
                       </p>
                     </>
                   }
@@ -351,8 +287,8 @@ const GamePage = () => {
             <h2 className="gamepage-title">{gameData.title}</h2>
             <div className="gamepage-sub-info">
               <p>
-                <i className="bi bi-star-fill" style={{ fontSize: "12px" }}></i>{" "}
-                {gameData.rating}/5
+                {gameData.rating > 0 && <i className="bi bi-star-fill" style={{ fontSize: "12px" }}></i>}
+                <span>{gameData.rating > 0 ? `${gameData.rating} / 5` : `${language === 'en' ? 'Awaiting more ratings' : 'Warte auf weitere Bewertungen'}`}</span>
               </p>
               <hr />
               <div className="gamepage-platform-wrapper">
@@ -378,7 +314,7 @@ const GamePage = () => {
                 ))}
                 {gameData.languages.length > 2 && (
                   <p>
-                    & {gameData.languages.length - 2}{" "}
+                    & {gameData.languages.length - 2}
                     {language === "en" ? "more" : "weitere"}
                   </p>
                 )}
@@ -440,6 +376,25 @@ const GamePage = () => {
                 </p>
                 <hr className="header-hr" />
               </div>
+							{gameData.earlyAccess &&
+								<div className="earlyAccess-wrapper">
+									<div>
+										<p className="earlyAccess-title">{language === 'en' ? 'This game is currently in Early Access.' : 'Dieses Spiel befindet sich derzeit im Early Access.'}</p>
+										<ul>
+											<li><NavLink className="earlyAccess-link" to={`/help/games_in_development_faq`} rel="norefferer noopener">{language === 'en' ? 'Learn more about early access.' : 'Erfahre mehr über Early Access-Spiele.'}</NavLink></li>
+											<li><NavLink className="earlyAccess-link" to={`/forum/${slugify(gameData.title, "_")}`} rel="norefferer noopener">{language === 'en' ? 'Visit the forums and learn more about this game.' : 'In unseren Foren findest du mehr zu diesem Spiel.'}</NavLink></li>
+										</ul>
+									</div>
+									<div className="gear-wrapper">
+										<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="" class="bi bi-gear-wide" viewBox="0 0 16 16">
+											<path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
+										</svg>
+										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+											<path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+										</svg>
+									</div>
+								</div>
+							}
               <div className="description-content">
                 {Array.isArray(gameData.description) &&
                   gameData.description.map((item, index) => {
@@ -543,14 +498,6 @@ const GamePage = () => {
                     return null;
                   })}
               </div>
-              {/* <div className="header-container">
-                <p className="header-left">
-                  {language === "en"
-                    ? "Popular achievements"
-                    : "Häufige Erfolge"}
-                </p>
-                <hr className="header-hr"/>
-              </div> */}
             </div>
             <div className="gamepage-info-right">
               {mainGame && (
@@ -574,44 +521,22 @@ const GamePage = () => {
                         <small>{mainGame.title}</small>
                         <div className="maingame-info-pricetags">
                           {mainGame.discount > 0 && (
-                            <p
-                              className="discount-tag"
-                              style={{
-                                color: "var(--mainColor)",
-                                fontWeight: "bold",
-                              }}>
-                              -{mainGame.discount}%
-                            </p>
-                          )}
+                            <p className="discount-tag" style={{ color: "var(--mainColor)", fontWeight: "bold" }}>-{mainGame.discount}%</p>
+													)}
                           <div className="maingame-pricetags">
-                            {mainGame.discount === 0 && (
-                              <p>€ {mainGame.price}</p>
-                            )}
+                            {mainGame.discount === 0 && (<p>€ {mainGame.price}</p>)}
                             {mainGame.discount > 0 && (
-                              <>
-                                <small
-                                  style={{
-                                    color: "gray",
-                                    textDecoration: "line-through",
-                                  }}>
-                                  € {mainGame.price}
-                                </small>
-                                <p>
-                                  €{" "}
-                                  {Math.floor(
-                                    (mainGame.price -
-                                      (mainGame.price * mainGame.discount) /
-                                        100) *
-                                      100
-                                  ) / 100}
-                                </p>
-                              </>
+                              <div className="maingame-pricetags-discount">
+                                <small style={{ color: "gray", textDecoration: "line-through" }}>€ {mainGame.price}</small>
+                                <p>€ {Math.floor((mainGame.price - (mainGame.price * mainGame.discount) / 100) * 100 ) / 100}</p>
+                              </div>
                             )}
                           </div>
                           <AddToCartBtn
                             className={"btn"}
                             game={mainGame}
                             text={<i className="bi bi-cart-plus"></i>}
+														title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'}
                           />
                         </div>
                       </div>
@@ -703,54 +628,128 @@ const GamePage = () => {
 							<div className="game-details-row">
 								<p className="game-details-tag">{language === 'en' ? 'Game features' : 'Spielfunktionen'}:</p>
 								<div className="game-details-content">
-									<p className="game-functions-tag">{
-										gameData.functions[0] === 'Cloud-Speicherstände'
-											? (language === 'en' ? 'Cloud saves': 'Cloud-Speicherstände')
-											:
-										gameData.functions[0] === 'Einzelspieler'
-											? (language === 'en' ? 'Single-player' : 'Einzelspieler')
-											:
-										gameData.functions[0] === 'Mehrspieler'
-											? (language === 'en' ? 'Multi-player' : 'Mehrspieler')
-											: 
-										gameData.functions[0] === 'Controller-Unterstützung'
-											? (language === 'en' ? 'Controller support' : 'Controller-Unterstützung')
-											: 
-										gameData.functions[0] === 'Erfolge'
-											? (language === 'en' ? 'Achievments' : 'Erfolge')
-											: 
-										gameData.functions[0] === 'Einblendungen'
-											? (language === 'en' ? 'Overlay' : 'Einblendungen')
-											: ''
-										}
-									</p>
+									<div className="game-functions-tag">
+											{
+											gameData.functions[0] === 'Cloud-Speicherstände'
+												? <>
+														<i className="bi bi-cloud-upload"></i>
+														<p>{language === 'en' ? 'Cloud saves': 'Cloud-Speicherstände'}</p>
+													</>
+												:
+											gameData.functions[0] === 'Einzelspieler'
+												? <>
+														<i className="bi bi-person"></i>
+														<p>{language === 'en' ? 'Single-player' : 'Einzelspieler'}</p>
+													</>
+												:
+											gameData.functions[0] === 'Mehrspieler'
+												? <>
+														<i className="bi bi-people"></i>
+														<p>{language === 'en' ? 'Multi-player' : 'Mehrspieler'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'Ranglisten'
+												? <>
+														<i className="bi bi-clipboard2-data"></i>
+														<p>{language === 'en' ? 'Leaderboards' : 'Ranglisten'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'Koop'
+												? <>
+														<i className="bi bi-people-fill"></i>
+														<p>{language === 'en' ? 'Coop' : 'Koop'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'crossplatform'
+												? <>
+														<i className="bi bi-globe"></i>
+														<p>{language === 'en' ? 'Crossplatform' : 'Crossplatform'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'Controller-Unterstützung'
+												? <>
+														<i className="bi bi-controller"></i>
+														<p>{language === 'en' ? 'Controller support' : 'Controller-Unterstützung'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'Erfolge'
+												? <>
+														<i className="bi bi-trophy"></i>
+														<p>{language === 'en' ? 'Achievments' : 'Erfolge'}</p>
+													</>
+												: 
+											gameData.functions[0] === 'Einblendungen'
+												? <>
+														<i className="bi bi-aspect-ratio"></i>
+														<p>{language === 'en' ? 'Overlay' : 'Einblendungen'}</p>
+													</>
+												: ''
+											}
+									</div>
 								</div>
 							</div>
 							<div className="game-functions-content">
 								{gameData.functions.slice(1).map((functions, index) => (
 									<div key={'row'+index} className="game-details-row">
 										<p className="game-details-tag-link" />
-										<p className="game-functions-tag" key={'function' + index}>{
+										<div className="game-functions-tag" key={'function' + index}>
+											{
 											functions === 'Cloud-Speicherstände'
-												? (language === 'en' ? 'Cloud saves': 'Cloud-Speicherstände')
+												? <>
+														<i className="bi bi-cloud-upload"></i>
+														<p>{language === 'en' ? 'Cloud saves': 'Cloud-Speicherstände'}</p>
+													</>
 												:
 											functions === 'Einzelspieler'
-												? (language === 'en' ? 'Single-player' : 'Einzelspieler')
+												? <>
+														<i className="bi bi-person"></i>
+														<p>{language === 'en' ? 'Single-player' : 'Einzelspieler'}</p>
+													</>
 												:
 											functions === 'Mehrspieler'
-												? (language === 'en' ? 'Multi-player' : 'Mehrspieler')
+												? <>
+														<i className="bi bi-people"></i>
+														<p>{language === 'en' ? 'Multi-player' : 'Mehrspieler'}</p>
+													</>
+												: 
+											functions === 'Ranglisten'
+												? <>
+														<i className="bi bi-clipboard2-data"></i>
+														<p>{language === 'en' ? 'Leaderboards' : 'Ranglisten'}</p>
+													</>
+												: 
+											functions === 'Koop'
+												? <>
+														<i className="bi bi-people-fill"></i>
+														<p>{language === 'en' ? 'Coop' : 'Koop'}</p>
+													</>
+												: 
+											functions === 'crossplatform'
+												? <>
+														<i className="bi bi-globe"></i>
+														<p>{language === 'en' ? 'Crossplatform' : 'Crossplatform'}</p>
+													</>
 												: 
 											functions === 'Controller-Unterstützung'
-												? (language === 'en' ? 'Controller support' : 'Controller-Unterstützung')
+												? <>
+														<i className="bi bi-controller"></i>
+														<p>{language === 'en' ? 'Controller support' : 'Controller-Unterstützung'}</p>
+													</>
 												: 
 											functions === 'Erfolge'
-												? (language === 'en' ? 'Achievments' : 'Erfolge')
+												? <>
+														<i className="bi bi-trophy"></i>
+														<p>{language === 'en' ? 'Achievments' : 'Erfolge'}</p>
+													</>
 												: 
 											functions === 'Einblendungen'
-												? (language === 'en' ? 'Overlay' : 'Einblendungen')
+												? <>
+														<i className="bi bi-aspect-ratio"></i>
+														<p>{language === 'en' ? 'Overlay' : 'Einblendungen'}</p>
+													</>
 												: ''
 											}
-										</p>
+										</div>
 									</div>
 								))}
 							</div>
@@ -802,6 +801,7 @@ const GamePage = () => {
 																className={"btn"}
 																game={dlc}
 																text={<i className="bi bi-cart-plus"></i>}
+																title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'}
 															/>
 													</div>
 												</div>
@@ -812,7 +812,7 @@ const GamePage = () => {
 							}
 						</div>
           </div>
-					<div>
+					<div className="gamepage-recommendation-wrapper">
 						<div className="header-container">
 							<p className="header-left">
 								{language === "en" ? "You may like these products" : "Das könnt dir auch gefallen"}
@@ -836,9 +836,9 @@ const GamePage = () => {
 														{game.discount > 0 && <p className="discount-tag">-{game.discount}%</p>}
 														<div className="price-discount-wrapper">
 															{game.discount > 0 && <small style={{textDecoration: 'line-through', color: 'gray'}}>{game.price} €</small>}
-															<p>{Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100} €</p>
+															<p>{game.discount > 0 ? Math.floor((game.price - (game.price * game.discount) / 100) * 100) / 100 : game.price} €</p>
 														</div>
-														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} />
+														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'} />
 													</div>
 												</div>
 											</NavLink>
@@ -858,9 +858,9 @@ const GamePage = () => {
 														{game.discount > 0 && <p className="discount-tag">-{game.discount}%</p>}
 														<div className="price-discount-wrapper">
 															{game.discount > 0 && <small style={{textDecoration: 'line-through', color: 'gray'}}>{game.price} €</small>}
-															<p>{Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100} €</p>
+															<p>{game.discount > 0 ? Math.floor((game.price - (game.price * game.discount) / 100) * 100) / 100 : game.price} €</p>
 														</div>
-														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} />
+														<AddToCartBtn className={"btn"} game={game} text={<i className="bi bi-cart-plus"></i>} title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'} />
 													</div>
 												</div>
 											</NavLink>

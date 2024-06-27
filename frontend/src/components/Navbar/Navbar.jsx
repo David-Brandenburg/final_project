@@ -17,7 +17,6 @@ import AddToCartBtn from "../AddToCartBtn.jsx";
 
 const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"));
-	const [hovered, setHovered] = useState(false)
 	const [prefetchedGames, setPrefetchedGames] = useState(null);
 	const [filteredGames, setFilteredGames] = useState(null);
   const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal, adminEditModal, setAdminEditModal } = useContext(ModalContext);
@@ -412,7 +411,12 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 						{filteredGames && (
 							<div className="filtered-games-modal">
 								{filteredGames.map(game => (
-									<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => e.stopPropagation())}>
+									<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => {
+										e.stopPropagation();
+										setFilteredGames(null);
+										setOpenModalBlocker(false);
+										setOpenSearch(false);
+									})}>
 										<div className="game-thumbnail-wrapper">
 											<img src={game.thumbnail} alt="" />
 										</div>

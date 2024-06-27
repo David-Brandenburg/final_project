@@ -32,10 +32,8 @@ const GamesPage = () => {
   const [inputValueMax, setInputValueMax] = useState(maxPrice); // Maximum price input value
   const [minReleaseDate, setMinReleaseDate] = useState("1980"); // Minimum release date filter
   const [maxReleaseDate, setMaxReleaseDate] = useState("2024"); // Maximum release date filter
-  const [inputValueMinRelease, setInputValueMinRelease] =
-    useState(minReleaseDate); // Minimum release date input value
-  const [inputValueMaxRelease, setInputValueMaxRelease] =
-    useState(maxReleaseDate); // Maximum release date input value
+  const [inputValueMinRelease, setInputValueMinRelease] = useState(minReleaseDate); // Minimum release date input value
+  const [inputValueMaxRelease, setInputValueMaxRelease] = useState(maxReleaseDate); // Maximum release date input value
   const [showLanguages, setShowLanguages] = useState(false); // Toggle for showing languages filter
   const [hoveredGame, setHoveredGame] = useState(null); // Stores the game that is currently hovered over
   const [filterCondition, setFilterCondition] = useState("ALL"); // Stores the current filter condition
