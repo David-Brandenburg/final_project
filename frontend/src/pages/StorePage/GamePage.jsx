@@ -13,8 +13,8 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./gamepage.scss";
-import LanguagesListTag from "../../components/LanguagesListTag.jsx";
-import LanguagesListGenres from "../../components/LanguagesListgGenres.jsx";
+import LanguagesListTag from "../../components/TrasnlationLanguages/LanguagesListTag.jsx";
+import LanguagesListGenres from "../../components/TrasnlationLanguages/LanguagesListgGenres.jsx";
 
 const GamePage = () => {
   const [gameData, setGameData] = useState(null);
