@@ -4,7 +4,7 @@ import React from "react";
 import { GetMessages } from "./translationUtils";
 import { NavLink } from "react-router-dom";
 import slugify from "slugify";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const LanguagesListTag = ({ tags, openTags, setOpenTags }) => {
   const { language } = useLanguage();
