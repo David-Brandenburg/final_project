@@ -40,7 +40,7 @@ const FilterStore = ({
   // Handlers for various filter conditions
   const handleReduzierteTitle = () => {
     setFilterCondition((prevCondition) =>
-      prevCondition === "DISCOUNTED" ? "ALL" : "DISCOUNTED"
+      prevCondition === "DISCOUNTED_GENRE" ? "ALL" : "DISCOUNTED_GENRE"
     );
   };
 
@@ -131,6 +131,7 @@ const FilterStore = ({
     setFilterCondition((prevCondition) =>
       prevCondition === "INDIE_TAG" ? "ALL" : "INDIE_TAG"
     );
+    console.log(filterCondition);
   };
 
   const handleFantasyTag = () => {

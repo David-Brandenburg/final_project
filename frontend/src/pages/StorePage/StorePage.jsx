@@ -5,11 +5,11 @@ import "react-range-slider-input/dist/style.css";
 import "./storepage.scss";
 import FilterStore from "../../components/StorePage/FilterStore";
 import GamesStore from "../../components/StorePage/GamesStore";
-import tagToFilterCondition from "../../components/StorePage/FilterStore";
-import genreToFilterCondition from "../../components/StorePage/FilterStore";
-import platformsFilterCondition from "../../components/StorePage/FilterStore";
-import functionsFilterCondition from "../../components/StorePage/FilterStore";
-import languagesFilterCondition from "../../components/StorePage/FilterStore";
+import tagToFilterCondition from "../../components/StorePage/tagFilterCondition.json";
+import genreToFilterCondition from "../../components/StorePage/genreToFilterCondition.json";
+import platformsFilterCondition from "../../components/StorePage/platformsFilterCondition.json";
+import functionsFilterCondition from "../../components/StorePage/functionsFilterCondition.json";
+import languagesFilterCondition from "../../components/StorePage/languagesFilterCondition.json";
 
 const GamesPage = () => {
   // Get the current language from the LanguageContext
