@@ -1,6 +1,6 @@
 import { useLanguage } from "../../contexts/LanguageContext";
 import HeaderStore from "../../components/StorePage/HeaderStore";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-range-slider-input/dist/style.css";
 import "./storepage.scss";
 import FilterStore from "../../components/StorePage/FilterStore";
@@ -28,13 +28,13 @@ const GamesPage = () => {
 
   const [filterCondition, setFilterCondition] = useState("ALL"); // Stores the current filter condition
 
-  const [selectedItemsSort, setSelectedItemsSort] = useState([,]); // Stores the selected items for sorting
+  const [selectedItemsSort, setSelectedItemsSort] = useState([]); // Stores the selected items for sorting
   const [sortCondition, setSortCondition] = useState("ALL"); // Stores the current sort condition
   const [salesHistory] = useState([]); // Stores the sales history
   const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
   // Toggles the dropdown menu
 
-  const [path, setPath] = useState(window.location.href);
+  const [path] = useState(window.location.href);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,13 +110,7 @@ const GamesPage = () => {
         ? "Best selling (recently)"
         : "Meistverkauft (kürzlich)",
     ]);
-    console.log(path);
   }, [language]);
-
-  // Check sales history date whenever the games state changes
-  useEffect(() => {
-    checkSalesHistoryDate();
-  }, [games]);
 
   const handleSearch = (e) => {
     setInputSearch(e.target.value);
@@ -172,9 +166,9 @@ const GamesPage = () => {
       REAL_TIME: (game) => game.genres.includes("Echtzeit"),
       STORY_RICH: (game) => game.genres.includes("Erzählung"),
       ÜBERLEBEN: (game) => game.genres.includes("Überleben"),
-      NEW_ARRIVALS: (game) => game.genres.includes("Neu-Erschienen"),
+      NEW_ARRIVALS_GENRE: (game) => game.genres.includes("Neu-Erschienen"),
       POPULAR_TITLES: (game) => game.genres.includes("Beliebte-Titel"),
-      DISCOUNTED: (game) => game.genres.includes("Angebote"),
+      DISCOUNTED_GENRE: (game) => game.genres.includes("Angebote"),
       MANAGEMENT: (game) => game.genres.includes("Management"),
       TAG_SEARCH: (game) => {
         if (!inputTags || inputTags.trim() === "") {
@@ -216,7 +210,6 @@ const GamesPage = () => {
       POSTAPOKALYPTISCH_TAG: (game) => game.tags.includes("Postapokalyptisch"),
       RESSOURCENVERWALTUNG_TAG: (game) =>
         game.tags.includes("Ressourcenverwaltung"),
-      CRAFTING_TAG: (game) => game.tags.includes("Crafting"),
       MITTELALTERLICH_TAG: (game) => game.tags.includes("Mittelalterlich"),
       BAUEN_TAG: (game) => game.tags.includes("Bauen"),
       BASENBAU_TAG: (game) => game.tags.includes("Basenbau"),
@@ -375,10 +368,12 @@ const GamesPage = () => {
       TIẾNG_VIỆT: (game) => game.languages.includes("Tiếng Việt"),
       SEARCH: (game) => {
         const searchLower = inputSearch.toLowerCase();
+        const searchCapizalize =
+          inputSearch.charAt(0).toUpperCase() + inputSearch.slice(1);
         return (
           game.title.toLowerCase().includes(searchLower) ||
-          game.description.toLowerCase().includes(searchLower) ||
-          game.genres.some((genre) => genre.toLowerCase().includes(searchLower))
+          game.publisher.toLowerCase().includes(searchLower) ||
+          game.tags.some((tag) => tag.includes(searchCapizalize))
         );
       },
     };
@@ -392,16 +387,21 @@ const GamesPage = () => {
     });
   };
 
-  const checkSalesHistoryDate = () => {
+  const checkSalesHistoryDate = useCallback(() => {
     games.forEach((game) => {
-      game.salesHistory.map((sale) => {
-        return salesHistory.push({
+      game.salesHistory.forEach((sale) => {
+        salesHistory.push({
           saleDate: sale.date,
           gameTitle: game.title,
         });
       });
     });
-  };
+  }, [games, salesHistory]);
+
+  // Check sales history date whenever the games state changes
+  useEffect(() => {
+    checkSalesHistoryDate();
+  }, [games, checkSalesHistoryDate]);
 
   function wasPurchasedInJune(salesHistory) {
     return salesHistory.some((sale) => {

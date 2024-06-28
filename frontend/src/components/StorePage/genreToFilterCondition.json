@@ -21,8 +21,8 @@
   "Echtzeit": "REAL_TIME",
   "Erzählung": "STORY_RICH",
   "Überleben": "ÜBERLEBEN",
-  "Neu-Erschienen": "NEW_ARRIVALS",
+  "Neu-Erschienen": "NEW_ARRIVALS_GENRE",
   "Beliebte-Titel": "POPULAR_TITLES",
-  "Angebote": "DISCOUNTED",
+  "Angebote": "DISCOUNTED_GENRE",
   "Management": "MANAGEMENT"
 }
