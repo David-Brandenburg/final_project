@@ -175,6 +175,9 @@ nav {
 				left: -200px;
 				border-radius: 3px;
 				width: 1200px;
+				height: fit-content;
+				max-height: calc((6 * 75px) + 47.5px);
+				overflow-y: scroll;
 				background: var(--background);
 				padding: 10px 20px;
 				display: flex;
@@ -182,6 +185,7 @@ nav {
 				gap: 2px;
 				box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
 				border: 1px solid var(--mainBorder);
+				
 
 				.game-wrapper{
 					display: flex;
@@ -236,7 +240,7 @@ nav {
 							display: flex;
 							color: color-mix(in lab, var(--mainColor), var(--mainBorder) 60%);
 							width: 100px;
-							gap: 3px;
+							gap: 5px;
 							font-size: 12px;
 						}
 					}
@@ -274,6 +278,33 @@ nav {
 					}
 				}
 
+			}
+			.filtered-games-modal {
+				--sb-thumb-color: #faa968;
+				--sb-track-color: color-mix(in lab, var(--background), var(--mainColor) 20%);
+				--sb-size: 14px;
+			}
+			
+			.filtered-games-modal::-webkit-scrollbar {
+				width: var(--sb-size)
+			}
+			
+			.filtered-games-modal::-webkit-scrollbar-track {
+				background: var(--sb-track-color);
+				border-radius: 2px;
+			}
+			
+			.filtered-games-modal::-webkit-scrollbar-thumb {
+				background: var(--sb-thumb-color);
+				border-radius: 2px;
+				
+			}
+			
+			@supports not selector(::-webkit-scrollbar) {
+				.filtered-games-modal {
+					scrollbar-color: var(--sb-thumb-color)
+														var(--sb-track-color);
+				}
 			}
     }
 

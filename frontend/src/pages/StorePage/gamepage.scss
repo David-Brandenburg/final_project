@@ -31,7 +31,7 @@
 			width: 400px;
 			height: fit-content;
 			right: 200px;
-			bottom: -137px;
+			bottom: -132px;
 			padding: 20px;
 			transform: translate(25%);
 			box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
@@ -46,13 +46,14 @@
 					position: absolute;
 					left: -20px;
 					top: 0px;
-					background-color: $accentColorDarkOrange;
+					background-color: $accentColorOrange;
 					width: 100px;
 					height: 50px;
 					border-radius: 0 5px 5px 0;
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
 					.discount-tag{
 						font-size: 28px;
 						font-weight: bold;
@@ -68,26 +69,38 @@
 					}
 				}
 				hr{
+					margin-top: 5px;
 					border-bottom: 1px solid var(--mainColor);
 				}
 			}
-			.btn {
+			.btnCart, .btnBuy {
 				display: flex;
-				background-color: $accentColorLightBlue;
 				color: var(--mainColor);
-				padding: 0.5rem 1rem;
-				border-radius: 0.5rem;
+				padding: 10px 20px;
+				border-radius: 5px;
+				box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
 				font-size: 1.5rem;
 				font-weight: 700;
 				cursor: pointer;
-				// width: max-content;
 				justify-content: center;
+
 				p {
 					margin-left: 0.5rem;
 				}
 				&:hover {
-					background-color: $accentColorDarkOrange;
 					color: var(--mainBorder);
+				}
+			}
+			.btnCart{
+				background: $accentColorLightBlue;
+				&:hover{
+					background: color-mix(in lab, $accentColorLightBlue, #fff 30%);
+				}
+			}
+			.btnBuy{
+				background: $accentColorDarkOrange;
+				&:hover{
+					background: color-mix(in lab, $accentColorDarkOrange, #fff 30%);
 				}
 			}
 		}
@@ -253,18 +266,29 @@
 				}
 				.subHeader{
 					font-weight: bold;
-					font-size: 20px;
+					font-size: 22px;
 					margin: 5px 0;
 				}
 				.paragraphHeader{
+					font-size: 18px;
 					font-weight: bold;
 					margin-top: 15px;
 				}
 				.paragraph{
 					margin: 10px 0;
+					text-align: justify;
+				}
+				.boxNote-wrapper{
+					background: var(--main);
+					box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+					line-height: 1.1lh;
+					padding: 20px;
+					// font-weight: bold;
+					font-size: 15px;
 				}
 				.footNote{
 					color: #797979;
+					font-size: 12px;
 				}
 			}
 		}
