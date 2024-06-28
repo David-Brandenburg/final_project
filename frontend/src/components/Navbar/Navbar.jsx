@@ -11,14 +11,16 @@ import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
 import defaultPic from "../../assets/defaultProfilepic.webp";
-import "./navbar.scss";
 import slugify from "slugify";
 import AddToCartBtn from "../AddToCartBtn.jsx";
+import pixelPlaza from "../../assets/pixelPlaza.webp";
+import "./navbar.scss";
 
 const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"));
 	const [prefetchedGames, setPrefetchedGames] = useState(null);
-	const [filteredGames, setFilteredGames] = useState(null);
+	const [filteredGames, setFilteredGames] = useState([]);
+	const [filterError, setFilterError] = useState(false);
   const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal, adminEditModal, setAdminEditModal } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
@@ -328,19 +330,30 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 		}
 
 		const filterGames = () => {
-			const filteredGames = prefetchedGames.filter(game => 
+			const filterGames = prefetchedGames.filter(game => 
 				game.title.toLowerCase().includes(value) ||
 				game.publisher.toLowerCase().includes(value) ||
 				game.tags.some(tag => tag.toLowerCase().includes(value))
 			);
-	
-			setFilteredGames(filteredGames);
+			setFilteredGames(filterGames);
 		};
 	
 		filterGames();
 	};
 
-	useEffect(() => {console.log(filteredGames)}, [filteredGames])
+	useEffect(() => {
+		if (filteredGames) {
+			if (filteredGames.length === 0) {
+				setFilterError(true)
+			} else {
+				setFilterError(false)
+			}
+			
+			return () => {
+				setFilterError(false)
+			}
+		}
+	}, [filteredGames, filterError])
 
   return (
     <nav>
@@ -410,8 +423,8 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 						</label>}
 						{filteredGames && (
 							<div className="filtered-games-modal">
-								{filteredGames.map(game => (
-									<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => {
+								{filteredGames.map((game, index) => (
+									<NavLink key={'filtered-game'+index} to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => {
 										e.stopPropagation();
 										setFilteredGames(null);
 										setOpenModalBlocker(false);
@@ -431,7 +444,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 											{heartfill(game.rating)}
 											<div className="platform-wrapper">
 												{game.platforms.map((platform) => (
-													<i className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'} platform`}></i>
+													<i key={platform} className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'} platform`}></i>
 												))}
 											</div>
 										</div>
@@ -449,7 +462,25 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 										</div>
 									</NavLink>
 								))}
-							</div>
+								{filterError &&
+									<div className="game-wrapper">
+										<div className="game-thumbnail-wrapper">
+											<img src={pixelPlaza} alt="" />
+										</div>
+										<div className="game-info-wrapper">
+											<div className="game-title-container">
+												<p className="game-title" style={{fontWeight: 'bold'}}>Error 404</p>
+												<small className="game-info">{language === 'en' ? "Couldn't find game, publisher or tag!" : "Konnte Spiel, Publisher oder Tag nicht finden!"}</small>
+											</div>
+										</div>
+										<div className="rating-platform-wrapper">
+											
+										</div>
+										<div className="price-tag-wrapper" style={{justifyContent: "flex-end"}}>
+											<p className="discount-tag" style={{background: '#f85525', width: '40px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px'}}><i className="bi bi-exclamation-triangle"></i></p>
+										</div>
+									</div>}
+							</div> 
 						)}
           </div>
         )}
