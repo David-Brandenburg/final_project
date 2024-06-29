@@ -18,6 +18,7 @@ import AdminEditModal from "./components/AdminModals/AdminEditModal.jsx";
 import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
 import GamePageImageModal from "./components/GamePageModals/GamePageImageModal.jsx";
 import GamePageTrailerModal from "./components/GamePageModals/GamePageTrailerModal.jsx";
+import EmailValidPage from "./pages/EmailValidPage/EmailValidPage.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -110,6 +111,7 @@ function App() {
             path="/checkout"
             element={isLoggedIn ? <CheckoutPage /> : <ErrorPage />}
           />
+          <Route path="/email-verify" element={<EmailValidPage />} />
         </Routes>
       </main>
       <Footer />

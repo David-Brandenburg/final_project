@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import "./Login.scss";
@@ -6,6 +6,7 @@ import { ModalContext } from "../../contexts/ModalContext.js";
 import { useLanguage } from "../../contexts/LanguageContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
 import { GoogleLogin } from "@react-oauth/google";
+import emailjs from "@emailjs/browser";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -17,6 +18,9 @@ const Login = () => {
   const { language } = useLanguage();
   const { setOpenModalBlocker } = useContext(ModalContext);
   const { setLoggedInUser } = useContext(LogginContext);
+  const emailRef = useRef();
+  const nameRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -53,13 +57,23 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const serviceID = "service_0yvloq6";
+    const templateID = "template_4s591t7";
 
     if (emailError || passwordError) {
       toast.warn("Please fix the errors in the form.");
       return;
     }
 
+    if (!nameRef.current.value || !emailRef.current.value) {
+      toast.warn("Please fill in all fields.");
+      setLoading(false);
+      return;
+    }
+
     try {
+      setLoading(true);
+
       const formData = { benutzername: username, email, password };
 
       const resp = await fetch("http://localhost:3001/accounts/create", {
@@ -75,10 +89,26 @@ const Login = () => {
         toast.warn(data.message);
       } else {
         const data = await resp.json();
+        console.log(data);
         toast.success(data.message);
+        emailjs.init(data.publicID);
+
+        // Ensure confirmation token is available
+        if (!data.confirmationToken) {
+          throw new Error("Confirmation token not received.");
+        }
+
+        await emailjs.send(serviceID, templateID, {
+          name: nameRef.current.value,
+          recipient: emailRef.current.value,
+          confirmation_link: `http://localhost:3001/accounts/confirm/${data.confirmationToken}`,
+        });
+        setShowLogin(true);
       }
     } catch (error) {
       console.error("Error appending data to server", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,6 +136,10 @@ const Login = () => {
         if (!data.token) {
           console.log("Token not found");
         } else {
+          if (!data.user.isEmailVerified) {
+            toast.error("Please verify your email address!");
+            return;
+          }
           setLoggedInUser({
             benutzername: data.user.benutzername,
             email: data.user.email,
@@ -154,6 +188,7 @@ const Login = () => {
               type="text"
               name="benutzername"
               value={username}
+              ref={nameRef}
               className="login-input"
               placeholder={language === "en" ? "Username" : "Benutzername"}
               autoComplete="off"
@@ -174,6 +209,7 @@ const Login = () => {
               type="text"
               name="email"
               value={email}
+              ref={emailRef}
               className={
                 "login-input" + (emailError ? " invalid-email" : " valid-email")
               }
@@ -215,7 +251,7 @@ const Login = () => {
           </div>
 
           <div className="login-btn-wrapper">
-            <button className="login-button" type="submit">
+            <button className="login-button" disabled={loading} type="submit">
               {language === "en" ? "Sign Up!" : "Registrieren"}
             </button>
             <button className="login-button" onClick={() => setShowLogin(true)}>
