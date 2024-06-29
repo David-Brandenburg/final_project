@@ -6,6 +6,9 @@ import { v2 as cloudinary } from "cloudinary";
 
 const saltRounds = 5;
 const JWT_SECRET = process.env.JWT_SECRET;
+const serviceID = process.env.EMAILJS_SERVICE_ID;
+const templateID = process.env.EMAILJS_TEMPLATE_ID;
+const publicID = process.env.EMAILJS_PUBLIC_KEY;
 
 async function createUser(req, res) {
   try {
@@ -43,6 +46,9 @@ async function createUser(req, res) {
       message: "Successfully created! Please check your email for verification",
       ok: true,
       confirmationToken: confirmationToken,
+      serviceID: serviceID,
+      templateID: templateID,
+      publicID: publicID,
     });
   } catch (error) {
     res.status(500).send({

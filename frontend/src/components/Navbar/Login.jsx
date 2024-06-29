@@ -22,8 +22,6 @@ const Login = () => {
   const nameRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => emailjs.init("WyG57K67ED0AsAISI"), []);
-
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
     return re.test(email);
@@ -93,6 +91,7 @@ const Login = () => {
         const data = await resp.json();
         console.log(data);
         toast.success(data.message);
+        emailjs.init(data.publicID);
 
         // Ensure confirmation token is available
         if (!data.confirmationToken) {
