@@ -38,6 +38,7 @@ app.use("/accounts", userRoutes);
 app.use("/games", gameRoutes);
 
 app.use("/api", apiRoutes);
+
 //
 // MVC Routes end
 

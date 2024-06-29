@@ -118,7 +118,7 @@ const CartModal = () => {
               : "Finde tolle Spiele und Angebote"}
           </h3>
           <NavLink
-            to="/games"
+            to="/games?=genres=beliebte-titel"
             onClick={handleBeliebteTitel}
             className="btn"
             title="navlink">

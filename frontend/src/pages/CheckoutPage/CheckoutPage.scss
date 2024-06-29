@@ -3,6 +3,9 @@
 .checkout-wrapper {
   display: flex;
   color: var(--mainColor);
+  input[type="checkbox"] {
+    display: none;
+  }
   .checkout-left-wrapper {
     display: flex;
     flex-direction: column;
@@ -59,10 +62,10 @@
             }
           }
         }
-				img{
-					width: 196px;
-					aspect-ratio: 16 / 9;
-				}
+        img {
+          width: 196px;
+          aspect-ratio: 16 / 9;
+        }
       }
     }
     .cart-info-totalprice {

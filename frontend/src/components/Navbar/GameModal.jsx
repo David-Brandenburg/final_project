@@ -99,7 +99,12 @@ const GameModal = () => {
   };
 
   return (
-    <div className="games-modal" onClick={(e) => {e.stopPropagation(); e.preventDefault()}}>
+    <div
+      className="games-modal"
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}>
       <div className="games-genre-list">
         <p className="games-modal-link">
           {language === "en" ? "New releases" : "Neu erschienen"}
@@ -130,7 +135,7 @@ const GameModal = () => {
           <GameModalCardContainer genre={genre} />
           <div className="">
             <NavLink
-              to={`/games?=genres=${genre.toLowerCase()}`}
+              to={`/games?=genres=${genre}`}
               className="genre-link"
               onClick={(e) => {
                 setOpenGameModal(false);
