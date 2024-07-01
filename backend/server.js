@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 
 var whitelist = [
-  "http://localhost:5173",
+  "http://localhost:3000",
   "https://netlify_frontend_app.netlify.app",
 ];
 var corsOptions = { origin: whitelist, credentials: true };
