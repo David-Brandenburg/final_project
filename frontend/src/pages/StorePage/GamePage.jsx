@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
@@ -416,6 +416,13 @@ const GamePage = () => {
                         </video>
                       );
                     }
+										if (key === "bannerLink") {
+											return (
+												<Link className="bannerLink" key={'bannerLink'+index} to={Object.values(item)[0].link} rel="noopener norefferer" target="_blank">
+													<img src={Object.values(item)[0].banner} alt="" />
+												</Link>
+											)
+										}
                     if (key === "subHeaderDE" || key === "subHeaderEN") {
                       return (
                         <p className="subHeader" key={"subHeader" + index}>
@@ -509,10 +516,9 @@ const GamePage = () => {
 										if (key === 'boxNoteDE' || key === 'boxNoteEN') {
 											return (
 												<div key={"boxNote" + index} className="boxNote-wrapper">
-													<p key={"boxNoteParagraph" + index} className="boxNote">
-                          {language === "en"
+													<p key={"boxNoteParagraph" + index} className="boxNote" dangerouslySetInnerHTML={{__html: language === "en"
                             ? Object.values(item)[1]
-                            : Object.values(item)[0]}
+                            : Object.values(item)[0]}}>
 													</p>
 												</div>
 											)
