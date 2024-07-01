@@ -47,6 +47,8 @@ const AdminTable = () => {
 					{data && Object.keys(data[0])
 						.filter((key) =>
 							key !== 'hashpw' &&
+							key !== 'confirmationToken' &&
+							key !== 'createAt' &&
 							key !== 'profilePic' &&
 							key !== 'thumbnail' &&
 							key !== 'pageThumbnail' &&
@@ -70,14 +72,26 @@ const AdminTable = () => {
 							key !== 'earlyAccess' &&
 							key !== 'releaseDate' &&
 							key !== 'trailer' &&
+							key !== 'usk' &&
 							key !== 'trailerThumbnails' &&
 							key !== '__v' &&
 							key !== 'description'
 						)
-						.map((key) => (
-							<th key={key}>{key}</th>
-						))}
-						<th>Edit / Delete</th>
+						.map((key) => 
+							{
+								let displayName = key;
+								if (key === 'isEmailVerified') {
+									displayName = <i title={'Email verifiziert?'} className="bi bi-envelope-check"></i>
+								}
+
+								if (key === 'isAdmin') {
+									displayName = <i title={'User ist Admin?'} className="bi bi-person-wheelchair"></i>
+								}
+								
+								return (<th key={key}>{displayName}</th>)
+							}
+						)}
+						<th>Edit | Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -86,6 +100,8 @@ const AdminTable = () => {
 							{Object.entries(item)
 								.filter(([key]) =>
 									key !== 'hashpw' &&
+									key !== 'confirmationToken' &&
+									key !== 'createAt' &&
 									key !== 'profilePic' &&
 									key !== 'thumbnail' &&
 									key !== 'pageThumbnail' &&
@@ -109,6 +125,7 @@ const AdminTable = () => {
 									key !== 'earlyAccess' &&
 									key !== 'releaseDate' &&
 									key !== 'trailer' &&
+									key !== 'usk' &&
 									key !== 'trailerThumbnails' &&
 									key !== '__v' &&
 									key !== 'description'
@@ -132,8 +149,8 @@ const AdminTable = () => {
 																	? '60px'
 																	: key === 'publisher'
 																	? '250px'
-																	: key === 'isAdmin'
-																	? '70px'
+																	: key === 'isAdmin' || key === 'isEmailVerified'
+																	? '40px'
 																	: key === 'vorname'
 																	? '100px'
 																	: key === 'nachname'

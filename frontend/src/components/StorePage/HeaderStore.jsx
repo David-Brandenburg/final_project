@@ -1,5 +1,4 @@
-import React from "react";
-import { useLanguage } from "../../contexts/LanguageContext";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
 const HeaderStore = ({ sortedGames, inputSearch, handleSearch }) => {
   const { language } = useLanguage();
