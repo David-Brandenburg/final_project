@@ -10,43 +10,43 @@ const GameModal = () => {
   const [genre, setGenre] = useState("");
   const { language } = useLanguage();
   const messages = {
-    "beliebte-titel": {
+    "Beliebte-Titel": {
       en: "Browse all bestsellers",
       de: "Zu allen beliebten Titeln",
     },
-    "neu-erschienen": {
+    "Neu-Erschienen": {
       en: "Browse all new releases",
       de: "Zu allen Neuerscheinungen",
     },
-    angebote: {
+    "Angebote": {
       en: "Browse all on sale now",
       de: "Zu allen Angeboten",
     },
-    abenteuer: {
+    "Abenteuer": {
       en: "Browse all adventure games",
       de: "Zu allen Abenteuerspielen",
     },
-    rollenspiel: {
+    "Rollenspiel": {
       en: "Browse all RPGs",
       de: "Zu allen Rollenspielen",
     },
-    strategie: {
+    "Strategie": {
       en: "Browse all strategy games",
       de: "Zu allen Strategiespielen",
     },
-    action: {
+    "Action": {
       en: "Browse all action games",
       de: "Zu allen Actionspielen",
     },
-    shooter: {
+    "Shooter": {
       en: "Browse all shooter games",
       de: "Zu allen Shootern",
     },
-    fantasy: {
+    "Fantasy": {
       en: "Browse all fantasy games",
       de: "Zu allen Fantasy-Spielen",
     },
-    "science-fiction": {
+    "Science-Fiction": {
       en: "Browse all science-fiction games",
       de: "Zu allen Science-Fiction-Spielen",
     },
@@ -58,11 +58,11 @@ const GameModal = () => {
 
     const handleMouseEnter = (e) => {
       const currentGenre = e.target;
-      if (currentGenre.innerText === "New releases") {
+      if (currentGenre.innerText === "New Releases") {
         setGenre("Neu-Erschienen");
       } else if (currentGenre.innerText === "Bestsellers") {
         setGenre("Beliebte-Titel");
-      } else if (currentGenre.innerText === "On sale now") {
+      } else if (currentGenre.innerText === "On Sale Now") {
         setGenre("Angebote");
       } else if (currentGenre.innerText === "Adventure") {
         setGenre("Abenteuer");

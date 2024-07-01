@@ -239,7 +239,7 @@
 			.description-content{
 				display: flex;
 				flex-direction: column;
-				> *:not(.subHeader, .paragraphHeader) {
+				> *:not(.subHeader, .paragraphHeader, .bannerLink) {
 					margin: 20px 0;
 				}
 				.gamepage-list{
@@ -290,6 +290,14 @@
 				.footNote{
 					color: #797979;
 					font-size: 12px;
+				}
+				.bannerLink{
+					width: 100%;
+					display: flex;
+					margin: 5px 0;
+					img{
+						width: 100%;
+					}
 				}
 			}
 		}
