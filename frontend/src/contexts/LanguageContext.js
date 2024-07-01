@@ -1,18 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 
 // Erstelle einen Context
-const LanguageContext = createContext();
+export const LanguageContext = createContext();
 
 // Erstelle einen Provider für den Context
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState("de"); // Standardmäßig auf Deutsch
+  const [inputSearch, setInputSearch] = useState(""); // Stores the input for search
 
   const toggleLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === "en" ? "de" : "en")); // Wechselt zwischen Englisch ('en') und Deutsch ('de')
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, inputSearch, setInputSearch }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -156,7 +156,6 @@ const GamePage = () => {
         const mainGameData = await fetchMainGame(gameData.mainGame, signal);
         if (mainGameData) {
           setMainGame(mainGameData);
-					console.log(mainGameData)
         }
       };
 

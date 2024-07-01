@@ -4,16 +4,16 @@ import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
 import { LogginContext } from "../../contexts/LogginContext.js";
+import { LanguageContext, useLanguage } from "../../contexts/LanguageContext.js";
 import { toast } from "react-toastify";
-import { useLanguage } from "../../contexts/LanguageContext.js";
-import Logo from "../../assets/pixelPlaza.webp";
 import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
+import Logo from "../../assets/pixelPlaza.webp";
 import defaultPic from "../../assets/defaultProfilepic.webp";
+import pixelPlaza from "../../assets/pixelPlaza.webp";
 import slugify from "slugify";
 import AddToCartBtn from "../AddToCartBtn.jsx";
-import pixelPlaza from "../../assets/pixelPlaza.webp";
 import "./navbar.scss";
 
 const Navbar = ({ profilePicChange, setProfilePicChange }) => {
@@ -26,6 +26,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
   const { cart } = useContext(AddtoCardContext);
   const { loggedInUser, isLoggedIn, setLoggedInUser, setIsAdmin } = useContext(LogginContext);
   const { language } = useLanguage();
+	const { setInputSearch } = useContext(LanguageContext)
 	const gamesLinkRef = useRef(null)
   const cIL = cart.length;
 
@@ -407,16 +408,18 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
             <label htmlFor="search">
               <i className="bi bi-search"></i>
             </label>
-            <input
-              type="text"
-              className="nav-search"
-              name="search"
-              id="search"
-              autoFocus
-              onClick={(e) => e.stopPropagation()}
-							onChange={handleFilter}
-							placeholder="Search for Games, Tags or Publisher"
-            />
+            <form action="/games" onSubmit={((e) => setInputSearch(e.target.value))} style={{width: '1000px'}}>
+							<input
+								type="text"
+								className="nav-search"
+								name="search"
+								id="search"
+								autoFocus
+								onClick={(e) => e.stopPropagation()}
+								onChange={((e) => {handleFilter(e); setInputSearch(e.target.value)})}
+								placeholder="Search for Games, Tags or Publisher"
+							/>
+            </form>
 						{filteredGames && <label className="count-games" htmlFor="search">
 							<p>{filteredGames.length}</p>
 							<p>{language === 'en' ? 'Games' : 'Spiele'}</p>
