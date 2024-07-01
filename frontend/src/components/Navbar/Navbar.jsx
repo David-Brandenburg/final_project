@@ -4,26 +4,29 @@ import { ScreenModeContext } from "../../contexts/ScreenModeContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import { AddtoCardContext } from "../../contexts/AddtoCardContext.js";
 import { LogginContext } from "../../contexts/LogginContext.js";
+import { LanguageContext, useLanguage } from "../../contexts/LanguageContext.js";
 import { toast } from "react-toastify";
-import { useLanguage } from "../../contexts/LanguageContext.js";
-import Logo from "../../assets/pixelPlaza.webp";
 import Login from "../Navbar/Login.jsx";
 import GameModal from "./GameModal.jsx";
 import CartModal from "./CartModal.jsx";
+import Logo from "../../assets/pixelPlaza.webp";
 import defaultPic from "../../assets/defaultProfilepic.webp";
-import "./navbar.scss";
+import pixelPlaza from "../../assets/pixelPlaza.webp";
 import slugify from "slugify";
 import AddToCartBtn from "../AddToCartBtn.jsx";
+import "./navbar.scss";
 
 const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 	const [navAvatar, setNavAvatar] = useState(localStorage.getItem("profilePic"));
 	const [prefetchedGames, setPrefetchedGames] = useState(null);
-	const [filteredGames, setFilteredGames] = useState(null);
+	const [filteredGames, setFilteredGames] = useState([]);
+	const [filterError, setFilterError] = useState(false);
   const { openModalBlocker, setOpenModalBlocker, openSearch, setOpenSearch, openCart, setOpenCart, openLoginModal, setOpenLoginModal, openGameModal, setOpenGameModal, adminEditModal, setAdminEditModal } = useContext(ModalContext);
   const { screenMode, setScreenMode } = useContext(ScreenModeContext);
   const { cart } = useContext(AddtoCardContext);
   const { loggedInUser, isLoggedIn, setLoggedInUser, setIsAdmin } = useContext(LogginContext);
   const { language } = useLanguage();
+	const { setInputSearch } = useContext(LanguageContext)
 	const gamesLinkRef = useRef(null)
   const cIL = cart.length;
 
@@ -328,19 +331,30 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 		}
 
 		const filterGames = () => {
-			const filteredGames = prefetchedGames.filter(game => 
+			const filterGames = prefetchedGames.filter(game => 
 				game.title.toLowerCase().includes(value) ||
 				game.publisher.toLowerCase().includes(value) ||
 				game.tags.some(tag => tag.toLowerCase().includes(value))
 			);
-	
-			setFilteredGames(filteredGames);
+			setFilteredGames(filterGames);
 		};
 	
 		filterGames();
 	};
 
-	useEffect(() => {console.log(filteredGames)}, [filteredGames])
+	useEffect(() => {
+		if (filteredGames) {
+			if (filteredGames.length === 0) {
+				setFilterError(true)
+			} else {
+				setFilterError(false)
+			}
+			
+			return () => {
+				setFilterError(false)
+			}
+		}
+	}, [filteredGames, filterError])
 
   return (
     <nav>
@@ -394,24 +408,26 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
             <label htmlFor="search">
               <i className="bi bi-search"></i>
             </label>
-            <input
-              type="text"
-              className="nav-search"
-              name="search"
-              id="search"
-              autoFocus
-              onClick={(e) => e.stopPropagation()}
-							onChange={handleFilter}
-							placeholder="Search for Games, Tags or Publisher"
-            />
+            <form action="/games" onSubmit={((e) => setInputSearch(e.target.value))} style={{width: '1000px'}}>
+							<input
+								type="text"
+								className="nav-search"
+								name="search"
+								id="search"
+								autoFocus
+								onClick={(e) => e.stopPropagation()}
+								onChange={((e) => {handleFilter(e); setInputSearch(e.target.value)})}
+								placeholder="Search for Games, Tags or Publisher"
+							/>
+            </form>
 						{filteredGames && <label className="count-games" htmlFor="search">
 							<p>{filteredGames.length}</p>
 							<p>{language === 'en' ? 'Games' : 'Spiele'}</p>
 						</label>}
 						{filteredGames && (
 							<div className="filtered-games-modal">
-								{filteredGames.map(game => (
-									<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => {
+								{filteredGames.map((game, index) => (
+									<NavLink key={'filtered-game'+index} to={`/games/${slugify(game.title, "_")}`} className="game-wrapper" onClick={((e) => {
 										e.stopPropagation();
 										setFilteredGames(null);
 										setOpenModalBlocker(false);
@@ -431,7 +447,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 											{heartfill(game.rating)}
 											<div className="platform-wrapper">
 												{game.platforms.map((platform) => (
-													<i className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'} platform`}></i>
+													<i key={platform} className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'} platform`}></i>
 												))}
 											</div>
 										</div>
@@ -449,7 +465,25 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
 										</div>
 									</NavLink>
 								))}
-							</div>
+								{filterError &&
+									<div className="game-wrapper">
+										<div className="game-thumbnail-wrapper">
+											<img src={pixelPlaza} alt="" />
+										</div>
+										<div className="game-info-wrapper">
+											<div className="game-title-container">
+												<p className="game-title" style={{fontWeight: 'bold'}}>Error 404</p>
+												<small className="game-info">{language === 'en' ? "Couldn't find game, publisher or tag!" : "Konnte Spiel, Publisher oder Tag nicht finden!"}</small>
+											</div>
+										</div>
+										<div className="rating-platform-wrapper">
+											
+										</div>
+										<div className="price-tag-wrapper" style={{justifyContent: "flex-end"}}>
+											<p className="discount-tag" style={{background: '#f85525', width: '40px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px'}}><i className="bi bi-exclamation-triangle"></i></p>
+										</div>
+									</div>}
+							</div> 
 						)}
           </div>
         )}

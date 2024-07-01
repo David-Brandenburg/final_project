@@ -1,25 +1,27 @@
-import { useLanguage } from "../../contexts/LanguageContext";
-import HeaderStore from "../../components/StorePage/HeaderStore";
-import { useCallback, useEffect, useState } from "react";
-import "react-range-slider-input/dist/style.css";
-import "./storepage.scss";
-import FilterStore from "../../components/StorePage/FilterStore";
-import GamesStore from "../../components/StorePage/GamesStore";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { LanguageContext, useLanguage } from "../../contexts/LanguageContext.js";
+import HeaderStore from "../../components/StorePage/HeaderStore.jsx";
+import FilterStore from "../../components/StorePage/FilterStore.jsx";
+import GamesStore from "../../components/StorePage/GamesStore.jsx";
 import tagToFilterCondition from "../../components/StorePage/tagFilterCondition.json";
 import genreToFilterCondition from "../../components/StorePage/genreToFilterCondition.json";
 import platformsFilterCondition from "../../components/StorePage/platformsFilterCondition.json";
 import functionsFilterCondition from "../../components/StorePage/functionsFilterCondition.json";
 import languagesFilterCondition from "../../components/StorePage/languagesFilterCondition.json";
+import { useLocation, useNavigate } from 'react-router-dom';
+import "react-range-slider-input/dist/style.css";
+import "./storepage.scss";
 
 const GamesPage = () => {
   // Get the current language from the LanguageContext
   const { language } = useLanguage();
+	const { inputSearch, setInputSearch } = useContext(LanguageContext)
 
   // State variables to manage various aspects of the games page
   const [games, setGames] = useState([]); // Stores the list of games
 
   const [inputTags, setInputTags] = useState(""); // Stores the input for tag search
-  const [inputSearch, setInputSearch] = useState(""); // Stores the input for search
+  // const [inputSearch, setInputSearch] = useState(""); // Stores the input for search
   const [minPrice, setMinPrice] = useState("0"); // Minimum price filter
   const [maxPrice, setMaxPrice] = useState("120"); // Maximum price filter
 
@@ -33,6 +35,9 @@ const GamesPage = () => {
   const [salesHistory] = useState([]); // Stores the sales history
   const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
   // Toggles the dropdown menu
+
+	const location = useLocation();
+  const navigate = useNavigate();
 
   const [path] = useState(window.location.href);
 
@@ -112,9 +117,24 @@ const GamesPage = () => {
     ]);
   }, [language]);
 
-  const handleSearch = (e) => {
-    setInputSearch(e.target.value);
-    setFilterCondition("SEARCH");
+	useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const searchValue = queryParams.get('search') || '';
+    setInputSearch(searchValue);
+    if (searchValue) {
+      setFilterCondition('SEARCH');
+    }
+  }, [location.search]);
+
+	const handleSearch = (e) => {
+    const searchValue = e.target.value;
+    setInputSearch(searchValue);
+    setFilterCondition('SEARCH');
+
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set('search', searchValue);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
 
   const filterGames = (games, filterCondition) => {
@@ -476,6 +496,7 @@ const GamesPage = () => {
         sortedGames={sortedGames}
         inputSearch={inputSearch}
         handleSearch={handleSearch}
+				path={path}
       />
       <div className="gamespage-main-wrapper">
         <FilterStore

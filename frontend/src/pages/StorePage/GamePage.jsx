@@ -7,14 +7,20 @@ import { useLanguage } from "../../contexts/LanguageContext.js";
 import { ModalContext } from "../../contexts/ModalContext.js";
 import { format } from "date-fns";
 import AddToCartBtn from "../../components/AddToCartBtn.jsx";
+import BuyNowBtn from "../../components/BuyNowBtn.jsx";
 import slugify from "slugify";
+import LanguagesListTag from "../../components/TrasnlationLanguages/LanguagesListTag.jsx";
+import LanguagesListGenres from "../../components/TrasnlationLanguages/LanguagesListgGenres.jsx";
+import usk0 from "../../assets/usk/USK_0.svg.png"
+import usk6 from "../../assets/usk/USK_6.svg.png"
+import usk12 from "../../assets/usk/USK_12.svg.png"
+import usk16 from "../../assets/usk/USK_16.svg.png"
+import usk18 from "../../assets/usk/USK_18.svg.png"
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./gamepage.scss";
-import LanguagesListTag from "../../components/TrasnlationLanguages/LanguagesListTag.jsx";
-import LanguagesListGenres from "../../components/TrasnlationLanguages/LanguagesListgGenres.jsx";
 
 const GamePage = () => {
   const [gameData, setGameData] = useState(null);
@@ -150,7 +156,6 @@ const GamePage = () => {
         const mainGameData = await fetchMainGame(gameData.mainGame, signal);
         if (mainGameData) {
           setMainGame(mainGameData);
-					console.log(mainGameData)
         }
       };
 
@@ -250,15 +255,15 @@ const GamePage = () => {
                       textDecoration:
                         gameData.discount > 0 ? "line-through" : "unset",
                     }}>
-                    € {gameData.price}
+                    € {(gameData.price).toFixed(2)}
                   </p>
                   {gameData.discount > 0 && (
-                    <p className="price-tag-discount">€ {Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100}</p>
+                    <p className="price-tag-discount">€ {(Math.floor((gameData.price - (gameData.price * gameData.discount) / 100) * 100) / 100).toFixed(2)}</p>
                   )}
                 </div>
                 <hr />
                 <AddToCartBtn
-                  className={"btn"}
+                  className={"btnCart"}
                   game={gameData}
                   text={
                     <>
@@ -269,8 +274,8 @@ const GamePage = () => {
                     </>
                   }
                 />
-                <AddToCartBtn
-                  className={"btn"}
+                <BuyNowBtn
+                  className={"btnBuy"}
                   game={gameData}
                   text={
                     <>
@@ -498,7 +503,18 @@ const GamePage = () => {
 										}
 										if (key === 'sectionHR') {
 											return (
-												<hr />
+												<hr key={'sectionHr'+index} />
+											)
+										}
+										if (key === 'boxNoteDE' || key === 'boxNoteEN') {
+											return (
+												<div key={"boxNote" + index} className="boxNote-wrapper">
+													<p key={"boxNoteParagraph" + index} className="boxNote">
+                          {language === "en"
+                            ? Object.values(item)[1]
+                            : Object.values(item)[0]}
+													</p>
+												</div>
 											)
 										}
 										if (key === 'footNote') {
@@ -568,7 +584,7 @@ const GamePage = () => {
 										{gameData.genres.slice(0,3).map((genre, index) => (
 											<React.Fragment key={'genre' + index}>
 												<NavLink className='game-details-link' to={`/games?=genres=${slugify(genre, "_")}`} style={{textUnderlineOffset: '4px'}}>{genre}</NavLink>
-												{index < gameData.genres.slice(0,3).length - 1 && <span className="space-holder2">-</span>}
+												{index < gameData.genres.length - 1 && <span className="space-holder2">-</span>}
 											</React.Fragment>
 										))}
 									</div>
@@ -579,7 +595,7 @@ const GamePage = () => {
 										{!openTags && gameData.tags.slice(0, 5).map((tag, index) => (
 											<React.Fragment key={'tag' + index}>
 												<NavLink className='game-details-link' to={`/games?=tags=${slugify(tag, "_")}`} style={{textUnderlineOffset: '4px'}}>{tag}</NavLink>
-												{index < gameData.tags.slice(0, 5).length - 0 && <span className="space-holder">,</span>}
+												{index < gameData.tags.length - 1 && <span className="space-holder">,</span>}
 											</React.Fragment>
 										))}
 										{openTags && gameData.tags.map((tag, index) => (
@@ -634,6 +650,15 @@ const GamePage = () => {
 								<div className="game-details-content">
 									<p style={{textTransform: 'none', textDecoration: 'underline', cursor: 'pointer', textUnderlineOffset: '4px'}} onClick={(() => toast.info(language === 'en' ? 'Under construction..' : 'Arbeiten im Gange..'))}>{language === 'en' ? 'Forum discussion' : 'Forum zum Spiel'}</p>
 								</div> 
+							</div>
+							<div className="game-details-row">
+								<p className="game-details-tag">{language === 'en' ? 'Rating' : 'Bewertung'}:</p>
+								<div className="game-details-content" style={{justifyContent: 'space-between'}}>
+									<p style={{fontSize: '14px', width: '70%', textTransform: 'none'}}>
+										{language === 'en' ? 'USK Rating' : 'USK-Einstufung'}: {gameData.usk} <span>{gameData.usk === 18 ? '(Not approved for young persons aged under 18)' : gameData.usk === 16 ? '(Approved for children aged 16 and above)' : gameData.usk === 12 ? '(Approved for children aged 12 and above)' : gameData.usk === 6 ? '(Approved for children aged 6 and above)' : '(Approved for everyone)'}</span>
+									</p>
+									<img src={gameData.usk === 18 ? usk18 : gameData.usk === 16 ? usk16 : gameData.usk === 12 ? usk12 : gameData.usk === 6 ? usk6 : usk0} alt="" style={{width: '40px'}}/>
+								</div>
 							</div>
 							<hr />
 							<div className="game-details-row">
@@ -834,8 +859,8 @@ const GamePage = () => {
 							{(recommendations1 && recommendations2) &&
 								<>
 									<div className="recommendations1-container">
-										{recommendations1.map((game) => (
-											<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-card">
+										{recommendations1.map((game, index) => (
+											<NavLink key={'gamelink'+index} to={`/games/${slugify(game.title, "_")}`} className="game-card">
 												<div className="game-card-thumbnail-wrapper">
 													<img src={game.thumbnail} alt="" />
 												</div>
@@ -856,8 +881,8 @@ const GamePage = () => {
 										))}
 									</div>
 									<div className="recommendations2-container">
-										{recommendations2.map((game) => (
-											<NavLink to={`/games/${slugify(game.title, "_")}`} className="game-card">
+										{recommendations2.map((game, index) => (
+											<NavLink key={'gamelink2'+index} to={`/games/${slugify(game.title, "_")}`} className="game-card">
 												<div className="game-card-thumbnail-wrapper">
 													<img src={game.thumbnail} alt="" />
 												</div>
