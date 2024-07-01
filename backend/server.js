@@ -23,6 +23,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(requestLogger);
 
+var whitelist = [
+  "http://localhost:5173",
+  "https://netlify_frontend_app.netlify.app",
+];
+var corsOptions = { origin: whitelist, credentials: true };
+app.use(cors(corsOptions));
+
 mongoose
   .connect(
     `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}/${MONGO_DATABASE}?retryWrites=true&w=majority&appName=FinalProject`
