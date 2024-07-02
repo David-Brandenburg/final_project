@@ -43,12 +43,10 @@ const DynamicList = ({ genre }) => {
     <>
       <PageSubtitle
         title={
-          (genre === "Beliebte-Titel" && language === "en"
-            ? "Bestsellers"
-            : "Beliebte Titel") ||
-          (genre === "Neu-Erschienen" && language === "en"
-            ? "123"
-            : "Neu Erscheinungen")
+          (genre === "Beliebte-Titel" &&
+            (language === "en" ? "Bestsellers" : "Beliebte-Titel")) ||
+          (genre === "Neu-Erschienen" &&
+            (language === "en" ? "New releases" : "Neu-Erschienen"))
         }
         icon={
           genre === "Beliebte-Titel"
