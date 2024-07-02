@@ -7,12 +7,13 @@ import { useLanguage } from "../../contexts/LanguageContext.js";
 const GameModalCardContainer = ({ genre }) => {
   const [games, setGames] = useState(null);
   const { language } = useLanguage();
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   useEffect(() => {
     const controller = new AbortController();
     const fetchGames = async () => {
       const signal = controller.signal;
-      const url = `http://localhost:3001/games/genres/${genre}`;
+      const url = `${URL}/games/genres/${genre}`;
 
       try {
         const response = await fetch(url, { method: "GET", signal });
@@ -64,13 +65,24 @@ const GameModalCardContainer = ({ genre }) => {
               className="game-card"
               key={game.title + index}>
               <div className="game-card-thumbnail-wrapper">
-                <img src={game.thumbnail} alt="" style={{width: '196px', aspectRatio: '16 / 9'}}/>
+                <img
+                  src={game.thumbnail}
+                  alt=""
+                  style={{ width: "196px", aspectRatio: "16 / 9" }}
+                />
               </div>
               <div className="game-card-info-wrapper">
                 <div className="game-card-platforms-wrapper">
                   {game.platforms.map((platform) => (
                     <small key={platform} className="game-card-platform">
-                      <i className={`bi bi-${platform === 'ios' ? 'apple' : platform === 'linux' ? 'ubuntu' : 'windows'}`}></i>
+                      <i
+                        className={`bi bi-${
+                          platform === "ios"
+                            ? "apple"
+                            : platform === "linux"
+                            ? "ubuntu"
+                            : "windows"
+                        }`}></i>
                     </small>
                   ))}
                 </div>
@@ -93,7 +105,11 @@ const GameModalCardContainer = ({ genre }) => {
                     }`}
                     game={game}
                     text={<p>{game.price}€</p>}
-										title={language === 'en' ? 'Add to cart' : 'Zum Warenkorb hinzufügen'}
+                    title={
+                      language === "en"
+                        ? "Add to cart"
+                        : "Zum Warenkorb hinzufügen"
+                    }
                   />
                 </div>
               </div>

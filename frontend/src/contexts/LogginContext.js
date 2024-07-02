@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const LogginContext = createContext();
 
 export const LogginContextProvider = ({ children }) => {
+  const URL = process.env.REACT_APP_URL_BACKEND;
   const [loggedInUser, setLoggedInUser] = useState(() => {
     const savedUser = localStorage.getItem("loggedInUser");
     return savedUser
@@ -35,7 +36,7 @@ export const LogginContextProvider = ({ children }) => {
 
   const checkAdmin = async (e) => {
     try {
-      const url = `http://localhost:3001/api/checkAdmin/${loggedInUser.id}`;
+      const url = `${URL}/api/checkAdmin/${loggedInUser.id}`;
       const response = await fetch(url, { method: "GET" });
       if (!response.ok) {
         const data = await response.json();

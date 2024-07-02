@@ -22,6 +22,7 @@ const Login = () => {
   const emailRef = useRef();
   const nameRef = useRef();
   const [loading, setLoading] = useState(false);
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -77,7 +78,7 @@ const Login = () => {
 
       const formData = { benutzername: username, email, password };
 
-      const resp = await fetch("http://localhost:3001/accounts/create", {
+      const resp = await fetch(`${URL}/accounts/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +103,7 @@ const Login = () => {
         await emailjs.send(serviceID, templateID, {
           name: nameRef.current.value,
           recipient: emailRef.current.value,
-          confirmation_link: `http://localhost:3001/accounts/confirm/${data.confirmationToken}`,
+          confirmation_link: `${URL}/accounts/confirm/${data.confirmationToken}`,
         });
         setShowLogin(true);
       }
@@ -121,7 +122,7 @@ const Login = () => {
         password: e.target.password.value,
       };
 
-      const resp = await fetch("http://localhost:3001/accounts/login", {
+      const resp = await fetch(`${URL}/accounts/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -170,7 +171,7 @@ const Login = () => {
     console.log(userObject);
 
     // Sende das Google Token an dein Backend
-    fetch("http://localhost:3001/accounts/google", {
+    fetch(`${URL}/accounts/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

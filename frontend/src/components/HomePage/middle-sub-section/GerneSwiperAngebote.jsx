@@ -16,10 +16,11 @@ const GerneSwiperAngebote = () => {
   const [genreDiscounts, setGenreDiscounts] = useState({});
   const [genreBackgrounds, setGenreBackgrounds] = useState({});
   const { language } = useLanguage();
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const fetchGames = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/games/`);
+      const response = await fetch(`${URL}/games/`);
       const data = await response.json();
       setGames(data);
       if (response.ok) {
