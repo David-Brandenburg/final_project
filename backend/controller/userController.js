@@ -3,12 +3,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import createToken from "../middleware/createToken.js";
 import { v2 as cloudinary } from "cloudinary";
+import { OAuth2Client } from "google-auth-library";
 
 const saltRounds = 5;
 const JWT_SECRET = process.env.JWT_SECRET;
 const serviceID = process.env.EMAILJS_SERVICE_ID;
 const templateID = process.env.EMAILJS_TEMPLATE_ID;
 const publicID = process.env.EMAILJS_PUBLIC_KEY;
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 async function createUser(req, res) {
   try {
@@ -93,6 +95,43 @@ async function confirmEmail(req, res) {
       ok: false,
       error: error.message,
     });
+  }
+}
+
+async function GoogleLogin(req, res) {
+  const { token } = req.body;
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const {
+      sub,
+      email,
+      given_name: vorname,
+      family_name: nachname,
+      picture: profilePic,
+    } = ticket.getPayload();
+
+    let user = await User.findOne({ googleId: sub });
+    if (!user) {
+      user = new User({
+        googleId: sub,
+        email,
+        benutzername: email.split("@")[0], // Beispiel Benutzername
+        vorname,
+        nachname,
+        profilePic,
+        hashpw: "google-auth", // Placeholder for hashpw, as it's required
+      });
+      await user.save();
+    }
+
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(400).json({ error: "Invalid Google token" });
   }
 }
 
@@ -365,4 +404,5 @@ export {
   updateAccountInfo,
   deleteAccount,
   resetAccountProfilePic,
+  GoogleLogin,
 };

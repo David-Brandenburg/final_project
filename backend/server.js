@@ -16,8 +16,14 @@ const MONGO_HOST = process.env.MONGO_HOST;
 const MONGO_DATABASE = process.env.MONGO_DATABASE;
 
 const app = express();
-
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: ["Content-Type"],
+};
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,6 +47,14 @@ app.use("/api", apiRoutes);
 
 //
 // MVC Routes end
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type", "Authorization");
+  next(err);
+});
 
 app.listen(PORT, () => {
   console.log("Server is running on Port:", PORT);

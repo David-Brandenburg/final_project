@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import "./Login.scss";
@@ -7,6 +7,7 @@ import { useLanguage } from "../../contexts/LanguageContext.js";
 import Logo from "../../assets/pixelPlaza.webp";
 import { GoogleLogin } from "@react-oauth/google";
 import emailjs from "@emailjs/browser";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -164,6 +165,35 @@ const Login = () => {
     console.log(error);
   };
 
+  const handleGoogleLogin = (response) => {
+    const userObject = jwtDecode(response.credential);
+    console.log(userObject);
+
+    // Sende das Google Token an dein Backend
+    fetch("http://localhost:3001/accounts/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: response.credential }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        setLoggedInUser({
+          benutzername: data.benutzername,
+          email: data.email,
+          id: data._id,
+          googleId: data.googleId,
+        });
+        toast.success(data.message);
+        setOpenModalBlocker(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div className="login-modal" onClick={(e) => e.stopPropagation()}>
       {!showLogin && (
@@ -319,7 +349,12 @@ const Login = () => {
             <button className="login-button" type="submit">
               {language === "en" ? "Log In!" : "Einloggen"}
             </button>
-            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
             <hr />
             <button
               className="login-button"

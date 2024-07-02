@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema(
     confirmationToken: { type: String, default: "" },
     isEmailVerified: { type: Boolean, default: false },
     createAt: { type: Date, default: Date.now },
+    googleId: { type: String, unique: true },
   },
   { versionKey: false }
 );
