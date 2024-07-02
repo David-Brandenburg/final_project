@@ -125,6 +125,7 @@ async function GoogleLogin(req, res) {
         nachname,
         profilePic,
         hashpw: "google-auth", // Placeholder for hashpw, as it's required
+        isEmailVerified: true,
       });
       await user.save();
     }

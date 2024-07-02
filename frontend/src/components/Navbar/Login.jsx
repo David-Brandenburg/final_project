@@ -159,12 +159,6 @@ const Login = () => {
       console.error("Error appending data to server!", error);
     }
   };
-  const responseMessage = (response) => {
-    console.log(response);
-  };
-  const errorMessage = (error) => {
-    console.log(error);
-  };
 
   const handleGoogleLogin = (response) => {
     const userObject = jwtDecode(response.credential);
