@@ -26,8 +26,13 @@ export const AddtoCardContextProvider = ({ children }) => {
     setCart((prevCart) => prevCart.filter((_, i) => i !== index));
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <AddtoCardContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <AddtoCardContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
     </AddtoCardContext.Provider>
   );

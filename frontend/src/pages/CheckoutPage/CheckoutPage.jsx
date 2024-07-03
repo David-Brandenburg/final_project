@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 
 const CheckoutPage = () => {
-  const { cart, removeFromCart } = useContext(AddtoCardContext);
+  const { cart, removeFromCart, clearCart } = useContext(AddtoCardContext);
   const { language } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState("");
   const [showModal, setShowModal] = useState("");
@@ -114,6 +114,7 @@ const CheckoutPage = () => {
       } else {
         const data = await resp.json();
         toast.success(data.message);
+        clearCart();
       }
     } catch (e) {
       console.error(e);
