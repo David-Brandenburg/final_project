@@ -114,12 +114,6 @@ async function GoogleLogin(req, res) {
       picture: profilePic,
     } = ticket.getPayload();
 
-		
-		const duplicateMail = await User.findOne({ email: email })
-		if (duplicateMail) {
-			return res.status(400).send({ message: 'E-Mail already in use!', ok: false })
-		}
-
     let user = await User.findOne({ googleId: sub });
     if (!user) {
       user = new User({

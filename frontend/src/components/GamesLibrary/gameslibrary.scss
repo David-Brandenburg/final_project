@@ -1,0 +1,64 @@
+@import "../../styles/variables.scss";
+
+.profile-game-card-wrapper{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 10px;
+	.profile-game-card{
+		display: flex;
+		width: calc(50% - 5px);
+		background: var(--main);
+		.profile-game-card-thumbnail-wrapper{
+			width: 196px;
+			aspect-ratio: 16 / 9;
+			display: inline-flex;
+			img{
+				width: 196px;
+				aspect-ratio: 16 / 9;
+			}
+		}
+		.profile-game-card-info-wrapper{
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			padding: 10px;
+			color: var(--mainColor);
+			.upper-wrapper{
+				display: flex;
+				width: 100%;
+				height: 50%;
+			}
+			.rating-wrapper{
+				// width: 115px;
+				font-size: 12px;
+			}
+			.lower-wrapper{
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				height: 50%;
+				align-items: flex-end;
+				color: gray;
+			}
+		}
+		&:hover{
+			background: var(--mainBorder);
+		}
+	}
+}
+
+.profile-game-card-wrapper-empty{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	flex-direction: column;
+	h3{
+		font-size: 100px;
+		text-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+	}
+	p{
+		font-size: 30px;
+		color: gray;
+	}
+}
