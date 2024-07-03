@@ -110,25 +110,19 @@ async function GoogleLogin(req, res) {
     const {
       sub,
       email,
-			name: benutzername,
+      name: benutzername,
       picture: profilePic,
     } = ticket.getPayload();
-
-		
-		const duplicateMail = await User.findOne({ email: email })
-		if (duplicateMail) {
-			return res.status(400).send({ message: 'E-Mail already in use!', ok: false })
-		}
 
     let user = await User.findOne({ googleId: sub });
     if (!user) {
       user = new User({
         googleId: sub,
         email,
-				benutzername,
+        benutzername,
         profilePic,
         hashpw: "google-auth", // Placeholder for hashpw, as it's required
-				isEmailVerified: true
+        isEmailVerified: true,
       });
       await user.save();
     }
@@ -210,7 +204,10 @@ async function updateAccountProfilePic(req, res) {
       return res.status(404).send({ message: "Account not found!", ok: false });
     }
 
-    if (account.profilePic && !account.profilePic.includes('googleusercontent')) {
+    if (
+      account.profilePic &&
+      !account.profilePic.includes("googleusercontent")
+    ) {
       const filename = account.profilePic.split("/").pop();
       const publicId = filename.split(".").slice(0, -1).join(".");
       const destroyResult = await cloudinary.uploader.destroy(
@@ -298,12 +295,14 @@ async function updateAccountInfo(req, res) {
     const accountId = req.params.accountId;
     const { benutzername, vorname, nachname, email, isAdmin } = req.body;
 
-		if (typeof isAdmin === 'boolean') {
-		} else {
-			if (!benutzername && !vorname && !nachname && !email) {
-				return res.status(400).send({ message: "Missing required fields!", ok: false });
-			}
-		}
+    if (typeof isAdmin === "boolean") {
+    } else {
+      if (!benutzername && !vorname && !nachname && !email) {
+        return res
+          .status(400)
+          .send({ message: "Missing required fields!", ok: false });
+      }
+    }
 
     const account = await User.findById(accountId);
     if (!account) {
