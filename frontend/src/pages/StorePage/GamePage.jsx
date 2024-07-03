@@ -312,7 +312,8 @@ const GamePage = () => {
               </div>
               <hr />
               <div className="gamepage-language-wrapper">
-                {gameData.languages.slice(0, 2).map((language, index) => (
+								{gameData.languages.length < 2 && (<p>{gameData.languages[0]}</p>)}
+                {gameData.languages.length > 2 && gameData.languages.slice(0, 2).map((language, index) => (
                   <p className="language-tag" key={index}>
                     {language}
                   </p>

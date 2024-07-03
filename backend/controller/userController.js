@@ -254,7 +254,7 @@ async function updateAccountInfo(req, res) {
     const accountId = req.params.accountId;
     const { benutzername, vorname, nachname, email, isAdmin } = req.body;
 
-    if (!benutzername && !vorname && !nachname && !email) {
+    if ((!benutzername && !vorname && !nachname && !email) && !isAdmin) {
       return res
         .status(400)
         .send({ message: "Missing required fields!", ok: false });

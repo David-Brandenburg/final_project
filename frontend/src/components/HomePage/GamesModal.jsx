@@ -1,14 +1,15 @@
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import { useLanguage } from "../../contexts/LanguageContext.js";
+import AddToCartBtn from "../AddToCartBtn";
+import slugify from "slugify";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../HomePage/GamesModal.scss";
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
-import AddToCartBtn from "../AddToCartBtn";
-import { NavLink } from "react-router-dom";
-import { useLanguage } from "../../contexts/LanguageContext.js";
-import slugify from "slugify";
 
 const GamesModal = ({ game }) => {
   const { language } = useLanguage();
@@ -662,9 +663,14 @@ const GamesModal = ({ game }) => {
           </div>
         </div>
         <div className="game-modal-tags">
-          {getMessages(game.tags, language).map((message, index) => (
-            <span key={index}>{message}, </span>
-          ))}
+					<p>
+						{getMessages(game.tags, language).map((message, index) => (
+							<React.Fragment key={'tag' + index}>
+								<span style={{width: 'max-content'}} key={index}>{message}</span>
+								{index < game.tags.length - 1 && <span className="space-holder">,</span>}
+							</React.Fragment>
+						))}
+					</p>
         </div>
 
         <div className="game-modal-functions">
