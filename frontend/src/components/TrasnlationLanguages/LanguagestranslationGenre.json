@@ -3,15 +3,15 @@
     "en": "Indie",
     "de": "Indie"
   },
-  "strategie": {
+  "Strategie": {
     "en": "Strategy",
     "de": "Strategie"
   },
-  "bauen": {
+  "Bauen": {
     "en": "Building",
     "de": "Bauen"
   },
-  "egoperspektive": {
+  "Egoperspektive": {
     "en": "First-Person",
     "de": "Egoperspektive"
   },
@@ -110,10 +110,6 @@
   "Mittelalterlich": {
     "en": "Medieval",
     "de": "Mittelalterlich"
-  },
-  "Bauen": {
-    "en": "Building",
-    "de": "Bauen"
   },
   "Basenbau": {
     "en": "Base Building",
