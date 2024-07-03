@@ -25,6 +25,8 @@ const Login = () => {
   const emailRef = useRef();
   const nameRef = useRef();
 
+  const URL = process.env.REACT_APP_URL_BACKEND;
+
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
     return re.test(email);
@@ -79,7 +81,7 @@ const Login = () => {
 
       const formData = { benutzername: username, email, password };
 
-      const resp = await fetch("http://localhost:3001/accounts/create", {
+      const resp = await fetch(`${URL}/accounts/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +106,7 @@ const Login = () => {
         await emailjs.send(serviceID, templateID, {
           name: nameRef.current.value,
           recipient: emailRef.current.value,
-          confirmation_link: `http://localhost:3001/accounts/confirm/${data.confirmationToken}`,
+          confirmation_link: `${URL}/accounts/confirm/${data.confirmationToken}`,
         });
         setShowLogin(true);
       }
@@ -123,7 +125,7 @@ const Login = () => {
         password: e.target.password.value,
       };
 
-      const resp = await fetch("http://localhost:3001/accounts/login", {
+      const resp = await fetch(`${URL}/accounts/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +165,7 @@ const Login = () => {
 
   const handleGoogleLogin = async (e) => {
     const userObject = jwtDecode(e.credential);
-		const url = `http://localhost:3001/accounts/google`;
+		const url = `${URL}/accounts/google`;
 
 		try {
 			const response = await fetch(url, {

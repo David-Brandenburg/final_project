@@ -360,6 +360,61 @@ async function updateAccountInfo(req, res) {
   }
 }
 
+async function updateMyGames(req, res) {
+  try {
+    const accountId = req.params.accountId;
+    const { gameTitles } = req.body;
+
+    if (!Array.isArray(gameTitles)) {
+      return res
+        .status(400)
+        .send({ message: "gameTitles must be an array!", ok: false });
+    }
+
+    const account = await User.findById(accountId);
+    if (!account) {
+      return res.status(404).send({ message: "Account not found!", ok: false });
+    }
+
+    // Abrufen der aktuellen Spiele
+    const currentGames = account.myGames;
+
+    // Herausfiltern von bereits vorhandenen Spielen
+    const newGames = gameTitles.filter(
+      (title) => !currentGames.includes(title)
+    );
+
+    if (newGames.length === 0) {
+      return res.status(200).send({
+        message: "No new games to add!",
+        ok: true,
+        data: currentGames,
+      });
+    }
+
+    const updatedMyGames = await User.updateOne(
+      { _id: account._id },
+      {
+        $push: {
+          myGames: { $each: newGames },
+        },
+      }
+    );
+
+    res.status(200).send({
+      message: "Successfully updated my games!",
+      ok: true,
+      data: updatedMyGames,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Internal Server Error!",
+      error: error.message,
+      ok: false,
+    });
+  }
+}
+
 async function deleteAccount(req, res) {}
 
 async function resetAccountProfilePic(req, res) {
@@ -411,4 +466,5 @@ export {
   deleteAccount,
   resetAccountProfilePic,
   GoogleLogin,
+  updateMyGames,
 };

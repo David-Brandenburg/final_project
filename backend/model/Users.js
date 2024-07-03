@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema(
     isEmailVerified: { type: Boolean, default: false },
     createAt: { type: Date, default: Date.now },
     googleId: { type: String, unique: true },
-		myGames: { type: Array, default: []}
+    myGames: { type: Array, default: [] },
   },
   { versionKey: false }
 );

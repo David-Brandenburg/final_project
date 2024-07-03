@@ -11,6 +11,7 @@ import {
   resetAccountProfilePic,
   confirmEmail,
   GoogleLogin,
+  updateMyGames,
 } from "../controller/userController.js";
 import checkToken from "./../middleware/checkToken.js";
 import upload from "../middleware/cloudinary.js";
@@ -46,5 +47,7 @@ router.delete("/deleteAccount/:accountId", deleteAccount);
 router.get("/confirm/:confirmationToken", confirmEmail);
 
 router.post("/google", GoogleLogin);
+
+router.patch("/updateMyGames/:accountId", updateMyGames);
 
 export default router;

@@ -1,5 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { LanguageContext, useLanguage } from "../../contexts/LanguageContext.js";
+import {
+  LanguageContext,
+  useLanguage,
+} from "../../contexts/LanguageContext.js";
 import HeaderStore from "../../components/StorePage/HeaderStore.jsx";
 import FilterStore from "../../components/StorePage/FilterStore.jsx";
 import GamesStore from "../../components/StorePage/GamesStore.jsx";
@@ -8,14 +11,14 @@ import genreToFilterCondition from "../../components/StorePage/genreToFilterCond
 import platformsFilterCondition from "../../components/StorePage/platformsFilterCondition.json";
 import functionsFilterCondition from "../../components/StorePage/functionsFilterCondition.json";
 import languagesFilterCondition from "../../components/StorePage/languagesFilterCondition.json";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-range-slider-input/dist/style.css";
 import "./storepage.scss";
 
 const GamesPage = () => {
   // Get the current language from the LanguageContext
   const { language } = useLanguage();
-	const { inputSearch, setInputSearch } = useContext(LanguageContext)
+  const { inputSearch, setInputSearch } = useContext(LanguageContext);
 
   // State variables to manage various aspects of the games page
   const [games, setGames] = useState([]); // Stores the list of games
@@ -36,8 +39,9 @@ const GamesPage = () => {
   const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
   // Toggles the dropdown menu
 
-	const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const [path] = useState(window.location.href);
 
@@ -96,7 +100,7 @@ const GamesPage = () => {
   // Fetches the list of games from the server
   const fetchGames = async () => {
     try {
-      const response = await fetch("http://localhost:3001/games");
+      const response = await fetch(`${URL}/games`);
       const data = await response.json();
       setGames(data);
     } catch (error) {
@@ -118,22 +122,22 @@ const GamesPage = () => {
 		document.title = `${language === 'en' ? 'The best video games, without DRM' : 'Die besten Videospiele, ohne DRM'} | PixelPlaza`
   }, [language]);
 
-	useEffect(() => {
+  useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const searchValue = queryParams.get('search') || '';
+    const searchValue = queryParams.get("search") || "";
     setInputSearch(searchValue);
     if (searchValue) {
-      setFilterCondition('SEARCH');
+      setFilterCondition("SEARCH");
     }
   }, [location.search]);
 
-	const handleSearch = (e) => {
+  const handleSearch = (e) => {
     const searchValue = e.target.value;
     setInputSearch(searchValue);
-    setFilterCondition('SEARCH');
+    setFilterCondition("SEARCH");
 
     const queryParams = new URLSearchParams(window.location.search);
-    queryParams.set('search', searchValue);
+    queryParams.set("search", searchValue);
     const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
     navigate(newUrl);
   };
@@ -497,7 +501,7 @@ const GamesPage = () => {
         sortedGames={sortedGames}
         inputSearch={inputSearch}
         handleSearch={handleSearch}
-				path={path}
+        path={path}
       />
       <div className="gamespage-main-wrapper">
         <FilterStore
