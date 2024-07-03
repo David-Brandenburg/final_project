@@ -24,7 +24,6 @@ const GerneSwiperAngebote = () => {
       const data = await response.json();
       setGames(data);
       if (response.ok) {
-        console.log("Games fetched successfully");
         const genresList = data.map((game) => game.genres);
         const uniqueGenres = [...new Set(genresList.flat())];
         setGenres(uniqueGenres);

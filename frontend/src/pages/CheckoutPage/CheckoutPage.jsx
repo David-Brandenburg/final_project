@@ -12,6 +12,8 @@ import paySafeCardPic from "../../assets/paysafe.png";
 import amexPic from "../../assets/amex.png";
 import jcbPic from "../../assets/jcb.png";
 import googlePic from "../../assets/7123025_logo_google_g_icon.png";
+import { toast } from "react-toastify";
+import { LogginContext } from "../../contexts/LogginContext.js";
 
 const CheckoutPage = () => {
   const { cart, removeFromCart } = useContext(AddtoCardContext);
@@ -19,6 +21,8 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [showModal, setShowModal] = useState("");
   const [showGiftModal, setShowGiftModal] = useState(false);
+  const { loggedInUser } = useContext(LogginContext);
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const handleCheckboxChange = (method) => {
     // Updated to accept 'method' parameter
@@ -91,6 +95,29 @@ const CheckoutPage = () => {
 
   const handleGiftCheckbox = () => {
     setShowGiftModal((prev) => !prev);
+  };
+
+  const submitPay = async () => {
+    const cartTitles = cart.map((item) => item.title);
+    console.log(cartTitles);
+    const url = `${URL}/accounts/updateMyGames/${loggedInUser.id}`;
+    try {
+      const resp = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gameTitles: cartTitles }),
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        toast.error(data.message);
+        throw new Error("Something went wrong!");
+      } else {
+        const data = await resp.json();
+        toast.success(data.message);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -235,21 +262,23 @@ const CheckoutPage = () => {
                 <label>
                   {language === "en" ? "Card number" : "Kartennummer"}
                 </label>
-                <input type="text" placeholder="1234 5678 9012 3456" />
+                <input type="text" placeholder="1234 5678 9012 3456" disabled />
                 <label>{language === "en" ? "CVC / CVV" : "CVC / CVV"}</label>
                 <input
                   type="text"
                   placeholder={language === "en" ? "3 digit" : "3 Stellen"}
+                  disabled
                 />
                 <label>
                   {language === "en" ? "Expiry Date" : "Ablaufdatum"}
                 </label>
-                <input type="text" placeholder="MM/JJ" />
+                <input type="text" placeholder="MM/JJ" disabled />
                 <li>
                   <label className="square-checkbox">
                     <input
                       type="checkbox"
                       onChange={() => handleCheckboxChange}
+                      disabled
                     />
                     <span className="checkmark"></span>
 
@@ -318,6 +347,7 @@ const CheckoutPage = () => {
                     <input
                       type="checkbox"
                       onChange={() => handleCheckboxChange}
+                      disabled
                     />
                     <span className="checkmark"></span>
 
@@ -381,7 +411,7 @@ const CheckoutPage = () => {
           <ul className="checkout-right-thrid-list">
             <li>
               <label className="square-checkbox">
-                <input type="checkbox" onChange={handleGiftCheckbox} />
+                <input type="checkbox" onChange={handleGiftCheckbox} disabled />
                 <span className="checkmark"></span>
 
                 {language === "en"
@@ -398,6 +428,7 @@ const CheckoutPage = () => {
                       ? "Gift recipient's email"
                       : "E-Mail-Adresse des Empfängers"
                   }
+                  disabled
                 />
                 <input
                   type="text"
@@ -406,6 +437,7 @@ const CheckoutPage = () => {
                       ? "Personal note to gift recipient (optional)"
                       : "Persönliche Nachricht an den Empfänger (optional"
                   }
+                  disabled
                 />{" "}
               </div>
             )}
@@ -421,7 +453,12 @@ const CheckoutPage = () => {
               )
               .toFixed(2)}
           </p>
-          <button className={btnStyleSwitch()}>{btnTextSwitch()}</button>
+          <button
+            className={btnStyleSwitch()}
+            onClick={submitPay}
+            disabled={!paymentMethod}>
+            {btnTextSwitch()}
+          </button>
         </div>
         {!paymentMethod && (
           <div className="checkout-right-fifth-wrappper">
@@ -432,6 +469,13 @@ const CheckoutPage = () => {
             </p>
           </div>
         )}
+        <div className="checkout-right-wrapper-disclaimer">
+          <h5>
+            {language === "en"
+              ? "Disclaimer: This website is for demonstration purposes only. No monetary transactions will be made. If you choose to click the payment button and select a payment method, the fake game will be added to your games library. You will receive an email thanking you for participating in our demo project! Nothing more, nothing lesse!"
+              : "Haftungsausschluss: Diese Website dient ausschließlich zu Demonstrationszwecken. Es finden keine Geldtransaktionen statt. Wenn Sie auf die Zahlungsschaltfläche klicken und eine Zahlungsmethode auswählen, wird das fiktive Spiel Ihrer Spielebibliothek hinzugefügt. Sie erhalten eine E-Mail, in der wir Ihnen für Ihre Teilnahme an unserem Demo-Projekt danken! Nicht mehr, nicht weniger!"}
+          </h5>
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ const DynamicList = ({ genre }) => {
       } else {
         const data = await response.json();
         setGames(data);
-        console.log("Games fetched successfully");
       }
     } catch (error) {
       console.error("Failed to fetch games:", error);
