@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { LogginContext } from "../../contexts/LogginContext.js";
 import "./Login.scss";
@@ -16,12 +16,14 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showLogin, setShowLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const { language } = useLanguage();
   const { setOpenModalBlocker } = useContext(ModalContext);
-  const { setLoggedInUser } = useContext(LogginContext);
+  const { loggedInUser, setLoggedInUser } = useContext(LogginContext);
+
   const emailRef = useRef();
   const nameRef = useRef();
-  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/;
@@ -158,40 +160,38 @@ const Login = () => {
       console.error("Error appending data to server!", error);
     }
   };
-  const responseMessage = (response) => {
-    console.log(response);
-  };
-  const errorMessage = (error) => {
-    console.log(error);
-  };
 
-  const handleGoogleLogin = (response) => {
-    const userObject = jwtDecode(response.credential);
-    console.log(userObject);
+  const handleGoogleLogin = async (e) => {
+    const userObject = jwtDecode(e.credential);
+		const url = `http://localhost:3001/accounts/google`;
 
-    // Sende das Google Token an dein Backend
-    fetch("http://localhost:3001/accounts/google", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: response.credential }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        setLoggedInUser({
-          benutzername: data.benutzername,
-          email: data.email,
-          id: data._id,
-          googleId: data.googleId,
-        });
-        toast.success(data.message);
-        setOpenModalBlocker(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ token: e.credential }),
+			})
+			const data = await response.json();
+
+			if (!response.ok){
+				toast.error(data.message)
+				throw new Error(data.message)
+			}
+
+			setLoggedInUser({
+				benutzername: data.benutzername,
+				email: data.email,
+				id: data._id,
+				googleId: data.googleId,
+			});
+			localStorage.setItem("profilePic", data.profilePic);
+			toast.success(data.message);
+			setOpenModalBlocker(false);
+		} catch (error) {
+			console.error(error);
+		}
   };
 
   return (

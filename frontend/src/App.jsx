@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ScreenModeContext } from "./contexts/ScreenModeContext.js";
@@ -43,7 +43,7 @@ function App() {
     setOpenTrailerModal,
   } = useContext(ModalContext);
 
-  const { isLoggedIn } = useContext(LogginContext);
+  const { loggedInUser, isLoggedIn } = useContext(LogginContext);
 
   const { screenMode } = useContext(ScreenModeContext);
 

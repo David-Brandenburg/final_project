@@ -7,7 +7,7 @@ import "./homepage.scss";
 const HomePage = () => {
 	
 	useEffect(() => {
-		document.title = 'Pixel Plaza'
+		document.title = 'PixelPlaza'
 	}, [])	
 
   return (
