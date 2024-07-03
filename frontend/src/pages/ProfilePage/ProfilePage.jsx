@@ -6,6 +6,7 @@ import { useLanguage } from "../../contexts/LanguageContext.js";
 import "./profilepage.scss";
 import AdminTable from "../../components/AdminTable/AdminTable.jsx";
 import { ModalContext } from "../../contexts/ModalContext.js";
+import GamesLibrary from "../../components/GamesLibrary/GamesLibrary.jsx";
 
 const ProfilePage = ({ setProfilePicChange }) => {
   const { language } = useLanguage();
@@ -158,7 +159,7 @@ const ProfilePage = ({ setProfilePicChange }) => {
         <>
           <div className="profile-sidebar">
             {(indexTab === "accountandsecurity" ||
-              indexTab === "socialsandlinks") && (
+              indexTab === "socialsandlinks" || indexTab === 'mygames') && (
               <>
                 <div className="profilePic-content">
                   <div className="profilePic-wrapper">
@@ -174,7 +175,7 @@ const ProfilePage = ({ setProfilePicChange }) => {
                   </div>
                 </div>
                 <div className="profileInfo-content">
-                  {indexTab === "accountandsecurity" && (
+                  {(indexTab === "accountandsecurity" || indexTab === 'mygames') && (
                     <>
                       <div className="profileInfo-content-row">
                         <p>{language === "en" ? "Username" : "Nutzername"}:</p>
@@ -359,6 +360,15 @@ const ProfilePage = ({ setProfilePicChange }) => {
                   ? "Account and Security"
                   : "Account und Sicherheit"}
               </p>
+							<p
+                onClick={(e) => setIndexTab("mygames")}
+                className={
+                  indexTab === "mygames" ? "indextab-active" : ""
+                }>
+                {language === "en"
+                  ? "My Games Library"
+                  : "Meine Spiele Bibliothek"}
+              </p>
               <p
                 onClick={(e) => setIndexTab("socialsandlinks")}
                 className={
@@ -518,6 +528,10 @@ const ProfilePage = ({ setProfilePicChange }) => {
               </>
             ) : indexTab === "socialsandlinks" ? (
               <>Under construction..</>
+            ) : indexTab === "mygames" ? (
+              <>
+								<GamesLibrary />
+							</>
             ) : indexTab === "adminanddashboard" ? (
               <>
                 <AdminTable />
