@@ -240,10 +240,11 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
         benutzername: "",
         email: "",
         id: "",
-        profilePic: "",
         token: "",
+        googleId: "",
       });
       localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+			localStorage.setItem("profilePic", "")
     }, 2500);
   };
 

@@ -34,11 +34,7 @@ router.post("/login", loginUser);
 // Route to check token
 router.post("/checktoken", checkToken);
 
-router.patch(
-  "/updateAccountProfilePic/:accountId",
-  upload.single("profilepic"),
-  updateAccountProfilePic
-);
+router.patch("/updateAccountProfilePic/:accountId", upload.single("profilepic"), updateAccountProfilePic);
 
 router.patch("/resetAccountProfilePic/:accountId", resetAccountProfilePic);
 

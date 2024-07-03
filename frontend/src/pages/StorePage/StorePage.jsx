@@ -119,6 +119,7 @@ const GamesPage = () => {
         ? "Best selling (recently)"
         : "Meistverkauft (kürzlich)",
     ]);
+		document.title = `${language === 'en' ? 'The best video games, without DRM' : 'Die besten Videospiele, ohne DRM'} | PixelPlaza`
   }, [language]);
 
   useEffect(() => {

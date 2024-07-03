@@ -15,12 +15,12 @@ const DynamicList = ({ genre }) => {
       const url = `${URL}/games/genres/${genre}`;
       const response = await fetch(url, { method: "GET" });
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message);
-      } else {
-        const data = await response.json();
-        setGames(data);
-      }
+				const data = await response.json();
+				throw new Error(data.message);
+			} else {
+				const data = await response.json();
+				setGames(data);
+			}
     } catch (error) {
       console.error("Failed to fetch games:", error);
     }
