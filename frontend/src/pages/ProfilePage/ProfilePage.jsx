@@ -16,11 +16,12 @@ const ProfilePage = ({ setProfilePicChange }) => {
   const [indexTab, setIndexTab] = useState("accountandsecurity");
   const { adminTab, setAdminTab } = useContext(ModalContext);
   const { loggedInUser, isAdmin } = useContext(LogginContext);
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const fetchUser = useMemo(
     () => async () => {
       try {
-        const url = `http://localhost:3001/accounts/${loggedInUser.id}`;
+        const url = `${URL}/accounts/${loggedInUser.id}`;
         const resp = await fetch(url, { method: "GET" });
         if (!resp.ok) {
           const data = await resp.json();
@@ -55,7 +56,7 @@ const ProfilePage = ({ setProfilePicChange }) => {
   const sumbitProfilePicUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const url = `http://localhost:3001/accounts/updateAccountProfilePic/${loggedInUser.id}`;
+    const url = `${URL}/accounts/updateAccountProfilePic/${loggedInUser.id}`;
     try {
       toast.info(language === "en" ? "Uploading Image.." : "Bild hochladen..");
       const response = await fetch(url, { method: "PATCH", body: formData });
@@ -92,7 +93,7 @@ const ProfilePage = ({ setProfilePicChange }) => {
 
   const submitPassword = async (e) => {
     e.preventDefault();
-    const url = `http://localhost:3001/accounts/updateAccountPassword/${loggedInUser.id}`;
+    const url = `${URL}/accounts/updateAccountPassword/${loggedInUser.id}`;
     try {
       const resp = await fetch(url, {
         method: "PATCH",
@@ -128,7 +129,7 @@ const ProfilePage = ({ setProfilePicChange }) => {
 
   const submitAccountInfo = async (e) => {
     e.preventDefault();
-    const url = `http://localhost:3001/accounts/updateAccountInfo/${loggedInUser.id}`;
+    const url = `${URL}/accounts/updateAccountInfo/${loggedInUser.id}`;
     try {
       const resp = await fetch(url, {
         method: "PATCH",

@@ -84,7 +84,7 @@
   }
   .checkout-right-wrapper {
     flex: 1;
-    height: 800px;
+    height: 900px;
     display: flex;
     flex-direction: column;
     h2 {
@@ -449,6 +449,11 @@
           background-color: $accentColorDarkOrange;
           color: #fff;
         }
+        &:disabled {
+          background-color: $accentColorLightBlue;
+          color: #000;
+          cursor: not-allowed;
+        }
       }
       .paypal-btn {
         text-align: center;
@@ -494,6 +499,8 @@
       p {
         color: darkgoldenrod;
       }
+    }
+    .checkout-right-wrapper-disclaimer {
     }
   }
 }

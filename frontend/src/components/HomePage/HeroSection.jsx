@@ -21,10 +21,11 @@ import { useLanguage } from "../../contexts/LanguageContext";
 const HeroSection = () => {
   const [games, setGames] = useState([]);
   const { language } = useLanguage();
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
   const fetchGames = async () => {
     try {
-      const response = await fetch("http://localhost:3001/games");
+      const response = await fetch(`${URL}/games`);
       const data = await response.json();
       setGames(data);
       if (response.ok) {
@@ -103,7 +104,9 @@ const HeroSection = () => {
                     )}
                   </div>
                   <div className="overlay">
-                    <NavLink className="text-wrapper" to={`/games/${slugify(game.title, "_")}`}>
+                    <NavLink
+                      className="text-wrapper"
+                      to={`/games/${slugify(game.title, "_")}`}>
                       <div className="text-icon-p">
                         {game.platforms?.map(getPlatformIcon)}
                         <p>

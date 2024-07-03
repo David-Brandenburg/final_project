@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./pagesubtitle.scss";
 import { NavLink } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -14,7 +14,7 @@ const PageSubtitle = ({ title, icon, Nav }) => {
           <h3>{title}</h3>
         </div>
         {Nav && (
-          <NavLink to={`/games?=genres=Beliebte-Titel`} className="genre-link">
+          <NavLink to={`/games?=genres=${title}`} className="genre-link">
             {language === "en" ? "See more" : "Mehr anzeigen"}
           </NavLink>
         )}
