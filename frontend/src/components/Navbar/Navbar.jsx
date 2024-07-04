@@ -49,6 +49,36 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
   const gamesLinkRef = useRef(null);
   const cIL = cart.length;
   const URL = process.env.REACT_APP_URL_BACKEND;
+  const [burgerMenu, setBurgerMenu] = useState(false);
+  const [burgerDropdown, setBurgerDropdown] = useState(false);
+
+  const handleBurgerDropdown = () => {
+    setBurgerDropdown((prev) => !prev);
+  };
+
+  const smartphone = window.matchMedia("(max-width: 788px)");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (smartphone.matches) {
+        setBurgerMenu(true);
+      } else {
+        setBurgerMenu(false);
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener to listen for resize events
+    const resizeListener = () => handleResize();
+    window.addEventListener("resize", resizeListener);
+
+    // Clean up function to remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []);
 
   const heartfill = (rating) => {
     let hearts;
@@ -244,7 +274,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
         googleId: "",
       });
       localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-			localStorage.setItem("profilePic", "")
+      localStorage.setItem("profilePic", "");
     }, 2500);
   };
 
@@ -382,55 +412,87 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
     <nav>
       <div className="nav-wrapper" onClick={handleCloseAll}>
         <div className="nav-left">
-          <NavLink to="/" className="logo-wrapper">
-            <img src={Logo} alt="logo" />
-          </NavLink>
-          {!openSearch && (
-            <div className="item-wrapper">
-              <div
-                className="dropdown-wrapper"
-                id="gamesLink"
-                onClick={(e) => {
-                  setOpenGameModal(false);
-                  setOpenModalBlocker(false);
-                  e.stopPropagation();
-                }}>
-                <NavLink
-                  to="/games"
-                  className="nav-link"
-                  title="navlink"
-                  ref={gamesLinkRef}>
-                  {language === "en" ? "Games" : "Spiele"}
-                  {openGameModal && <GameModal />}
-                </NavLink>
+          {burgerMenu && (
+            <>
+              <div className="burger-menu" onClick={handleBurgerDropdown}>
+                <i className="bi bi-list"></i>
               </div>
-              <NavLink to="/infos" className="nav-link" title="navlink">
-                {language === "en" ? "Infos" : "Infos"}
-              </NavLink>
-              <NavLink to="/forum" className="nav-link" title="navlink">
-                {language === "en" ? "Forum" : "Forum"}
-              </NavLink>
-              <NavLink to="/help" className="nav-link" title="navlink">
-                {language === "en" ? "Help" : "Hilfe"}
-              </NavLink>
-              {isLoggedIn ? (
-                <NavLink to="/profile" className="nav-link">
-                  <img
-                    className="nav-link-profile-img"
-                    src={navAvatar ? navAvatar : defaultPic}
-                    alt=""
-                  />
-                  <p>{loggedInUser.benutzername}</p>
-                </NavLink>
-              ) : (
-                <div className="dropdown-wrapper" id="loginLink">
-                  <p className="nav-link" onClick={handleOpenLogin}>
-                    Einloggen
-                  </p>
-                  {openLoginModal && <Login />}
+              {burgerDropdown && (
+                <div className="burger-menu-dropdown-wrapper">
+                  <ul>
+                    <li onClick={handleBurgerDropdown}>
+                      <NavLink to="/" className="nav-link" title="Home">
+                        {language === "en" ? "Home" : "Home"}
+                      </NavLink>
+                    </li>
+                    <li onClick={handleBurgerDropdown}>
+                      <NavLink
+                        to="/games"
+                        className="nav-link"
+                        title="Games"
+                        ref={gamesLinkRef}>
+                        {language === "en" ? "Games" : "Spiele"}
+                        {openGameModal && <GameModal />}
+                      </NavLink>
+                    </li>
+                  </ul>
                 </div>
               )}
-            </div>
+            </>
+          )}
+          {!burgerMenu && (
+            <>
+              <NavLink to="/" className="logo-wrapper">
+                <img src={Logo} alt="logo" />
+              </NavLink>
+              {!openSearch && (
+                <div className="item-wrapper">
+                  <div
+                    className="dropdown-wrapper"
+                    id="gamesLink"
+                    onClick={(e) => {
+                      setOpenGameModal(false);
+                      setOpenModalBlocker(false);
+                      e.stopPropagation();
+                    }}>
+                    <NavLink
+                      to="/games"
+                      className="nav-link"
+                      title="Games"
+                      ref={gamesLinkRef}>
+                      {language === "en" ? "Games" : "Spiele"}
+                      {openGameModal && <GameModal />}
+                    </NavLink>
+                  </div>
+                  <NavLink to="/infos" className="nav-link" title="Infos">
+                    {language === "en" ? "Infos" : "Infos"}
+                  </NavLink>
+                  <NavLink to="/forum" className="nav-link" title="Forum">
+                    {language === "en" ? "Forum" : "Forum"}
+                  </NavLink>
+                  <NavLink to="/help" className="nav-link" title="Help">
+                    {language === "en" ? "Help" : "Hilfe"}
+                  </NavLink>
+                  {isLoggedIn ? (
+                    <NavLink to="/profile" className="nav-link">
+                      <img
+                        className="nav-link-profile-img"
+                        src={navAvatar ? navAvatar : defaultPic}
+                        alt=""
+                      />
+                      <p>{loggedInUser.benutzername}</p>
+                    </NavLink>
+                  ) : (
+                    <div className="dropdown-wrapper" id="loginLink">
+                      <p className="nav-link" onClick={handleOpenLogin}>
+                        Einloggen
+                      </p>
+                      {openLoginModal && <Login />}
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
         {openSearch && (

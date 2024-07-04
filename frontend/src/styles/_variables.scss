@@ -13,5 +13,19 @@ $navbarGradient: linear-gradient(180deg, #121212e6, #232323e6);
 $footerGradient: linear-gradient(180deg, #121212 50%, #232323);
 
 $defaultFont: "Play", sans-serif;
-$defaultGradient: linear-gradient(35deg, $accentColorBlue, $accentColorLightBlue, $accentColorCreme, $accentColorOrange, $accentColorDarkOrange);
-$defaultGradientReverse: linear-gradient(35deg, $accentColorDarkOrange, $accentColorOrange, $accentColorCreme, $accentColorLightBlue, $accentColorBlue);
+$defaultGradient: linear-gradient(
+  35deg,
+  $accentColorBlue,
+  $accentColorLightBlue,
+  $accentColorCreme,
+  $accentColorOrange,
+  $accentColorDarkOrange
+);
+$defaultGradientReverse: linear-gradient(
+  35deg,
+  $accentColorDarkOrange,
+  $accentColorOrange,
+  $accentColorCreme,
+  $accentColorLightBlue,
+  $accentColorBlue
+);

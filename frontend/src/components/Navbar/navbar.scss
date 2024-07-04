@@ -66,18 +66,50 @@ nav {
       &:hover {
         color: color-mix(in lab, $accentColorLightBlue 65%, #fff);
       }
-			&.active{
-				color: $accentColorOrange;
-				> .nav-link-profile-img{
-					border-color: $accentColorOrange!important;
-				}
-			}
+      &.active {
+        color: $accentColorOrange;
+        > .nav-link-profile-img {
+          border-color: $accentColorOrange !important;
+        }
+      }
     }
 
     .nav-left {
       display: flex;
       gap: 10px;
       align-items: center;
+      .burger-menu {
+        display: flex;
+        flex-direction: column;
+        color: var(--mainColor);
+        font-size: 20px;
+      }
+      .burger-menu-dropdown-wrapper {
+        position: relative;
+
+        top: 80px;
+        right: 50px;
+        background: var(--background);
+        color: var(--mainColor);
+        border: 1px solid var(--mainBorder);
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px;
+        .burger-menu-dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 5px;
+          cursor: pointer;
+          &:hover {
+            background: var(--mainBorder);
+          }
+        }
+      }
+
       .logo-wrapper {
         display: inline-flex;
         img {
@@ -120,9 +152,9 @@ nav {
             &:hover {
               color: color-mix(in lab, $accentColorLightBlue 65%, #fff);
             }
-						&.active{
-							color: $accentColorOrange;
-						}
+            &.active {
+              color: $accentColorOrange;
+            }
           }
         }
         .nav-link-profile-img {
@@ -142,7 +174,7 @@ nav {
       align-items: center;
       gap: 10px;
       color: #fff;
-			position: relative;
+      position: relative;
       .nav-search {
         color: #fff;
         background: transparent;
@@ -156,156 +188,160 @@ nav {
           border-bottom: 1px solid #fff;
         }
       }
-			.count-games{
-				display: flex;
-				gap: 5px;
-				position: relative;
-				&::after{
-					content: '\F229';
-					position: absolute;
-					font-family: "Bootstrap-Icons";
-					bottom: -17px;
-					left: 50%;
-					transform: translateX(-50%);
-				}
-			}
-			.filtered-games-modal{
-				position: absolute;
-				top: 39px;
-				left: -200px;
-				border-radius: 3px;
-				width: 1200px;
-				height: fit-content;
-				max-height: calc((6 * 75px) + 47.5px);
-				overflow-y: scroll;
-				background: var(--background);
-				padding: 10px 20px;
-				display: flex;
-				flex-direction: column;
-				gap: 2px;
-				box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
-				border: 1px solid var(--mainBorder);
-				
+      .count-games {
+        display: flex;
+        gap: 5px;
+        position: relative;
+        &::after {
+          content: "\F229";
+          position: absolute;
+          font-family: "Bootstrap-Icons";
+          bottom: -17px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      .filtered-games-modal {
+        position: absolute;
+        top: 39px;
+        left: -200px;
+        border-radius: 3px;
+        width: 1200px;
+        height: fit-content;
+        max-height: calc((6 * 75px) + 47.5px);
+        overflow-y: scroll;
+        background: var(--background);
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--mainBorder);
 
-				.game-wrapper{
-					display: flex;
-					width: 100%;
-					background: var(--main);
-					color: var(--mainColor);
-					height: 73px;
-					box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
-					align-items: center;
-					.game-thumbnail-wrapper{
-						width: 130px;
-						aspect-ratio: 16 / 9;
-						display: inline-flex;
-						img{
-							width: inherit;
-							aspect-ratio: 16 / 9;
-						}
-					}
-					.game-info-wrapper{
-						width: 600px;
-						padding: 0 10px;
-						display: flex;
-						// flex-direction: column;
-						align-items: center;
-						gap: 10px;
-						.dlc-tag{
-							background: color-mix(in lab, $accentColorLightBlue, #fff 40%);
-							padding: 5px 10px;
-							border-radius: 3px;
-						}
-						.game-info{
-							color: gray;
-						}
-					}
-					.rating-platform-wrapper{
-						width: 470px;
-						display: flex;
-						align-items: center;
-						justify-content: space-evenly;
-						.rating-wrapper{
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							width: 200px;
-							gap: 1px;
-							.bi{
-								color: color-mix(in lab, var(--mainColor), var(--mainBorder) 60%);
-								font-size: 12px;
-							}
-						}
-						.platform-wrapper{
-							display: flex;
-							color: color-mix(in lab, var(--mainColor), var(--mainBorder) 60%);
-							width: 100px;
-							gap: 5px;
-							font-size: 12px;
-						}
-					}
-					.price-tag-wrapper{
-						width: 20%;
-						display: flex;
-						justify-content: space-between;
-						padding: 0 10px;
-						.discount-tag{
-							width: 50px;
-							padding: 6px;
-							border-radius: 3px;
-						}
-						.btn{
-							display: flex;
-							padding: 6px;
-							background: $accentColorLightBlue;
-							color: #fff;
-							border-radius: 3px;
-							box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
-							.price-tag{
-								width: 60px;
-								display: flex;
-								// align-items: center;
-								justify-content: space-between;
-							}
-							&:hover{
-								background: color-mix(in lab, $accentColorLightBlue, #fff 30%);
-								color: #000;
-							}
-						}
-					}
-					&:hover{
-						background: var(--mainBorder);
-					}
-				}
+        .game-wrapper {
+          display: flex;
+          width: 100%;
+          background: var(--main);
+          color: var(--mainColor);
+          height: 73px;
+          box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+          align-items: center;
+          .game-thumbnail-wrapper {
+            width: 130px;
+            aspect-ratio: 16 / 9;
+            display: inline-flex;
+            img {
+              width: inherit;
+              aspect-ratio: 16 / 9;
+            }
+          }
+          .game-info-wrapper {
+            width: 600px;
+            padding: 0 10px;
+            display: flex;
+            // flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            .dlc-tag {
+              background: color-mix(in lab, $accentColorLightBlue, #fff 40%);
+              padding: 5px 10px;
+              border-radius: 3px;
+            }
+            .game-info {
+              color: gray;
+            }
+          }
+          .rating-platform-wrapper {
+            width: 470px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            .rating-wrapper {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 200px;
+              gap: 1px;
+              .bi {
+                color: color-mix(
+                  in lab,
+                  var(--mainColor),
+                  var(--mainBorder) 60%
+                );
+                font-size: 12px;
+              }
+            }
+            .platform-wrapper {
+              display: flex;
+              color: color-mix(in lab, var(--mainColor), var(--mainBorder) 60%);
+              width: 100px;
+              gap: 5px;
+              font-size: 12px;
+            }
+          }
+          .price-tag-wrapper {
+            width: 20%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            .discount-tag {
+              width: 50px;
+              padding: 6px;
+              border-radius: 3px;
+            }
+            .btn {
+              display: flex;
+              padding: 6px;
+              background: $accentColorLightBlue;
+              color: #fff;
+              border-radius: 3px;
+              box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+              .price-tag {
+                width: 60px;
+                display: flex;
+                // align-items: center;
+                justify-content: space-between;
+              }
+              &:hover {
+                background: color-mix(in lab, $accentColorLightBlue, #fff 30%);
+                color: #000;
+              }
+            }
+          }
+          &:hover {
+            background: var(--mainBorder);
+          }
+        }
+      }
+      .filtered-games-modal {
+        --sb-thumb-color: #faa968;
+        --sb-track-color: color-mix(
+          in lab,
+          var(--background),
+          var(--mainColor) 20%
+        );
+        --sb-size: 14px;
+      }
 
-			}
-			.filtered-games-modal {
-				--sb-thumb-color: #faa968;
-				--sb-track-color: color-mix(in lab, var(--background), var(--mainColor) 20%);
-				--sb-size: 14px;
-			}
-			
-			.filtered-games-modal::-webkit-scrollbar {
-				width: var(--sb-size)
-			}
-			
-			.filtered-games-modal::-webkit-scrollbar-track {
-				background: var(--sb-track-color);
-				border-radius: 2px;
-			}
-			
-			.filtered-games-modal::-webkit-scrollbar-thumb {
-				background: var(--sb-thumb-color);
-				border-radius: 2px;
-				
-			}
-			
-			@supports not selector(::-webkit-scrollbar) {
-				.filtered-games-modal {
-					scrollbar-color: var(--sb-thumb-color)
-														var(--sb-track-color);
-				}
-			}
+      .filtered-games-modal::-webkit-scrollbar {
+        width: var(--sb-size);
+      }
+
+      .filtered-games-modal::-webkit-scrollbar-track {
+        background: var(--sb-track-color);
+        border-radius: 2px;
+      }
+
+      .filtered-games-modal::-webkit-scrollbar-thumb {
+        background: var(--sb-thumb-color);
+        border-radius: 2px;
+      }
+
+      @supports not selector(::-webkit-scrollbar) {
+        .filtered-games-modal {
+          scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+        }
+      }
     }
 
     .nav-right {
@@ -383,7 +419,7 @@ nav {
             padding: 10px;
             img {
               width: 150px;
-							aspect-ratio: 16 / 9;
+              aspect-ratio: 16 / 9;
               border-radius: 5px;
               margin: 10px;
             }
