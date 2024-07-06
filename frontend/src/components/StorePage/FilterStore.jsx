@@ -44,6 +44,12 @@ const FilterStore = ({
     );
   };
 
+  const handleMyGamesNotShown = () => {
+    setFilterCondition((prevCondition) =>
+      prevCondition === "MYGAMESNOTSHWON" ? "ALL" : "MYGAMESNOTSHWON"
+    );
+  };
+
   const handleDLCFilter = () => {
     setFilterCondition((prevCondition) =>
       prevCondition === "DLC" ? "ALL" : "DLC"
@@ -501,7 +507,7 @@ const FilterStore = ({
           <>
             <li className="gamespage-main-filter-li">
               <label className="square-checkbox">
-                <input type="checkbox" disabled />
+                <input type="checkbox" />
                 <span className="checkmark"></span>
                 {language === "en"
                   ? " Hide owned games"

@@ -119,7 +119,11 @@ const GamesPage = () => {
         ? "Best selling (recently)"
         : "Meistverkauft (kürzlich)",
     ]);
-		document.title = `${language === 'en' ? 'The best video games, without DRM' : 'Die besten Videospiele, ohne DRM'} | PixelPlaza`
+    document.title = `${
+      language === "en"
+        ? "The best video games, without DRM"
+        : "Die besten Videospiele, ohne DRM"
+    } | PixelPlaza`;
   }, [language]);
 
   useEffect(() => {
@@ -146,6 +150,7 @@ const GamesPage = () => {
     const filterFunctions = {
       DISCOUNTED: (game) =>
         game.price - (game.price * game.discount) / 100 < game.price,
+      MYGAMESNOTSHWON: (game) => !game.myGames,
       DLC: (game) => !game.dlc,
       PRICE_RANGE: (game) => game.price >= minPrice && game.price <= maxPrice,
       ONLY_FREE: (game) =>

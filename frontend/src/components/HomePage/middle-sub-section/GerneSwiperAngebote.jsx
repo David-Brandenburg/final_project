@@ -136,14 +136,13 @@ const GerneSwiperAngebote = () => {
         centeredSlides={true}
         slidesPerView={3}
         loop={true}
-        pagination={{ el: ".swiper-pagination", clickable: true }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
           clickable: true,
         }}
-        modules={[Pagination, Navigation]}
-        className="">
+        modules={[Navigation]}
+        className="swiper-genres">
         {genres.map(
           (genre, index) =>
             genreDiscounts[genre] !== null &&
