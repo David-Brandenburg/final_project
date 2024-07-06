@@ -70,17 +70,17 @@ async function getGame(req, res) {
   const gameTitle = req.params.title;
   try {
     const orginalTitle = gameTitle.replace(/_/g, " ");
-    console.log(orginalTitle);
+
     const foundGame = await Game.findOne({ title: orginalTitle });
     if (!foundGame) {
-			const foundGameById = await Game.findById(gameTitle);
-			if (!foundGameById) {
-				return res.status(404).send({ message: "Game not found!", ok: false });
-			} else if (foundGameById) {
-				return res.status(200).json(foundGameById)
-			} else {
-				return res.status(404).send({ message: "Game not found!", ok: false });
-			}
+      const foundGameById = await Game.findById(gameTitle);
+      if (!foundGameById) {
+        return res.status(404).send({ message: "Game not found!", ok: false });
+      } else if (foundGameById) {
+        return res.status(200).json(foundGameById);
+      } else {
+        return res.status(404).send({ message: "Game not found!", ok: false });
+      }
     }
 
     return res.status(200).json(foundGame);
@@ -101,11 +101,9 @@ async function getGamesByGenres(req, res) {
       return res.status(404).send({ message: "No games found", ok: false });
     }
 
-    const gamesByGenre = games.filter((game) =>
-      game.genres.includes(genre)
-    );
+    const gamesByGenre = games.filter((game) => game.genres.includes(genre));
 
-		// console.log(gamesByGenre)
+    // console.log(gamesByGenre)
 
     return res.status(200).json(gamesByGenre);
   } catch (error) {
