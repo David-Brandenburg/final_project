@@ -507,7 +507,7 @@ const FilterStore = ({
           <>
             <li className="gamespage-main-filter-li">
               <label className="square-checkbox">
-                <input type="checkbox" />
+                <input type="checkbox" onChange={handleMyGamesNotShown} />
                 <span className="checkmark"></span>
                 {language === "en"
                   ? " Hide owned games"

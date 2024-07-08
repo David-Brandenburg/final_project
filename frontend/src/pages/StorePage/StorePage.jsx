@@ -14,6 +14,7 @@ import languagesFilterCondition from "../../components/StorePage/languagesFilter
 import { useLocation, useNavigate } from "react-router-dom";
 import "react-range-slider-input/dist/style.css";
 import "./storepage.scss";
+import { LogginContext } from "../../contexts/LogginContext.js";
 
 const GamesPage = () => {
   // Get the current language from the LanguageContext
@@ -37,7 +38,8 @@ const GamesPage = () => {
   const [sortCondition, setSortCondition] = useState("ALL"); // Stores the current sort condition
   const [salesHistory] = useState([]); // Stores the sales history
   const [isScrolled, setIsScrolled] = useState(false); // Manages the scroll state
-  // Toggles the dropdown menu
+  const { loggedInUser } = useContext(LogginContext);
+  const [myGames, setMyGames] = useState([]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -108,9 +110,28 @@ const GamesPage = () => {
     }
   };
 
+  const fetchAccountsGames = async (e) => {
+    try {
+      const response = await fetch(`${URL}/accounts/${loggedInUser.id}`, {
+        method: "GET",
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      } else {
+        const data = await response.json();
+        setMyGames(data.myGames);
+        console.log(myGames);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Fetch games when the component is mounted
   useEffect(() => {
     fetchGames();
+    fetchAccountsGames();
     // handNavLink();
     window.scrollTo(0, 0);
     setSortCondition("Meistverkauft (kürzlich)");
@@ -150,7 +171,7 @@ const GamesPage = () => {
     const filterFunctions = {
       DISCOUNTED: (game) =>
         game.price - (game.price * game.discount) / 100 < game.price,
-      MYGAMESNOTSHWON: (game) => !game.myGames,
+      MYGAMESNOTSHWON: (game) => !myGames.includes(game.title),
       DLC: (game) => !game.dlc,
       PRICE_RANGE: (game) => game.price >= minPrice && game.price <= maxPrice,
       ONLY_FREE: (game) =>
