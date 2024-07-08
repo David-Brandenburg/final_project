@@ -87,18 +87,23 @@ const GameModalCardContainer = ({ genre }) => {
                   ))}
                 </div>
                 <div className="price-tags-wrapper">
-                  {game.discount > 0 && (
-                    <div className="game-discount-wrapper">
-                      <small className="discountprice-tag">
-                        {Math.floor(
-                          (game.price - (game.price * game.discount) / 100) *
-                            100
-                        ) / 100}
-                        €
-                      </small>
-                      <small className="discount-tag">-{game.discount}%</small>
-                    </div>
-                  )}
+                  {game.price === 0
+                    ? "Free"
+                    : game.discount > 0 && (
+                        <div className="game-discount-wrapper">
+                          <small className="discountprice-tag">
+                            {Math.floor(
+                              (game.price -
+                                (game.price * game.discount) / 100) *
+                                100
+                            ) / 100}
+                            €
+                          </small>
+                          <small className="discount-tag">
+                            -{game.discount}%
+                          </small>
+                        </div>
+                      )}
                   <AddToCartBtn
                     className={`game-card-price-tag${
                       game.discount > 0 ? "-discount" : ""

@@ -663,14 +663,18 @@ const GamesModal = ({ game }) => {
           </div>
         </div>
         <div className="game-modal-tags">
-					<p>
-						{getMessages(game.tags, language).map((message, index) => (
-							<React.Fragment key={'tag' + index}>
-								<span style={{width: 'max-content'}} key={index}>{message}</span>
-								{index < game.tags.length - 1 && <span className="space-holder">,</span>}
-							</React.Fragment>
-						))}
-					</p>
+          <p>
+            {getMessages(game.tags, language).map((message, index) => (
+              <React.Fragment key={"tag" + index}>
+                <span style={{ width: "max-content" }} key={index}>
+                  {message}
+                </span>
+                {index < game.tags.length - 1 && (
+                  <span className="space-holder">,</span>
+                )}
+              </React.Fragment>
+            ))}
+          </p>
         </div>
 
         <div className="game-modal-functions">
@@ -684,7 +688,9 @@ const GamesModal = ({ game }) => {
             </div>
           )}
           <div className="game-modal-price-text">
-            <p>{discountedPrice.toFixed(2)}€</p>{" "}
+            <p>
+              {discountedPrice === 0 ? "Free " : discountedPrice.toFixed(2)}€
+            </p>{" "}
           </div>
           <AddToCartBtn
             className="game-modal-price-btn"

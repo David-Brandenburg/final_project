@@ -141,8 +141,14 @@ const CheckoutPage = () => {
                     </p>
                   </div>
                   <div className="cart-info-right">
-                    <p className="price">{item.price}€</p>
-                    <p>{discountedPrice.toFixed(2)} €</p>
+                    <p className="price">
+                      {item.price === 0 ? "" : item.price + " €"}
+                    </p>
+                    <p>
+                      {discountedPrice === 0
+                        ? "Free"
+                        : discountedPrice.toFixed(2) + " €"}{" "}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -163,7 +169,6 @@ const CheckoutPage = () => {
                 0
               )
               .toFixed(2)}
-            €
           </p>
         </div>
         <small className="checkout-discount-total">

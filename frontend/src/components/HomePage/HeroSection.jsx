@@ -122,7 +122,12 @@ const HeroSection = () => {
                         <p>-{game.discount}%</p>
                       </div>
                       <div className="price">
-                        <p>{discountedPrice.toFixed(2)}€</p>
+                        <p>
+                          {discountedPrice === 0
+                            ? "Free"
+                            : discountedPrice.toFixed(2)}
+                          €
+                        </p>
                       </div>
                       <AddToCartBtn
                         className={"btn"}

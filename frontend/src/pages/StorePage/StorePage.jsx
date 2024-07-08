@@ -121,7 +121,6 @@ const GamesPage = () => {
       } else {
         const data = await response.json();
         setMyGames(data.myGames);
-        console.log(myGames);
       }
     } catch (error) {
       console.error(error);

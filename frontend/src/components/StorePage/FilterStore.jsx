@@ -514,15 +514,6 @@ const FilterStore = ({
                   : " Alle Produkte im Besitz ausblenden"}
               </label>
             </li>
-            <li className="gamespage-main-filter-li">
-              <label className="square-checkbox">
-                <input type="checkbox" disabled />
-                <span className="checkmark"></span>
-                {language === "en"
-                  ? " Show only games on my wishlist"
-                  : " Nur Spiele von meiner Wunschliste anzeigen"}
-              </label>
-            </li>
           </>
         )}
         {/* Show DLC */}
@@ -553,17 +544,6 @@ const FilterStore = ({
                   : " DLCs und Extras ausblenden"}
               </label>
             </li>
-            {isLoggedIn && (
-              <li className="gamespage-main-filter-li">
-                <label className="square-checkbox">
-                  <input type="checkbox" />
-                  <span className="checkmark"></span>
-                  {language === "en"
-                    ? "Show only DLCs for my games"
-                    : " Nur DLCs für meine Spiele anzeigen"}
-                </label>
-              </li>
-            )}
           </ul>
         )}
         {/* Show price range */}
@@ -673,17 +653,6 @@ const FilterStore = ({
                 {language === "en" ? " Early access" : " Early Access"}
               </label>
             </li>
-            {isLoggedIn && (
-              <li className="gamespage-main-filter-li">
-                <label className="square-checkbox">
-                  <input type="checkbox" disabled />
-                  <span className="checkmark"></span>
-                  {language === "en"
-                    ? "Show only DLCs for my games"
-                    : " Nur DLCs für meine Spiele anzeigen"}
-                </label>
-              </li>
-            )}
           </>
         )}
         {/* Show genres */}
@@ -773,17 +742,6 @@ const FilterStore = ({
                 {language === "en" ? "Strategy" : " Strategie"}
               </label>
             </li>
-            {isLoggedIn && (
-              <li className="gamespage-main-filter-li">
-                <label className="square-checkbox">
-                  <input type="checkbox" disabled />
-                  <span className="checkmark"></span>
-                  {language === "en"
-                    ? "Show only DLCs for my games"
-                    : " Nur DLCs für meine Spiele anzeigen"}
-                </label>
-              </li>
-            )}
           </>
         )}
         {/* Show tags */}

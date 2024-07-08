@@ -55,7 +55,11 @@ const CartModal = () => {
               </p>
             </div>
             <div className="cart-artikel-price-btn">
-              <p>{totalDiscountedPrice} €</p>
+              <p>
+                {totalDiscountedPrice === "0.00"
+                  ? "Free"
+                  : totalDiscountedPrice + " €"}{" "}
+              </p>
               {isLoggedIn ? (
                 <NavLink
                   to="/checkout"
@@ -93,7 +97,11 @@ const CartModal = () => {
                     </div>
                     <div className="cart-info-right">
                       <p className="discount">- {item.discount}%</p>
-                      <p>{discountedPrice.toFixed(2)} €</p>
+                      <p>
+                        {discountedPrice.toFixed(2) === "0.00"
+                          ? "Free"
+                          : discountedPrice.toFixed(2) + " €"}{" "}
+                      </p>
                     </div>
                   </div>
                 </div>

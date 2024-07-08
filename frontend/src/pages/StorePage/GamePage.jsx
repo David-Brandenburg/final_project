@@ -265,18 +265,20 @@ const GamePage = () => {
                       textDecoration:
                         gameData.discount > 0 ? "line-through" : "unset",
                     }}>
-                    € {gameData.price.toFixed(2)}
+                    {gameData.price === 0
+                      ? "Free"
+                      : gameData.price.toFixed(2) + " €"}
                   </p>
                   {gameData.discount > 0 && (
                     <p className="price-tag-discount">
-                      €{" "}
+                      {" "}
                       {(
                         Math.floor(
                           (gameData.price -
                             (gameData.price * gameData.discount) / 100) *
                             100
                         ) / 100
-                      ).toFixed(2)}
+                      ).toFixed(2) + " €"}
                     </p>
                   )}
                 </div>
@@ -341,12 +343,15 @@ const GamePage = () => {
               </div>
               <hr />
               <div className="gamepage-language-wrapper">
-								{gameData.languages.length < 2 && (<p>{gameData.languages[0]}</p>)}
-                {gameData.languages.length > 2 && gameData.languages.slice(0, 2).map((language, index) => (
-                  <p className="language-tag" key={index}>
-                    {language}
-                  </p>
-                ))}
+                {gameData.languages.length < 2 && (
+                  <p>{gameData.languages[0]}</p>
+                )}
+                {gameData.languages.length > 2 &&
+                  gameData.languages.slice(0, 2).map((language, index) => (
+                    <p className="language-tag" key={index}>
+                      {language}
+                    </p>
+                  ))}
                 {gameData.languages.length > 2 && (
                   <p>
                     & {gameData.languages.length - 2}

@@ -176,11 +176,12 @@ const GamesStore = ({
                     )}
                     <div className="game-card-price-text">
                       <p>
-                        {(
-                          game.price -
-                          (game.price * game.discount) / 100
-                        ).toFixed(2)}
-                        €
+                        {game.price === 0
+                          ? "Free"
+                          : (
+                              game.price -
+                              (game.price * game.discount) / 100
+                            ).toFixed(2) + " €"}
                       </p>{" "}
                     </div>
                   </div>

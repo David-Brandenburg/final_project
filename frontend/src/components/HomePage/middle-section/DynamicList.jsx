@@ -15,12 +15,12 @@ const DynamicList = ({ genre }) => {
       const url = `${URL}/games/genres/${genre}`;
       const response = await fetch(url, { method: "GET" });
       if (!response.ok) {
-				const data = await response.json();
-				throw new Error(data.message);
-			} else {
-				const data = await response.json();
-				setGames(data);
-			}
+        const data = await response.json();
+        throw new Error(data.message);
+      } else {
+        const data = await response.json();
+        setGames(data);
+      }
     } catch (error) {
       console.error("Failed to fetch games:", error);
     }
@@ -87,12 +87,14 @@ const DynamicList = ({ genre }) => {
                       </small>
                     )}
                     <p className="game-card-price">
-                      {game.discount > 0
+                      {game.price === 0
+                        ? "Free"
+                        : game.discount > 0
                         ? Math.floor(
                             (game.price - (game.price * game.discount) / 100) *
                               100
                           ) / 100
-                        : game.price}{" "}
+                        : game.price.toFixed(2)}{" "}
                       €
                     </p>
                   </div>

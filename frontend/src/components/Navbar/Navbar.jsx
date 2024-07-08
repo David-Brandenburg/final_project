@@ -244,7 +244,7 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
         googleId: "",
       });
       localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-			localStorage.setItem("profilePic", "")
+      localStorage.setItem("profilePic", "");
     }, 2500);
   };
 
@@ -531,7 +531,9 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
                               }
                               className="price-tag">
                               <span>€</span>{" "}
-                              {game.discount > 0
+                              {game.price === 0
+                                ? "Free"
+                                : game.discount > 0
                                 ? Math.floor(
                                     (game.price -
                                       (game.price * game.discount) / 100) *
