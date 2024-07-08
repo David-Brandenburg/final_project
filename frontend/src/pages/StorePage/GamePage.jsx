@@ -429,7 +429,7 @@ const GamePage = () => {
                         <NavLink
                           className="earlyAccess-link"
                           to={`/help/games_in_development_faq`}
-                          rel="norefferer noopener">
+                          rel="noreferrer noopener">
                           {language === "en"
                             ? "Learn more about early access."
                             : "Erfahre mehr über Early Access-Spiele."}
@@ -439,7 +439,7 @@ const GamePage = () => {
                         <NavLink
                           className="earlyAccess-link"
                           to={`/forum/${slugify(gameData.title, "_")}`}
-                          rel="norefferer noopener">
+                          rel="noreferrer noopener">
                           {language === "en"
                             ? "Visit the forums and learn more about this game."
                             : "In unseren Foren findest du mehr zu diesem Spiel."}
@@ -494,7 +494,7 @@ const GamePage = () => {
                           className="bannerLink"
                           key={"bannerLink" + index}
                           to={Object.values(item)[0].link}
-                          rel="noopener norefferer"
+                          rel="noopener noreferrer"
                           target="_blank">
                           <img src={Object.values(item)[0].banner} alt="" />
                         </Link>
@@ -714,15 +714,8 @@ const GamePage = () => {
                   <div className="game-details-content">
                     {gameData.genres.slice(0, 3).map((genre, index) => (
                       <React.Fragment key={"genre" + index}>
-                        <NavLink
-                          className="game-details-link"
-                          to={`/games?=genres=${slugify(genre, "_")}`}
-                          style={{ textUnderlineOffset: "4px" }}>
-                          {genre}
-                        </NavLink>
-                        {index < gameData.genres.length - 1 && (
-                          <span className="space-holder2">-</span>
-                        )}
+                        <NavLink className="game-details-link" to={`/games?=genres=${slugify(genre, "_")}`} style={{ textUnderlineOffset: "4px" }}>{genre}</NavLink>
+                        {index < gameData.genres.slice(0,3).length - 1 && (<span className="space-holder2">-</span>)}
                       </React.Fragment>
                     ))}
                   </div>

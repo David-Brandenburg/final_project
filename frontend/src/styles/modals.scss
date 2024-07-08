@@ -298,6 +298,53 @@
 	}
 }
 
+.admin-delete-modal{
+	position: relative;
+	top: 50%;
+	left: 50%;
+	translate: -50% -75%;
+	color: var(--mainColor);
+	width: 800px;
+	height: 275px;
+	background: var(--background);
+	border: 1px solid var(--mainBorder);
+	border-radius: 5px;
+	.modal-content-header{
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		// padding: 6px;
+	}
+	h3{
+		text-align: center;
+		padding: 6px;
+	}
+	.info-id{
+		padding: 0 6px;
+		span{
+			color: $accentColorDarkOrange;
+		}
+	}
+	.close-btn{
+		width: 25px;
+		height: 25px;
+		display: flex;
+		border-top-right-radius: 5px;
+		border: 1px solid;
+		border-color: transparent;
+		align-items: center;
+		justify-content: center;
+		&:hover{
+			cursor: pointer;
+			background: red;
+			transition: background 200ms ease-in-out;
+			color: var(--mainBorder);
+		}
+	}
+}
+
 .gamepage-image-wrapper{
 	position: sticky;
 	top: 180px;
