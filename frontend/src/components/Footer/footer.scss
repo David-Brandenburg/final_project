@@ -26,9 +26,16 @@ footer {
       .text-left {
         display: flex;
         justify-content: space-between;
-        color: white;
+        // color: white;
         width: 100%;
         font-size: 1rem;
+				.footer-link{
+					color: $fontColorTransp;
+					&:hover{
+						color: $fontColorFull;
+						cursor: pointer;
+					}
+				}
       }
       .icons-right {
         display: flex;

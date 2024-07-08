@@ -1,6 +1,6 @@
+import { NavLink } from "react-router-dom";
 import Logo from "../../assets/pixelPlaza.webp";
 import "./footer.scss";
-import { NavLink } from "react-router-dom";
 
 import { useLanguage } from "../../contexts/LanguageContext";
 
@@ -11,13 +11,11 @@ const Footer = () => {
       <div className="footer-wrapper">
         <div className="footer-top-row">
           <div className="text-left">
-            <p>{language === "en" ? "Redeem code" : "Code einlösen"}</p>
-            <p>{language === "en" ? "Contact us" : "Kontakt"}</p>
-            <p>{language === "en" ? "Career opportunities" : "Jobs"}</p>
-            <p>
-              {language === "en" ? "Submit your game" : "Dein Spiel einreichen"}
-            </p>
-            <p>Blog</p>
+            <p className="footer-link">{language === "en" ? "Redeem code" : "Code einlösen"}</p>
+            <NavLink to={'/contact'} className="footer-link">{language === "en" ? "Contact us" : "Kontakt"}</NavLink>
+            <p className="footer-link">{language === "en" ? "Career opportunities" : "Jobs"}</p>
+            <p className="footer-link">{language === "en" ? "Submit your game" : "Dein Spiel einreichen"}</p>
+            <p className="footer-link">Blog</p>
           </div>
           <div className="icons-right">
             <i className="bi bi-facebook"></i>

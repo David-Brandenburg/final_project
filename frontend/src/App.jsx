@@ -19,6 +19,7 @@ import AdminDeleteModal from "./components/AdminModals/AdminDeleteModal.jsx";
 import GamePageImageModal from "./components/GamePageModals/GamePageImageModal.jsx";
 import GamePageTrailerModal from "./components/GamePageModals/GamePageTrailerModal.jsx";
 import EmailValidPage from "./pages/EmailValidPage/EmailValidPage.jsx";
+import ContactPage from "./pages/ContactPage/ContactPage.jsx";
 
 function App() {
   const [profilePicChange, setProfilePicChange] = useState(false);
@@ -104,6 +105,7 @@ function App() {
               )
             }
           />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/:title" element={<GamePage />} />
           <Route path="*" element={<ErrorPage />} />

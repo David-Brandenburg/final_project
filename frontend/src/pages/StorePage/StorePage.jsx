@@ -60,11 +60,7 @@ const GamesPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    setFilterConditionFromPath(path);
-  }, [path]);
-
+	
   const setFilterConditionFromPath = (path) => {
     for (const tag in tagToFilterCondition) {
       if (path.includes("tags") && path.includes(tag)) {
@@ -96,6 +92,10 @@ const GamesPage = () => {
       }
     }
   };
+
+	useEffect(() => {
+    setFilterConditionFromPath(path);
+  }, [path]);
 
   // Fetches the list of games from the server
   const fetchGames = async () => {

@@ -7,7 +7,7 @@ const AdminTable = () => {
   const [data, setData] = useState(null);
   const [columnsToDisplay, setColumnsToDisplay] = useState([]);
 
-  const { setOpenModalBlocker, setAdminEditModal, adminTab } =
+  const { setOpenModalBlocker, setAdminEditModal, setAdminDeleteModal, adminTab } =
     useContext(ModalContext);
   const URL = process.env.REACT_APP_URL_BACKEND;
   const fetchData = async (e) => {
@@ -48,6 +48,12 @@ const AdminTable = () => {
     e.preventDefault();
     setOpenModalBlocker(true);
     setAdminEditModal(id);
+  };
+
+  const handleDeleteEntry = (e, id) => {
+    e.preventDefault();
+    setOpenModalBlocker(true);
+    setAdminDeleteModal(id);
   };
 
   return (
@@ -135,9 +141,11 @@ const AdminTable = () => {
                 <td className="edit-delete-td">
                   <i
                     className="bi bi-pencil-square"
-                    onClick={(e) => handleEditEntry(e, item._id)}></i>{" "}
+                    onClick={(e) => handleEditEntry(e, item._id)}></i>
                   &nbsp; | &nbsp;
-                  <i className="bi bi-trash3"></i>
+                  <i
+										className="bi bi-trash3"
+										onClick={(e) => handleDeleteEntry(e, item._id)}></i>
                 </td>
               </tr>
             ))}

@@ -414,7 +414,25 @@ async function updateMyGames(req, res) {
   }
 }
 
-async function deleteAccount(req, res) {}
+async function deleteAccount(req, res) {
+	try {
+		const accountId = req.params.accountId;
+		const findAccount = User.findById(accountId);
+		if (!findAccount) {
+			return res.status(404).send({ message: 'Account not found!', ok: false })
+		}
+
+		const deleteAccount = User.findByIdAndDelete(accountId);
+
+		return res.status(204).send({ message: `Account with ID: ${accountId} were successfully removed!`, ok: true, data: deleteAccount });
+	} catch (error) {
+		res.status(500).send({
+      message: "Internal Server Error!",
+      error: error.message,
+      ok: false,
+    });
+	}
+}
 
 async function resetAccountProfilePic(req, res) {
   try {
