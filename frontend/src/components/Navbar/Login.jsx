@@ -94,7 +94,6 @@ const Login = () => {
         toast.warn(data.message);
       } else {
         const data = await resp.json();
-        console.log(data);
         toast.success(data.message);
         emailjs.init(data.publicID);
 

@@ -44,10 +44,6 @@ const AdminTable = () => {
     }
   }, [adminTab]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleEditEntry = (e, id) => {
     e.preventDefault();
     setOpenModalBlocker(true);
