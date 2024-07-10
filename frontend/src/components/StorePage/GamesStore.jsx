@@ -196,8 +196,8 @@ const GamesStore = ({
                 <h3>{language === "en" ? "Error" : "Fehler"}</h3>
                 <p>
                   {language === "en"
-                    ? "Something went wrong"
-                    : "Etwas ist schief gelaufen"}
+                    ? "Game could not be found"
+                    : "Spiel konnte nicht gefunden werden"}
                 </p>
               </div>
             </div>

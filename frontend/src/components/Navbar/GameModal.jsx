@@ -18,31 +18,31 @@ const GameModal = () => {
       en: "Browse all new releases",
       de: "Zu allen Neuerscheinungen",
     },
-    "Angebote": {
+    Angebote: {
       en: "Browse all on sale now",
       de: "Zu allen Angeboten",
     },
-    "Abenteuer": {
+    Abenteuer: {
       en: "Browse all adventure games",
       de: "Zu allen Abenteuerspielen",
     },
-    "Rollenspiel": {
+    Rollenspiel: {
       en: "Browse all RPGs",
       de: "Zu allen Rollenspielen",
     },
-    "Strategie": {
+    Strategie: {
       en: "Browse all strategy games",
       de: "Zu allen Strategiespielen",
     },
-    "Action": {
+    Action: {
       en: "Browse all action games",
       de: "Zu allen Actionspielen",
     },
-    "Shooter": {
+    Shooter: {
       en: "Browse all shooter games",
       de: "Zu allen Shootern",
     },
-    "Fantasy": {
+    Fantasy: {
       en: "Browse all fantasy games",
       de: "Zu allen Fantasy-Spielen",
     },
