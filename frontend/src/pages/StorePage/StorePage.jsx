@@ -62,7 +62,7 @@ const GamesPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-	
+
   const setFilterConditionFromPath = (path) => {
     for (const tag in tagToFilterCondition) {
       if (path.includes("tags") && path.includes(tag)) {
@@ -95,7 +95,7 @@ const GamesPage = () => {
     }
   };
 
-	useEffect(() => {
+  useEffect(() => {
     setFilterConditionFromPath(path);
   }, [path]);
 

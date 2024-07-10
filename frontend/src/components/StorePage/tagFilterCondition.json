@@ -97,7 +97,8 @@
   "Dystopisch": "DYSTOPISCH_TAG",
   "Mythologie": "MYTHOLOGIE_TAG",
   "OST": "OST_TAG",
-  "Militärisch": "MILITÄRISCH_TAG",
+  "Militarisch": "MILITÄRISCH_TAG",
   "Politik": "POLITIK_TAG",
-  "Hack and Slash": "HACK_AND_SLASH_TAG"
+  "Hack and Slash": "HACK_AND_SLASH_TAG",
+  "Atmospharisch": "ATMOSPHÄRISCH_TAG"
 }

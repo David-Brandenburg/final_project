@@ -1,68 +1,66 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { LogginContext } from '../../contexts/LogginContext.js';
-import slugify from 'slugify';
-import './gameslibrary.scss'
-import { NavLink } from 'react-router-dom';
-import { useLanguage } from '../../contexts/LanguageContext.js';
+import React, { useContext, useEffect, useState } from "react";
+import { LogginContext } from "../../contexts/LogginContext.js";
+import slugify from "slugify";
+import "./gameslibrary.scss";
+import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../contexts/LanguageContext.js";
 
 const GamesLibrary = () => {
-	const [games, setGames] = useState([])
-	const [fullGames, setFullGames] = useState([])
-	const { loggedInUser } = useContext(LogginContext);
-	const URL = process.env.REACT_APP_URL_BACKEND;
+  const [games, setGames] = useState([]);
+  const [fullGames, setFullGames] = useState([]);
+  const { loggedInUser } = useContext(LogginContext);
+  const URL = process.env.REACT_APP_URL_BACKEND;
 
-	const { language } = useLanguage();
+  const { language } = useLanguage();
 
-	const fetchData = async (e) => {
-		try {
-			const response = await fetch(`${URL}/accounts/${loggedInUser.id}`, {method: 'GET'})
-			if (!response.ok) {
-				const data = await response.json();
-				throw new Error(data.message)
-			} else {
-				const data = await response.json();
-				setGames(data.myGames)
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	};
+  const fetchData = async (e) => {
+    try {
+      const response = await fetch(`${URL}/accounts/${loggedInUser.id}`, {
+        method: "GET",
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      } else {
+        const data = await response.json();
+        setGames(data.myGames);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-	useEffect(() => {
-		fetchData();
-	}, [loggedInUser])
-	
-	useEffect(() => {
-		const fetchGames = async () => {
-			const fetchedGames = [];
-	
-			for (const game of games) {
-				try {
-					const response = await fetch(`${URL}/games/${slugify(game, "_")}`);
-					if (!response.ok) {
-						const data = await response.json();
-						throw new Error(data.message);
-					}
-					const data = await response.json();
-					fetchedGames.push(data);
-				} catch (error) {
-					console.error(error);
-				}
-			}
-	
-			setFullGames(fetchedGames);
-		};
-	
-		if (games.length > 0) {
-			fetchGames();
-		}
-	}, [URL, games]);	
+  useEffect(() => {
+    fetchData();
+  }, [loggedInUser]);
 
-	useEffect(() => {
-		console.log(fullGames)
-	}, [fullGames]);
+  useEffect(() => {
+    const fetchGames = async () => {
+      const fetchedGames = [];
 
-	const heartfill = (rating) => {
+      for (const game of games) {
+        try {
+          const response = await fetch(`${URL}/games/${slugify(game, "_")}`);
+          if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message);
+          }
+          const data = await response.json();
+          fetchedGames.push(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      setFullGames(fetchedGames);
+    };
+
+    if (games.length > 0) {
+      fetchGames();
+    }
+  }, [URL, games]);
+
+  const heartfill = (rating) => {
     let hearts;
 
     switch (true) {
@@ -192,34 +190,42 @@ const GamesLibrary = () => {
     return hearts;
   };
 
-	return (
-		<>
-			<div className='profile-game-card-wrapper'>
-				{fullGames.length > 0 && fullGames.map((game, index) => (
-					<NavLink key={'profile-game-card'+index} to={`/games/${slugify(game.title, "_")}`} className='profile-game-card'>
-						<div className='profile-game-card-thumbnail-wrapper'>
-							<img src={game.thumbnail} alt="" />
-						</div>
-						<div className='profile-game-card-info-wrapper'>
-							<div className='upper-wrapper'>
-								<p>{game.title}</p>
-							</div>
-							<div className="lower-wrapper">
-								<small>{game.publisher}</small>
-								{heartfill(game.rating)}
-							</div>
-						</div>
-					</NavLink>
-				))}
-			</div>
-			{fullGames.length < 1 && (
-				<div className='profile-game-card-wrapper-empty'>
-					<h3>{language === 'en' ? 'Sorry!' : 'Entschuldigung!'}</h3>
-					<p>{language === 'en' ? "You don't have any games in your library yet!" : 'Du hast noch keine Spiele in deiner Bibliothek!'}</p>
-				</div>
-			)}
-		</>
-);
+  return (
+    <>
+      <div className="profile-game-card-wrapper">
+        {fullGames.length > 0 &&
+          fullGames.map((game, index) => (
+            <NavLink
+              key={"profile-game-card" + index}
+              to={`/games/${slugify(game.title, "_")}`}
+              className="profile-game-card">
+              <div className="profile-game-card-thumbnail-wrapper">
+                <img src={game.thumbnail} alt="" />
+              </div>
+              <div className="profile-game-card-info-wrapper">
+                <div className="upper-wrapper">
+                  <p>{game.title}</p>
+                </div>
+                <div className="lower-wrapper">
+                  <small>{game.publisher}</small>
+                  {heartfill(game.rating)}
+                </div>
+              </div>
+            </NavLink>
+          ))}
+      </div>
+      {fullGames.length < 1 && (
+        <div className="profile-game-card-wrapper-empty">
+          <h3>{language === "en" ? "Sorry!" : "Entschuldigung!"}</h3>
+          <p>
+            {language === "en"
+              ? "You don't have any games in your library yet!"
+              : "Du hast noch keine Spiele in deiner Bibliothek!"}
+          </p>
+        </div>
+      )}
+    </>
+  );
 };
 
-export default GamesLibrary
+export default GamesLibrary;

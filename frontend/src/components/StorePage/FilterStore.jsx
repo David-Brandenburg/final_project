@@ -137,7 +137,6 @@ const FilterStore = ({
     setFilterCondition((prevCondition) =>
       prevCondition === "INDIE_TAG" ? "ALL" : "INDIE_TAG"
     );
-    console.log(filterCondition);
   };
 
   const handleFantasyTag = () => {
@@ -838,7 +837,7 @@ const FilterStore = ({
                   onChange={handleAtmosphärischTag}
                 />
                 <span className="checkmark"></span>
-                {language === "en" ? " Simulation" : " Atmosphärisch"}
+                {language === "en" ? " Atmospharic" : " Atmosphärisch"}
               </label>
             </li>
             <li className="gamespage-main-filter-li">

@@ -28,7 +28,6 @@ const CheckoutPage = () => {
     // Updated to accept 'method' parameter
     setPaymentMethod((prevMethod) => (prevMethod === method ? "" : method)); // Set the selected payment method
     setShowModal(method);
-    console.log(showModal);
   };
 
   const btnStyleSwitch = () => {
@@ -99,7 +98,6 @@ const CheckoutPage = () => {
 
   const submitPay = async () => {
     const cartTitles = cart.map((item) => item.title);
-    console.log(cartTitles);
     const url = `${URL}/accounts/updateMyGames/${loggedInUser.id}`;
     try {
       const resp = await fetch(url, {

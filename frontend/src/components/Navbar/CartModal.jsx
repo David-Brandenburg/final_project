@@ -18,7 +18,6 @@ const CartModal = () => {
     setOpenModalBlocker(false);
     setOpenCart(false);
   };
-  // console.log(cart);
 
   useEffect(() => {
     let totalPrice = 0;
