@@ -137,25 +137,28 @@ nav {
     }
 
     .nav-mid {
-      width: 50%;
+      width: 400px;
+			margin-right: 320px;
       display: flex;
       align-items: center;
       gap: 10px;
       color: #fff;
 			position: relative;
-      .nav-search {
-        color: #fff;
-        background: transparent;
-        border-bottom: 1px solid #ffffff40;
-        width: 50%;
-        padding: 6px;
-        font-family: $defaultFont;
-        &:focus-visible,
-        &:focus,
-        &:hover {
-          border-bottom: 1px solid #fff;
-        }
-      }
+			form{
+				.nav-search {
+					color: #fff;
+					background: transparent;
+					border-bottom: 1px solid #ffffff40;
+					width: 300px;
+					padding: 6px;
+					font-family: $defaultFont;
+					&:focus-visible,
+					&:focus,
+					&:hover {
+						border-bottom: 1px solid #fff;
+					}
+				}
+			}
 			.count-games{
 				display: flex;
 				gap: 5px;
@@ -171,7 +174,7 @@ nav {
 			}
 			.filtered-games-modal{
 				position: absolute;
-				top: 39px;
+				top: 41px;
 				left: -200px;
 				border-radius: 3px;
 				width: 1200px;
