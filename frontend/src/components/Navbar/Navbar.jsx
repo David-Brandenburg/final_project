@@ -456,10 +456,16 @@ const Navbar = ({ profilePicChange, setProfilePicChange }) => {
                 placeholder="Search for Games, Tags or Publisher"
               />
             </form>
-            {filteredGames && (
+            {filteredGames && filteredGames.length > 0 && (
               <label className="count-games" htmlFor="search">
-                <p>{filteredGames.length}</p>
-                <p>{language === "en" ? "Games" : "Spiele"}</p>
+                <span>{filteredGames.length}</span>
+								{filteredGames.length < 2 && (<span>{language === "en" ? "Game" : "Spiel"}</span>)}
+								{filteredGames.length > 1 && (<span>{language === "en" ? "Games" : "Spiele"}</span>)}
+              </label>
+            )}
+            {filteredGames && filteredGames.length < 1 && (
+              <label className="count-games" htmlFor="search">
+                <span>{language === "en" ? "Error" : "Fehler"}</span>
               </label>
             )}
             {filteredGames && (
